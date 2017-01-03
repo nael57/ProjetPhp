@@ -39,8 +39,12 @@ class CoffretController {
     
     public function affich_coffret(){
         echo $_COOKIE[ 'panier' ];
-       $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-        $v = new VueCoffret($liste);
+        $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        $prest[] = null;
+        foreach($liste as $p){
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+        }
+        $v = new VueCoffret($prest);
         $html = $v->affich_general(2, null);
         return $html;
     }

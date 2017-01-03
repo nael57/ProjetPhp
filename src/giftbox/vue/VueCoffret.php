@@ -27,10 +27,13 @@ class VueCoffret {
     
     public function affich_coffret(){
         $html = '<h2> Votre coffret cadeau </h2> <br><br>';
-        
+        $montant = 0;
         foreach($this->tab as $pre){
-            $html = $html . $pre;
+            $html = $html . $pre . '<br>';
+            $montant+=$pre->prix;
         }
+        
+        $html = $html . '<br> Montant total de la commande : ' . $montant;
         return $html;
     }
     
@@ -64,7 +67,7 @@ class VueCoffret {
                 $content.'
             </section>
             <footer>
-                <a href=../../CatalogueController/affich_prest> Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>
+                <a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/confirmer_coffret"> Confirmer ma commande et passer au paiement </a>
         </body>
         </html>';
         return $html;

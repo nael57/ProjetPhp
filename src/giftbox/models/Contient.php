@@ -20,7 +20,7 @@ class Contient extends Model{
      * @return la liste des prestations
      */
     public function prestations($id){
-        $liste = Prestation::where('id', '=', $id)->get();
+        $liste = Contient::where('id_coo', '=', $id)->get();
         return $liste;
     }
     

@@ -8,6 +8,9 @@ class VueCatalogue {
     private $tab;
     private $sel;
     private $id;
+    private $lienPrest;
+    private $lienCat;
+    private $lienAccueil;
     
     public function __construct( $tableau ){
         $this->tab = $tableau;
@@ -25,12 +28,22 @@ class VueCatalogue {
         foreach($this->tab as $pre){
             $page = $page . '<li><a href=affich_prest/' . $pre->id . '>' . $pre->nom . ' ' . $pre->prix . '€ ' . $pre->cat_id . ' ' .'</a>'. '<img src="../../images/'.$pre->img.'" width="80">'.'<br><br>';
         }
+        
+        $this->lienPrest = '../../Index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../Index.php/CatalogueController/affich_cat';
+        $this->lienAccueil = '../..';
+        
         return $page;
     }
     
     private function affich_prest(){
         $page = '<h1> Description de la prestation n°' . $this->id . '</h1>';
         $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../CoffretController/ajout_prest/' . $this->id . '> Ajouter cette prestation a ma commande </a>';
+        
+        $this->lienPrest = '../../CatalogueController/affich_prest';
+        $this->lienCat = '../../CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
+        
         return $page;
     }
    
@@ -41,6 +54,11 @@ class VueCatalogue {
             $page = $page . '<li><a href=affich_cat/'. $i . '>' . $cat->id . '  ' . $cat->nom . '</a>';
             $i++;
         }
+        
+        $this->lienPrest = '../../Index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../Index.php/CatalogueController/affich_cat';
+        $this->lienAccueil = '../..';
+        
         return $page;
         
     }
@@ -49,9 +67,14 @@ class VueCatalogue {
         $page = '<h1> Prestations de la catégorie n°'.$this->id.'</h1> <ul>';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page.'<li>'.$pre;
+            $page = $page . '<li><a href=../affich_prest/' . $pre->id . '>' . $pre->nom . ' ' . $pre->prix . '€ ' . $pre->cat_id . ' ' .'</a>'. '<img src="../../../images/'.$pre->img.'" width="80">'.'<br><br>';
             $i++;
         }
+        
+        $this->lienPrest = '../../CatalogueController/affich_prest';
+        $this->lienCat = '../../CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
+        
         return $page;
     }
     
@@ -82,10 +105,10 @@ class VueCatalogue {
         <boby>
             <nav>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
+                <a href="'.$this->lienPrest.'">Liste des prestations</a>
                 <br><br>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_cat">Liste des categories</a>
+                <a href="'.$this->lienCat.'">Liste des categories</a>
                 <br><br>
             </nav>
             <section>
@@ -93,7 +116,7 @@ class VueCatalogue {
                 $content.'
             </section>
             <footer>
-                <a href=../../Index.php>Accueil</a>
+                <a href="'.$this->lienAccueil.'">Accueil</a>
             </footer>
         </body>
         </html>';

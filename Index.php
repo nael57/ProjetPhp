@@ -72,5 +72,12 @@ $slim->get('/CoffretController/affich_coffret', function(){
     echo $html;
 });
 
+//on demande ici a valider le coffret
+$slim->get('/CoffretController/confirmer_coffret', function(){
+    $c = new CoffretCon();
+    $html = $c->confirmer_coffret();
+    echo $hmtl;
+});
+
 //on traite ici la requète courante
 $slim->run();
