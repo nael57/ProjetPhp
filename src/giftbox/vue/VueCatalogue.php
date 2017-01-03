@@ -2,6 +2,7 @@
 
 namespace giftbox\vue;
 
+
 class VueCatalogue {
     
     private $tab;
@@ -21,10 +22,8 @@ class VueCatalogue {
     
     private function affich_liste_prest(){
         $page = '<h1> Liste des prestations </h1> <ul> ';
-        $i = 1;
         foreach($this->tab as $pre){
-            $page = $page . '<li><a href=affich_prest/' . $i . '>' . $pre->nom . '</a>';
-            $i++;
+            $page = $page . '<li><a href=affich_prest/' . $pre->id . '>' . $pre->nom . ' ' . $pre->prix . '€ ' . $pre->cat_id . ' ' .'</a>'. '<img src="../../images/'.$pre->img.'" width="80">'.'<br><br>';
         }
         $page = $page . '</ul><br><br><a href=../../Index.php>Accueil</a>';
         return $page;
@@ -32,7 +31,7 @@ class VueCatalogue {
     
     private function affich_prest(){
         $page = '<h1> Description de la prestation n°' . $this->id . '</h1>';
-        $page = $page . '<br> ' . $this->tab . '</ul><br><br><a href=../../../Index.php>Accueil</a>';
+        $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../../Index.php>Accueil</a>';
         return $page;
     }
    
@@ -41,16 +40,19 @@ class VueCatalogue {
         $i = 1;
         foreach($this->tab as $cat){
             $page = $page . '<li><a href=affich_cat/'. $i . '>' . $cat->id . '  ' . $cat->nom . '</a>';
+            $i++;
         }
         $page = $page . '</ul><br><br><a href=../../Index.php>Accueil</a>';
         return $page;
-        $i++;
+        
     }
     
     private function affich_liste_prest_par_cat(){
         $page = '<h1> Prestations de la catégorie n°'.$this->id.'</h1> <ul>';
+        $i = 1;
         foreach($this->tab as $pre){
             $page = $page.'<li>'.$pre;
+            $i++;
         }
         $page = $page . '</ul><br><br><a href=../../../Index.php>Accueil</a>';
         return $page;
@@ -75,7 +77,7 @@ class VueCatalogue {
         
         $html = '
         <!DOCTYPE html>
-        <html lang="fr">
+        <html>
         <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title> Projet giftbox </title>
             <meta charset="utf-8"><link rel="stylesheet" href="../../../../../DocRoot/Projet_php/projet.css"><style type="text/css"></style>

@@ -9,7 +9,7 @@ class CatalogueController {
     
     public function affich_prest($id){
         if($id==null){
-            $liste = Prestation::Orderby('nom')->get();
+            $liste = Prestation::Orderby('prix')->get();
             $v = new VueCatalogue($liste);
             $html = $v->affich_general(1, null);
         }
@@ -29,7 +29,7 @@ class CatalogueController {
         }
         else {
             $liste = Categorie::where('id', '=', $id_cat)->first();
-            $prest = $liste->prestations()->get();
+            $prest = $liste;
             $v = new VueCatalogue($prest);
             $html = $v->affich_general(4, $id_cat);
         }
