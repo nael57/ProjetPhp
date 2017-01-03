@@ -50,14 +50,14 @@ class VueCoffret {
         <html lang="fr">
         <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title> Ajouté au panier </title>
-            <meta charset="utf-8"><link rel="stylesheet" href="../../../../../DocRoot/Projet_php/projet.css"><style type="text/css"></style>
+            <meta charset="utf-8">
         </head>
         <boby>
             <nav>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
+                <a href="../../../../../DocRoot/ProjetPhp/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_cat">Liste des categories</a>
+                <a href="../../../../../DocRoot/ProjetPhp/Index.php/CatalogueController/affich_cat">Liste des categories</a>
             </nav>
             <section>
                 '.

@@ -20,21 +20,26 @@ class CoffretController {
         }
         else {
             $c->save();
-            setcookie('panier', $c->id, time() + 60*60); 
+            setcookie('panier', $c->id, time() + 60*60, '/'); 
         }
-        
-        $con = new Contient();
-        $con->id_pre = $id;
-        $con->id_coo = $c->id;
-        $con->save();
-        
+        if((Contient::where('id_pre', '=', $id)->where('id_coo', '=', $c->id)->first()) == null){
+            $con = new Contient();
+            $con->id_pre = $id;
+            $con->id_coo = $c->id;
+            $con->save();
+        }
+        else{
+            $con = null;
+            echo 'la prestation a deja ete ajoutee';
+        }
         $v = new VueCoffret($con);
         $html = $v->affich_general(1, $id);
         return $html;
     }
     
     public function affich_coffret(){
-        $liste = Contient::prestations($_COOKIE['panier']);
+        echo $_COOKIE[ 'panier' ];
+       $liste = Contient::prestations($_COOKIE[ 'panier' ]);
         $v = new VueCoffret($liste);
         $html = $v->affich_general(2, null);
         return $html;

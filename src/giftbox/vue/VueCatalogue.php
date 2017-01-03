@@ -25,13 +25,12 @@ class VueCatalogue {
         foreach($this->tab as $pre){
             $page = $page . '<li><a href=affich_prest/' . $pre->id . '>' . $pre->nom . ' ' . $pre->prix . '€ ' . $pre->cat_id . ' ' .'</a>'. '<img src="../../images/'.$pre->img.'" width="80">'.'<br><br>';
         }
-        $page = $page . '</ul><br><br><a href=../../Index.php>Accueil</a>';
         return $page;
     }
     
     private function affich_prest(){
         $page = '<h1> Description de la prestation n°' . $this->id . '</h1>';
-        $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../../Index.php>Accueil</a> <a href=../../CoffretController/ajout_prest/' . $this->id . '> Ajouter cette prestation a ma commande </a>';
+        $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../CoffretController/ajout_prest/' . $this->id . '> Ajouter cette prestation a ma commande </a>';
         return $page;
     }
    
@@ -42,7 +41,6 @@ class VueCatalogue {
             $page = $page . '<li><a href=affich_cat/'. $i . '>' . $cat->id . '  ' . $cat->nom . '</a>';
             $i++;
         }
-        $page = $page . '</ul><br><br><a href=../../Index.php>Accueil</a>';
         return $page;
         
     }
@@ -54,7 +52,6 @@ class VueCatalogue {
             $page = $page.'<li>'.$pre;
             $i++;
         }
-        $page = $page . '</ul><br><br><a href=../../../Index.php>Accueil</a>';
         return $page;
     }
     
@@ -80,7 +77,7 @@ class VueCatalogue {
         <html>
         <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title> Projet giftbox </title>
-            <meta charset="utf-8"><link rel="stylesheet" href="../../../../../DocRoot/Projet_php/projet.css"><style type="text/css"></style>
+            <meta charset="utf-8">
         </head>
         <boby>
             <nav>
@@ -95,6 +92,9 @@ class VueCatalogue {
                 '.
                 $content.'
             </section>
+            <footer>
+                <a href=../../Index.php>Accueil</a>
+            </footer>
         </body>
         </html>';
         

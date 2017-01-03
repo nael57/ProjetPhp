@@ -12,7 +12,7 @@ class VueIndex {
         <html lang="fr">
             <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                 <title> Accueil </title>
-                <meta charset="utf-8"><link rel="stylesheet" href="projet.css"> <style type="text/css"></style>
+                <meta charset="utf-8">
             </head>
             <boby>
                 <h1> Bienvenue sur l\'accueil </h1>
