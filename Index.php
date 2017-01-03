@@ -15,7 +15,7 @@ use giftbox\controller\IndexController as Index;
 
 //creation de la connexion
 $db = new DB();
-$tab = parse_ini_file('src/conf/conf.ini');
+$tab = parse_ini_file('../conf/conf.ini');
 $db->addConnection($tab);
 $db->setAsGlobal();
 $db->bootEloquent();
