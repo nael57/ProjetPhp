@@ -23,6 +23,6 @@ class Prestation extends Model{
     }
     
     public function __toString(){
-        return $this->id . '  ' . $this->nom . '  ' . $this->descr . '  ' . $this->cat_id . '  ' . $this->img . '  ' . $this->prix;
+        return $this->id . '  ' . $this->nom . '  ' . $this->descr . '  ' . $this->cat_id . '  ' . $this->img . '  ' . $this->prix .'€';
     }
 }
