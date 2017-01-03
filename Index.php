@@ -11,11 +11,12 @@ require_once 'vendor/autoload.php';
 use giftbox\vue\VueCatalogue as VueCatalogue;
 use Illuminate\Database\Capsule\Manager as DB;
 use giftbox\controller\CatalogueController as CatalogueCon;
+use giftbox\controller\CoffretController as CoffretCon;
 use giftbox\controller\IndexController as Index;
 
 //creation de la connexion
 $db = new DB();
-$tab = parse_ini_file('../conf/conf.ini');
+$tab = parse_ini_file('src/conf/conf.ini');
 $db->addConnection($tab);
 $db->setAsGlobal();
 $db->bootEloquent();
@@ -54,6 +55,20 @@ $slim->get('/CatalogueController/affich_cat', function(){
 $slim->get('/CatalogueController/affich_cat/:id', function($id){
     $c = new CatalogueCon();
     $html = $c->affich_cat($id);
+    echo $html;
+});
+
+//on demande ici l'ajout d'une prestation au coffret
+$slim->get('/CoffretController/ajout_prest/:id', function($id){
+    $c = new CoffretCon();
+    $html = $c->ajout_prest($id);
+    echo $html;
+});
+
+//on demande ici l'affichage du coffret
+$slim->get('/CoffretController/affich_coffret', function(){
+   $c = new CoffretCon();
+    $html = $c->affich_coffret();
     echo $html;
 });
 

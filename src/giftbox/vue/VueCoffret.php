@@ -57,11 +57,7 @@ class VueCoffret {
                 <br><br>
                 <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_prest/12">Description de la prestation 12 (exemple)</a>
-                <br><br>
                 <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_cat">Liste des categories</a>
-                <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_cat/1">Liste des prestations de la categorie 1 (exemple)</a>
             </nav>
             <section>
                 '.

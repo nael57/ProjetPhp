@@ -31,7 +31,7 @@ class VueCatalogue {
     
     private function affich_prest(){
         $page = '<h1> Description de la prestation n°' . $this->id . '</h1>';
-        $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../../Index.php>Accueil</a>';
+        $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../../Index.php>Accueil</a> <a href=../../CoffretController/ajout_prest/' . $this->id . '> Ajouter cette prestation a ma commande </a>';
         return $page;
     }
    
@@ -87,11 +87,9 @@ class VueCatalogue {
                 <br><br>
                 <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_prest/12">Description de la prestation 12 (exemple)</a>
                 <br><br>
                 <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_cat">Liste des categories</a>
                 <br><br>
-                <a href="../../../../../DocRoot/Projet_php/Index.php/CatalogueController/affich_cat/1">Liste des prestations de la categorie 1 (exemple)</a>
             </nav>
             <section>
                 '.
