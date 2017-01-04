@@ -1,11 +1,15 @@
 <?php
 
+//definition du namespace
 namespace giftbox\vue;
 
+//Classe qui premet l'affichage de 'lindex
 class VueIndex {
     
+    //contructeur vide
     public function __contruct(){}
 
+    //methode qui permet un affichage de l'index
     public function affichage(){
         $html = '
         <!DOCTYPE html>

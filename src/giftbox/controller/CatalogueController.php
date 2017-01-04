@@ -1,12 +1,16 @@
 <?php
 
+//definition du namespace et des alias
 namespace giftbox\controller;
 use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
 use giftbox\vue\VueCatalogue as VueCatalogue;
 
+//Classe controller pour le catalogue
 class CatalogueController {
     
+    //methode qui affiche la liste des prestations si le parametre est 
+    //nul ou la prestation en parametre sinon
     public function affich_prest($id){
         if($id==null){
             
@@ -22,6 +26,10 @@ class CatalogueController {
         return $html;
     }
     
+    /*
+    * Methode qui affiche la liste des categorie si le parametre est nul 
+    * ou les presations d'une categorie sinon
+    */
     public function affich_cat($id_cat){
         if($id_cat==null){
             $liste = Categorie::get();

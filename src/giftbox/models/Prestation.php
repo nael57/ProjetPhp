@@ -22,6 +22,10 @@ class Prestation extends Model{
         return $this->belongsTo('giftbox\models\Categorie', 'cat_id');
     }
     
+    /*
+    *Methode qui definit l'affichage d'une prestation
+    * @return son affichage
+    */
     public function __toString(){
         return $this->id . '  ' . $this->nom . '  ' . $this->descr . '  ' . $this->cat_id . '  ' . $this->img . '  ' . $this->prix .'€';
     }

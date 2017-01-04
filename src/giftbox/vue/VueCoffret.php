@@ -1,18 +1,26 @@
 <?php
 
+//definition du namespace et des alias
 namespace giftbox\vue;
 use giftbox\models\Prestation as Prestation;
 
+//Classe vue pour le coffret (panier cadeau)
+//Les tables ne sont jamais modifiees ici
 class VueCoffret {
     
+    //prestations envoyees par le controller
     private $tab;
+    //num de l'action a effectuer
     private $sel;
+    //nul ou definissant la prestation a manipuler
     private $id;
 
+    //contructeur prenant en parametre des prestations a ajouter, afficher,...
     public function __construct($tableau){
         $this->tab = $tableau;
     }
     
+    //methode qui permet d'aiguiller vers differents affichages selon les parametres
     public function affich_general($int, $id){
         $this->sel = $int;
         $this->id = $id;
@@ -20,11 +28,13 @@ class VueCoffret {
         echo $html;
     }
     
+    //methode pour permet d'ajouter une prestation au panier
     public function ajout_prest(){
         $html = 'La prestation n°' . $this->id . ' a été ajoutée au panier !';
         return $html;
     }
     
+    //methode qui permet d'afficher le panier de l'uilisateur
     public function affich_coffret(){
         $html = '<h2> Votre coffret cadeau </h2> <br><br>';
         $montant = 0;
@@ -37,6 +47,7 @@ class VueCoffret {
         return $html;
     }
     
+    //methode permettant l'affichage general de la page et y ajoutant le bon script
     public function render(){
         $content = '';
         switch ($this->sel){

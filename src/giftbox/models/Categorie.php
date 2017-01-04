@@ -22,6 +22,10 @@ class Categorie extends Model {
         return $this->hasMany('\giftbox\models\Prestation', 'cat_id');
     }
     
+    /*
+    * Methode toString definissant l'affichage d'une categorie
+    * @Return son affichage
+    */
     public function __toString(){
         return $this->id . '  ' . $this->nom;
     }

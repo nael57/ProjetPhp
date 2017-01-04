@@ -11,6 +11,7 @@ use giftbox\vue\VueCoffret as VueCoffret;
 //classe CoffretController
 class CoffretController {
     
+    //methode qui ajoute la prestation en parametre au coffret
     public function ajout_prest($id){
         
         $c = new Coffret();
@@ -37,6 +38,7 @@ class CoffretController {
         return $html;
     }
     
+    //methode qui affiche le coffret courant 
     public function affich_coffret(){
         echo $_COOKIE[ 'panier' ];
         $liste = Contient::prestations($_COOKIE[ 'panier' ]);
@@ -47,5 +49,9 @@ class CoffretController {
         $v = new VueCoffret($prest);
         $html = $v->affich_general(2, null);
         return $html;
+    }
+    
+    public function confirmer_coffret(){
+        
     }
 }

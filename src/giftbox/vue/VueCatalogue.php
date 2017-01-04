@@ -1,21 +1,28 @@
 <?php
 
+//definition du namespace
 namespace giftbox\vue;
 
-
+//Classe vue pour le catalogue
 class VueCatalogue {
     
+    //prestations ou categories envoyees par le controller
     private $tab;
+    //num de l'action a effectuer
     private $sel;
+    //nul ou definissant la categorie ou la prestation a afficher sinon
     private $id;
+    //liens vers d'autres pages flexibles selon ou on se trouve
     private $lienPrest;
     private $lienCat;
     private $lienAccueil;
     
+    //contructeur prenant en parametre des prestations ou des categories
     public function __construct( $tableau ){
         $this->tab = $tableau;
     }
-           
+    
+    //methode qui permet d'aiguiller vers differents affichages selon les parametres
     public function affich_general( $selecteur, $id ){
         $this->sel = $selecteur;
         $this->id = $id;
@@ -23,6 +30,7 @@ class VueCatalogue {
         return $html;
     }
     
+    //methode permettant d'afficher la liste des prestations
     private function affich_liste_prest(){
         $page = '<h1> Liste des prestations </h1> <ul> ';
         foreach($this->tab as $pre){
@@ -36,6 +44,7 @@ class VueCatalogue {
         return $page;
     }
     
+    //methode permettant d'afficher une prestation en detail
     private function affich_prest(){
         $page = '<h1> Description de la prestation n°' . $this->id . '</h1>';
         $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../CoffretController/ajout_prest/' . $this->id . '> Ajouter cette prestation a ma commande </a>';
@@ -47,6 +56,7 @@ class VueCatalogue {
         return $page;
     }
    
+    //methode premettant d'afficher la liste des categories
     private function affich_liste_cat(){
         $page = '<h1> Liste des catégories </h1> <ul>';
         $i = 1;
@@ -63,6 +73,7 @@ class VueCatalogue {
         
     }
     
+    //methode permettant d'afficher les prestations d'une cateogie en particulier
     private function affich_liste_prest_par_cat(){
         $page = '<h1> Prestations de la catégorie n°'.$this->id.'</h1> <ul>';
         $i = 1;
@@ -78,6 +89,7 @@ class VueCatalogue {
         return $page;
     }
     
+    //methode qui permet un affichage general des pages en y ajoutant le bon script selon l'action demandee par l'utilisateur
     private function render(){
        $content=0;
         switch ($this->sel) {
