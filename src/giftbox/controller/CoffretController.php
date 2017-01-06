@@ -38,11 +38,10 @@ class CoffretController {
         return $html;
     }
     
-    //methode qui affiche le coffret courant 
+    //methode qui permettra d'afficher le coffret courant 
     public function affich_coffret(){
-        echo $_COOKIE[ 'panier' ];
         $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-        $prest[] = null;
+        $prest = null;
         foreach($liste as $p){
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
         }
@@ -51,7 +50,14 @@ class CoffretController {
         return $html;
     }
     
+    //methode qui permet la confirmation du coffret ainsi que les formalités associées 
     public function confirmer_coffret(){
-        
+        $coffret=null;
+        if(isset($_COOKIE['panier'])){
+            $coffret = Coffret::where('id', '=', $_COOKIE['panier']);
+        }
+        $v = new VueCoffret($coffret);
+        $html = $v->affich_general(3, null);
+        return $html;
     }
 }
