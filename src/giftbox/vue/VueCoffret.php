@@ -14,7 +14,8 @@ class VueCoffret {
     private $sel;
     //nul ou definissant la prestation a manipuler
     private $id;
-
+    private $liens = false;
+    
     //contructeur prenant en parametre des prestations a ajouter, afficher,...
     public function __construct($tableau){
         $this->tab = $tableau;
@@ -51,18 +52,21 @@ class VueCoffret {
     
     //methode qui permet de confirmer le coffret une fois fini
     public function confirmer_coffret(){
-        $content = '<form id="f1" method = "post" action = "">
-                        <label for="fNom"> nom : </label>
-                        <input type="text" id="fNom" name="nom" placeholder="<name>" required>
-                        <label for="fPrenom"> prenom : </label>
-                        <input type="text" id="fPrenom" name="prenom" placeholder="<prenom>" required>
-                        <label for="fMail"> mail : </label>
-                        <input type="text" id="fMail" name="mail" placeholder="<mail>" required>
-                        <label for="fComm"> commentaire a envoyer au destinataire : </label>
-                        <input type="text" id="fComm" name="comm" placeholder="<commentaire>" required>
-                        <label for="fMode"> Mode de paiement : </label>
-                        <label>classique</label><input type="radio" name="groupe_radio1" value=1>
-                        <label>cagnotte</label><input type="radio" mane="groupe_radio1" value=2>';
+        $content = '<h2> Confirmation de votre commande </h2><br><br>
+        <form id="f1" method = "post" action = "">
+                <label for="fNom"> nom : </label>
+                <input type="text" id="fNom" name="nom" placeholder="<obligatoire>" required><br><br>
+                <label for="fPrenom"> prenom : </label>
+                <input type="text" id="fPrenom" name="prenom" placeholder="<obligatoire>" required><br><br>
+                <label for="fMail"> mail : </label>
+                <input type="text" id="fMail" name="mail" placeholder="<obligatoire>" required><br><br>
+                <label for="fComm"> commentaire a envoyer au destinataire : </label>
+                <input type="text" id="fComm" name="comm" placeholder="<obligatoire>" required><br><br>
+                <label for="fMode"> Mode de paiement : </label>
+                <label>classique</label><input type="radio" name="groupe_radio1" value=1>
+                <label>cagnotte</label><input type="radio" mane="groupe_radio1" value=2><br><br>
+                <button type="submit" name="valider" value="valid">valider</button>
+        </form>';
         return $content;
     }
     
@@ -71,12 +75,15 @@ class VueCoffret {
         $content = '';
         switch ($this->sel){
             case 1 :
+                $this->liens=true;
                 $content = $this->ajout_prest();
             break;
             case 2 :
+                $this->liens=true;
                 $content = $this->affich_coffret();
             break;
             case 3 :
+                $this->liens=false;
                 $content = $this->confirmer_coffret();
             break;
         }
@@ -88,21 +95,18 @@ class VueCoffret {
             <title> Ajouté au panier </title>
             <meta charset="utf-8">
         </head>
-        <boby>
-            <nav>
-                <br><br>
-                <a href="../../../../../DocRoot/ProjetPhp/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
-                <br><br>
-                <a href="../../../../../DocRoot/ProjetPhp/Index.php/CatalogueController/affich_cat">Liste des categories</a>
-            </nav>
-            <section>
+        <boby>';
+        $html = $html . '<section>
                 '.
                 $content.'
-            </section>
-            <footer>
+            </section>';
+        if($this->liens){
+            $html = $html . '<footer>
                 <a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>
-        </body>
-        </html>';
+            </footer>';
+        }
+        $html = $html . '</body>
+                        </html>';
         return $html;
     }
 }
