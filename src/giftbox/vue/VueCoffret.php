@@ -7,7 +7,10 @@ use giftbox\models\Prestation as Prestation;
 //Classe vue pour le coffret (panier cadeau)
 //Les tables ne sont jamais modifiees ici
 class VueCoffret {
-    
+
+    //liens vers d'autres pages flexibles selon ou on se trouve
+    private $lienPrest = '../../../Index.php/CatalogueController/affich_prest';
+    private $lienCat = '../../../Index.php/CatalogueController/affich_cat';
     //prestations envoyees par le controller
     private $tab;
     //num de l'action a effectuer
@@ -91,9 +94,9 @@ class VueCoffret {
         <boby>
             <nav>
                 <br><br>
-                <a href="../../../../../DocRoot/ProjetPhp/Index.php/CatalogueController/affich_prest">Liste des prestations</a>
+                <a href="'.$this->lienPrest.'">Liste des prestations</a>
                 <br><br>
-                <a href="../../../../../DocRoot/ProjetPhp/Index.php/CatalogueController/affich_cat">Liste des categories</a>
+                <a href="'.$this->lienCat.'">Liste des categories</a>
             </nav>
             <section>
                 '.
