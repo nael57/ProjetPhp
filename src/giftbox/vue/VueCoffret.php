@@ -44,14 +44,26 @@ class VueCoffret {
             $montant = $montant + $prix;
         }
         
-        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br><t> <a href="../../CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
+        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br><t> <a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
         
         return $html;
     }
     
     //methode qui permet de confirmer le coffret une fois fini
     public function confirmer_coffret(){
-        $content = '<form id="f1" method = "post" action = ""';
+        $content = '<form id="f1" method = "post" action = "">
+                        <label for="fNom"> nom : </label>
+                        <input type="text" id="fNom" name="nom" placeholder="<name>" required>
+                        <label for="fPrenom"> prenom : </label>
+                        <input type="text" id="fPrenom" name="prenom" placeholder="<prenom>" required>
+                        <label for="fMail"> mail : </label>
+                        <input type="text" id="fMail" name="mail" placeholder="<mail>" required>
+                        <label for="fComm"> commentaire a envoyer au destinataire : </label>
+                        <input type="text" id="fComm" name="comm" placeholder="<commentaire>" required>
+                        <label for="fMode"> Mode de paiement : </label>
+                        <label>classique</label><input type="radio" name="groupe_radio1" value=1>
+                        <label>cagnotte</label><input type="radio" mane="groupe_radio1" value=2>';
+        return $content;
     }
     
     //methode permettant l'affichage general de la page et y ajoutant le bon script
@@ -88,7 +100,7 @@ class VueCoffret {
                 $content.'
             </section>
             <footer>
-                <a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../Index.php/CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>
+                <a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>
         </body>
         </html>';
         return $html;
