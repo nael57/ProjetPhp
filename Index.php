@@ -76,7 +76,7 @@ $slim->get('/CoffretController/affich_coffret', function(){
 $slim->get('/CoffretController/confirmer_coffret', function(){
     $c = new CoffretCon();
     $html = $c->confirmer_coffret();
-    echo $hmtl;
+    echo $html;
 });
 
 //on traite ici la requète courante
