@@ -44,6 +44,9 @@ class VueCatalogue {
             </div> 
             </div>
             </div>';
+        }
+        return $page;
+
     }
     
     //methode permettant d'afficher une prestation en detail
@@ -215,7 +218,7 @@ class VueCatalogue {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">'.$content1.'</div>
+    <div class="row">'.$content.'</div>
     </div>
     </div>
     
