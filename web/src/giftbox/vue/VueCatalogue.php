@@ -83,7 +83,16 @@ class VueCatalogue {
         $page = '<h1> Prestations de la catégorie n°'.$this->id.'</h1> <ul>';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page . '<li><a href=../affich_prest/' . $pre->id . '>' . $pre->nom . ' ' . $pre->prix . '€ ' . $pre->cat_id . ' ' .'</a>'. '<img src="../../../images/'.$pre->img.'" width="80">'.'<br><br>';
+            $page=$page.'<div class="col-lg-4 col-md-4">
+            <div class="fh5co-blog animate-box">
+            <a href="#"><img class="img-responsive" src="images/'.$pre->img.'"alt=""></a>
+            <div class="blog-text">
+            <h3><a href="#">'.$pre->nom.'</a></h3>
+            <span class="posted_on">'.$pre->prix.' €</span>
+            <a href="#" class="btn btn-primary">Lire plus</a>
+            </div> 
+            </div>
+            </div>';
             $i++;
         }
         
@@ -168,19 +177,19 @@ class VueCatalogue {
     <div class="container">
     <div class="row">
     <div class="col-xs-1">
-    <div id="fh5co-logo"><a href="index.html">Gift<span>Box</span></a></div>
+    <div id="fh5co-logo"><a href="index.php">Gift<span>Box</span></a></div>
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="index.html">Accueil</a></li>
+    <li ><a href="index.php">Accueil</a></li>
     <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
-    <a href="catalogue.html" >Catalogue</a>
+    <a href="catalogue.php" >Catalogue</a>
     <ul class="dropdown">
-    <li><a href="#">Restauration</a></li>
-    <li><a href="#">Hébergement</a></li>
-    <li><a href="#">Attention</a></li>
-    <li><a href="#">Activité</a></li>
+    <li><a href="restauration.php">Restauration</a></li>
+    <li><a href="hebergement.php">Hébergement</a></li>
+    <li><a href="attention.php">Attention</a></li>
+    <li><a href="activites.php">Activité</a></li>
     <li><a href="#">Autres</a></li>
     </ul>
     </li>
