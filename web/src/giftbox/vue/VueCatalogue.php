@@ -2,6 +2,7 @@
 
 //definition du namespace
 namespace giftbox\vue;
+use giftbox\models\Categorie as Categorie;
 
 //Classe vue pour le catalogue
 class VueCatalogue {
@@ -63,10 +64,12 @@ class VueCatalogue {
    
     //methode premettant d'afficher la liste des categories
     private function affich_liste_cat(){
-        $page = '<h1> Liste des catégories </h1> <ul>';
-        $i = 2;
-        foreach($this->tab as $cat){
-            $page = $page . '<li><a href=affich_cat/'. $i . '>' . $cat->id . '  ' . $cat->nom . '</a>';
+        $cat = Categorie::get();
+        $this->tab=$cat;
+        $page = '';
+        $i = 1;
+        foreach($this->tab as $pre){
+            $page = $page. '<li><a href=affich_cat/'.$i.'>'.$pre->nom.'</a></li>';
             $i++;
         }
         
@@ -80,7 +83,10 @@ class VueCatalogue {
     
     //methode permettant d'afficher les prestations d'une cateogie en particulier
     private function affich_liste_prest_par_cat(){
-        $page = '<h1> Prestations de la catégorie n°'.$this->id.'</h1> <ul>';
+        $cat = Categorie::where('id', '=', $this->id)->first();
+        $nom = $cat->nom;
+
+        $page = '<h1> Prestations de la catégorie: '.$nom.'</h1> <ul>';
         $i = 1;
         foreach($this->tab as $pre){
             $page=$page.'<div class="col-lg-4 col-md-4">
@@ -186,11 +192,7 @@ class VueCatalogue {
     <li class="has-dropdown" >
     <a href="catalogue.php" >Catalogue</a>
     <ul class="dropdown">
-    <li><a href="restauration.php">Restauration</a></li>
-    <li><a href="hebergement.php">Hébergement</a></li>
-    <li><a href="attention.php">Attention</a></li>
-    <li><a href="activites.php">Activité</a></li>
-    <li><a href="#">Autres</a></li>
+    '.$this->affich_liste_cat().'
     </ul>
     </li>
     <li><a href="contact.html">Qui sommes nous ?</a></li>
