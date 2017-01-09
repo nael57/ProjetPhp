@@ -2,6 +2,7 @@
 
 //definition du namespace
 namespace giftbox\vue;
+use giftbox\models\Categorie as Categorie;
 
 //Classe vue pour le catalogue
 class VueCatalogue {
@@ -75,7 +76,10 @@ class VueCatalogue {
     
     //methode permettant d'afficher les prestations d'une cateogie en particulier
     private function affich_liste_prest_par_cat(){
-        $page = '<h1> Prestations de la catégorie n°'.$this->id.'</h1> <ul>';
+        $cat = Categorie::where('id', '=', $this->id)->first();
+        $nom = $cat->nom;
+        
+        $page = '<h1> Prestations de la catégorie '.$nom.'</h1> <ul>';
         $i = 1;
         foreach($this->tab as $pre){
             $page = $page . '<li><a href=../affich_prest/' . $pre->id . '>' . $pre->nom . ' ' . $pre->prix . '€ ' . $pre->cat_id . ' ' .'</a>'. '<img src="../../../images/'.$pre->img.'" width="80">'.'<br><br>';
