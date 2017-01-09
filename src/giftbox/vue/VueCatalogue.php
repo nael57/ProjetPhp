@@ -59,7 +59,7 @@ class VueCatalogue {
     //methode premettant d'afficher la liste des categories
     private function affich_liste_cat(){
         $page = '<h1> Liste des catégories </h1> <ul>';
-        $i = 1;
+        $i = 2;
         foreach($this->tab as $cat){
             $page = $page . '<li><a href=affich_cat/'. $i . '>' . $cat->id . '  ' . $cat->nom . '</a>';
             $i++;
