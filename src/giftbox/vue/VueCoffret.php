@@ -15,6 +15,8 @@ class VueCoffret {
     //nul ou definissant la prestation a manipuler
     private $id;
     private $liens = false;
+    private $lienhaut=null;
+    private $lienbas=null;
     
     //contructeur prenant en parametre des prestations a ajouter, afficher,...
     public function __construct($tableau){
@@ -31,12 +33,16 @@ class VueCoffret {
     
     //methode pour permet d'ajouter une prestation au panier
     public function ajout_prest(){
+        $this->lienhaut = '<a href="../../CatalogueController/affich_prest">Liste des prestations</a><br><br><a href="../../CatalogueController/affich_cat">Liste des categories</a>';
+        $this->lienbas='<a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>';
         $html = 'La prestation n°' . $this->id . ' a été ajoutée au panier !';
         return $html;
     }
     
     //methode qui permet d'afficher le panier de l'uilisateur
     public function affich_coffret(){
+        $this->lienhaut = '<a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>';
+        $this->lienbas='<a href=../../CatalogueController/affich_prest>Continuer mes achats </a><br><br><a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
         $html = '<h2> Votre coffret cadeau </h2> <br><br>';
         $montant = 0;
         foreach($this->tab as $pre){
@@ -45,7 +51,7 @@ class VueCoffret {
             $montant = $montant + $prix;
         }
         
-        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br><t> <a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
+        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br>';
         
         return $html;
     }
@@ -95,18 +101,18 @@ class VueCoffret {
             <title> Ajouté au panier </title>
             <meta charset="utf-8">
         </head>
-        <boby>';
-        $html = $html . '<section>
-                '.
+        <boby>
+            <nav>'.
+                $this->lienhaut.
+            '<nav>'.
+            '<section>'.
                 $content.'
-            </section>';
-        if($this->liens){
-            $html = $html . '<footer>
-                <a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>
-            </footer>';
-        }
-        $html = $html . '</body>
-                        </html>';
+            </section>
+            <footer>'.
+                $this->lienbas.    
+            '</footer>
+        </body>
+        </html>';
         return $html;
     }
 }
