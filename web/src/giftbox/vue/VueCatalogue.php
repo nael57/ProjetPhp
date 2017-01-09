@@ -69,7 +69,7 @@ class VueCatalogue {
         $page = '';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page. '<li><a href=affich_cat/'.$i.'>'.$pre->nom.'</a></li>';
+            $page = $page. '<li><a href=affich_cat/'.$pre->.'.php>'.$pre->nom.'</a></li>';
             $i++;
         }
         
