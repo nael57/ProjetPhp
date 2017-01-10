@@ -1,90 +1,19 @@
 <?php
 
-//definition du namespace et des alias
+//definition du namespace
 namespace giftbox\vue;
-use giftbox\models\Prestation as Prestation;
 
-//Classe vue pour le coffret (panier cadeau)
-//Les tables ne sont jamais modifiees ici
-class VueCoffret {
+//Classe vue pour le catalogue
+class VuePrestation {
 
-    //liens vers d'autres pages flexibles selon ou on se trouve
-    private $lienPrest = '../../../Index.php/CatalogueController/affich_prest';
-    private $lienCat = '../../../Index.php/CatalogueController/affich_cat';
-    //prestations envoyees par le controller
-    private $tab;
-    //num de l'action a effectuer
-    private $sel;
-    //nul ou definissant la prestation a manipuler
-    private $id;
-
-    //contructeur prenant en parametre des prestations a ajouter, afficher,...
-    public function __construct($tableau){
-        $this->tab = $tableau;
-    }
+    //prestation envoyee par le controller
+    private $prestation;
     
-    //methode qui permet d'aiguiller vers differents affichages selon les parametres
-    public function affich_general($selecteur, $id){
-        $this->sel = $selecteur;
-        $this->id = $id;
-        $html = $this->render();
-        return $html;
+    public function __construct( $presta ){
+        $this->prestation = $presta;
     }
-    
-    //methode pour permet d'ajouter une prestation au panier
-    public function ajout_prest(){
-        $html = 'La prestation n°' . $this->id . ' a été ajoutée au panier !';
-        return $html;
-    }
-    
-    //methode qui permet d'afficher le panier de l'uilisateur
-    public function affich_coffret(){
-        $html = '<h2> Votre coffret cadeau </h2> <br><br>';
-        $montant = 0;
-        foreach($this->tab as $pre){
-            $html = $html . $pre . '<br>';
-            $prix = $pre->prix;
-            $montant = $montant + $prix;
-        }
-        
-        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br><t> <a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
-        
-        return $html;
-    }
-    
-    //methode qui permet de confirmer le coffret une fois fini
-    public function confirmer_coffret(){
-        $content = '<form id="f1" method = "post" action = "RedirectionModePaiement.php">
-                        <label for="fNom"> nom : </label>
-                        <input type="text" id="fNom" name="nom" placeholder="<name>" required>
-                        <label for="fPrenom"> prenom : </label>
-                        <input type="text" id="fPrenom" name="prenom" placeholder="<prenom>" required>
-                        <label for="fMail"> mail : </label>
-                        <input type="text" id="fMail" name="mail" placeholder="<mail>" required>
-                        <label for="fComm"> commentaire a envoyer au destinataire : </label>
-                        <input type="text" id="fComm" name="comm" placeholder="<commentaire>" required>
-                        <label for="fMode"> Mode de paiement : </label>
-                        <label>classique</label><input type="radio" name="groupe_radio1" value="classique">
-                        <label>cagnotte</label><input type="radio" name="groupe_radio1" value="cagnotte">';
-        return $content;
-    }
-    
-    //methode permettant l'affichage general de la page et y ajoutant le bon script
-    public function render(){
-        $content = '';
-        switch ($this->sel){
-            case 1 :
-                $content = $this->ajout_prest();
-            break;
-            case 2 :
-                $content = $this->affich_coffret();
-            break;
-            case 3 :
-                $content = $this->confirmer_coffret();
-            break;
-        }
-        
-        $html = '<!DOCTYPE HTML>
+    $html='
+    <!DOCTYPE HTML>
     <html>
     <head>
     <meta charset="utf-8">
@@ -175,8 +104,8 @@ class VueCoffret {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Coffret</h1>
-    <h2>Voici les éléments de votre coffret courant Gift<a href="#">Box</a></h2>
+    <h1>Cagnotte</h1>
+    <h2>Voici la cagnotte permettant de financer le coffret Gift<a href="#">Box</a> numéro 123456. Vous trouverez les objets de la cagnottes ci-dessous</h2>
     </div>
     </div>
     </div>
@@ -185,11 +114,12 @@ class VueCoffret {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">CADEAU 1 avec photo et prix CADEAU 3 avec photo et prix  CADEAU 3 avec photo et prix </div>
-   <div class="row">CADEAU 2 avec photo et prix </div>
-   <div class="row">CADEAU 3 avec photo et prix </div>
-   <div class="row">CADEAU 4 avec photo et prix </div>
-
+    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
+    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
+    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
+    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
+    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
+    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
     </div>
     </div>
     
@@ -198,14 +128,16 @@ class VueCoffret {
     <div class="container">
     <div class="row animate-box">
     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-    <h2>Montant total <!-- AFFICHER LE PRIX DYNAMIQUEMENT LÀ --> </h2>
-    <p>Vous pouvez reglez votre paiement de différentes manières</p>
+    <h2>Pour linstant nous avons récoltés 13451 euros sur les 1233131 nécessaires. On a donc atteint 10% de notre objectif.</h2>
+    <p>Participer à la cagnotte dès maintenant en saisissant un montant en euros<br></p>
     </div>
     </div>
     <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center">
-    <p><a href="#" class="btn btn-default btn-lg">Payer Directement</a></p>
-    <p><a href="#" class="btn btn-default btn-lg">Payer Via Cagnotte</a></p>
+    <div class="col-md-8 col-md-offset-2 text-center"><input type="number" />
+    <p><a href="#" class="btn btn-default btn-lg">Je participe !</a><br>
+    <!-- SI ON ARRIVE DEPUIS LESPACE GESTION ET QUE LA VALEUR DES PARTICIPATIONS EST > AU MONTANT TOTAL ALORS AFFICHER LE BOUTON CI DESSOUS
+    <a href="#" class="btn btn-default btn-lg">Je cloture la cagnotte</a></p> 
+    -->
     </div>
     </div>
     </div>
@@ -291,6 +223,5 @@ class VueCoffret {
 
     </body>
     </html>';
-        return $html;
-    }
+    return $html;
 }
