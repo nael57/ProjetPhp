@@ -377,7 +377,7 @@ class VueIndex {
             <div class="row row-pb-md">
                 <div class="col-md-3 fh5co-widget">
                     <h4>À propos</h4>
-                    <p>GiftBox est une entreprise purement fictive réalisée dans le cadre du projet de notre 3ème semestre de DUT Informatique, toute ressemblance avec une entreprise existante nest pas voulue.</p>
+                    <p>GiftBox est une entreprise purement fictive réalisée dans le cadre du projet de notre 3ème semestre de DUT Informatique, toute ressemblance avec une entreprise existante n\'est pas voulue.</p>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Catalogue</h4>
@@ -387,7 +387,7 @@ class VueIndex {
                 </div>
 
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-                    <h4>Laventure GiftBox</h4>
+                    <h4>L\'aventure GiftBox</h4>
                     <ul class="fh5co-footer-links">
                         <li><a href="#">Le concept</a></li>
                         <li><a href="#">Qui sommes nous</a></li>
@@ -397,10 +397,10 @@ class VueIndex {
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Nos partenaires</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">IUT Charlemagne</a></li>
+                        <li><a href="http://iut-charlemagne.univ-lorraine.fr/">IUT Charlemagne</a></li>
                         <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-                        <li><a href="#">OpenClassroom</a></li>
-                        <li><a href="#">Youtube</a></li>
+                        <li><a href="https://openclassrooms.com/">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr">Youtube</a></li>
                     </ul>
                 </div>
 
