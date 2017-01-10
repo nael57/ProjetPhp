@@ -198,7 +198,7 @@ class VueCatalogue {
     <li><a href="contact.html">Qui sommes nous ?</a></li>
     <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
     <li class="has-dropdown">
-    <a href="#"><span>Panier</span></a>
+    <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
     <li><a href="#">Votre coffret est actuellement vide !</a></li>
     <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
