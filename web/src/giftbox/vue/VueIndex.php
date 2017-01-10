@@ -137,7 +137,7 @@ class VueIndex {
                         <div class="display-tc animate-box" data-animate-effect="fadeIn">
                             <h1>GiftBox, offrez un moment de bonheur !</h1>
                             <h2>Offrez un coffret de <a href="#">rêve</a> à vos proches</h2>
-                            <p><a class="btn btn-primary btn-lg btn-learn" href="#">Quel est le concept ?</a> <a class="btn btn-primary btn-lg popup-vimeo btn-video" href="https://vimeo.com/channels/staffpicks/93951774"><i class="icon-play"></i>Voir notre catalogue</a></p>
+                            <p><a class="btn btn-primary btn-lg btn-learn" href="LIEN POUR PRESENTER CONCEPT">Quel est le concept ?</a> <a class="btn btn-primary btn-lg popup-vimeo btn-video"METTRE LE LIEN CATALOGUE"><i class="icon-play"></i>Voir notre catalogue</a></p>
                         </div>
                     </div>
                 </div>
