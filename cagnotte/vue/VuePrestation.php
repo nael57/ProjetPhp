@@ -1,93 +1,23 @@
 <?php
 
-//definition du namespace et des alias
+//definition du namespace
 namespace giftbox\vue;
-use giftbox\models\Prestation as Prestation;
 
-//Classe vue pour le coffret (panier cadeau)
-//Les tables ne sont jamais modifiees ici
-class VueCoffret {
+//Classe vue pour le catalogue
+class VuePrestation {
 
-    //liens vers d'autres pages flexibles selon ou on se trouve
-    private $lienPrest = '../../../Index.php/CatalogueController/affich_prest';
-    private $lienCat = '../../../Index.php/CatalogueController/affich_cat';
-    //prestations envoyees par le controller
-    private $tab;
-    //num de l'action a effectuer
-    private $sel;
-    //nul ou definissant la prestation a manipuler
-    private $id;
+    //prestation envoyee par le controller
+    private $prestation;
+    
+    public function __construct( $presta ){
+        $this->prestation = $presta;
+    }
+    $html='
 
-    //contructeur prenant en parametre des prestations a ajouter, afficher,...
-    public function __construct($tableau){
-        $this->tab = $tableau;
-    }
-    
-    //methode qui permet d'aiguiller vers differents affichages selon les parametres
-    public function affich_general($selecteur, $id){
-        $this->sel = $selecteur;
-        $this->id = $id;
-        $html = $this->render();
-        return $html;
-    }
-    
-    //methode pour permet d'ajouter une prestation au panier
-    public function ajout_prest(){
-        $html = 'La prestation n°' . $this->id . ' a été ajoutée au panier !';
-        return $html;
-    }
-    
-    //methode qui permet d'afficher le panier de l'uilisateur
-    public function affich_coffret(){
-        $html = '<h2> Votre coffret cadeau </h2> <br><br>';
-        $montant = 0;
-        foreach($this->tab as $pre){
-            $html = $html . $pre . '<br>';
-            $prix = $pre->prix;
-            $montant = $montant + $prix;
-        }
-        
-        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br><t> <a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
-        
-        return $html;
-    }
-    
-    //methode qui permet de confirmer le coffret une fois fini
-    public function confirmer_coffret(){
-        $content = '<form id="f1" method = "post" action = "RedirectionModePaiement.php">
-                        <label for="fNom"> nom : </label>
-                        <input type="text" id="fNom" name="nom" placeholder="<name>" required>
-                        <label for="fPrenom"> prenom : </label>
-                        <input type="text" id="fPrenom" name="prenom" placeholder="<prenom>" required>
-                        <label for="fMail"> mail : </label>
-                        <input type="text" id="fMail" name="mail" placeholder="<mail>" required>
-                        <label for="fComm"> commentaire a envoyer au destinataire : </label>
-                        <input type="text" id="fComm" name="comm" placeholder="<commentaire>" required>
-                        <label for="fMode"> Mode de paiement : </label>
-                        <label>classique</label><input type="radio" name="groupe_radio1" value="classique">
-                        <label>cagnotte</label><input type="radio" name="groupe_radio1" value="cagnotte">';
-        return $content;
-    }
-    
-    //methode permettant l'affichage general de la page et y ajoutant le bon script
-    public function render(){
-        $content = '';
-        switch ($this->sel){
-            case 1 :
-                $content = $this->ajout_prest();
-            break;
-            case 2 :
-                $content = $this->affich_coffret();
-            break;
-            case 3 :
-                $content = $this->confirmer_coffret();
-            break;
-        }
-        
-        $html = '<!DOCTYPE HTML>
+    <!DOCTYPE HTML>
     <html>
     <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GiftBox, offrez du rêve</title>
 
@@ -148,7 +78,7 @@ class VueCoffret {
     <li class="has-dropdown" >
     <a href="catalogue.php" >Catalogue</a>
     <ul class="dropdown">
-    '.$this->affich_liste_cat().'
+    <!--'.$this->affich_liste_cat().'-->
     </ul>
     </li>
     <li><a href="contact.html">Qui sommes nous ?</a></li>
@@ -175,8 +105,8 @@ class VueCoffret {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Coffret</h1>
-    <h2>Voici les éléments de votre coffret courant Gift<a href="#">Box</a></h2>
+    <h1>'.$prestation->nom.'</h1>
+    <h2>METTRE LA PHOTO ICI</h2>
     </div>
     </div>
     </div>
@@ -185,33 +115,14 @@ class VueCoffret {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">CADEAU 1 avec photo et prix CADEAU 3 avec photo et prix  CADEAU 3 avec photo et prix </div>
-   <div class="row">CADEAU 2 avec photo et prix </div>
-   <div class="row">CADEAU 3 avec photo et prix </div>
-   <div class="row">CADEAU 4 avec photo et prix </div>
-
-    </div>
-    </div>
-    
-    <div id="fh5co-started" style="background-image:url(images/img_bg_2.jpg);">
-    <div class="overlay"></div>
-    <div class="container">
-    <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-    <h2>Montant total <!-- AFFICHER LE PRIX DYNAMIQUEMENT LÀ --> </h2>
-    <p>Vous pouvez reglez votre paiement de différentes manières</p>
-    </div>
-    </div>
-    <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center">
-    <p><a href="#" class="btn btn-default btn-lg">Payer Directement</a></p>
-    <p><a href="#" class="btn btn-default btn-lg">Payer Via Cagnotte</a></p>
-    </div>
-    </div>
+    <div class="row">'.$prestation->description.'</div>
+    <div class="row">'.$prestation->prix.'</div>
+    <div class="row">METTRE LAJOUT AU PANIER</div>
     </div>
     </div>
 
-     <footer id="fh5co-footer" role="contentinfo">
+
+ <footer id="fh5co-footer" role="contentinfo">
         <div class="container">
             <div class="row row-pb-md">
                 <div class="col-md-3 fh5co-widget">
@@ -291,6 +202,5 @@ class VueCoffret {
 
     </body>
     </html>';
-        return $html;
-    }
+    return $html;
 }

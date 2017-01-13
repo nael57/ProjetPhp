@@ -1,90 +1,134 @@
 <?php
 
-//definition du namespace et des alias
+//definition du namespace
 namespace giftbox\vue;
-use giftbox\models\Prestation as Prestation;
+use giftbox\models\Categorie as Categorie;
 
-//Classe vue pour le coffret (panier cadeau)
-//Les tables ne sont jamais modifiees ici
-class VueCoffret {
-
-    //liens vers d'autres pages flexibles selon ou on se trouve
-    private $lienPrest = '../../../Index.php/CatalogueController/affich_prest';
-    private $lienCat = '../../../Index.php/CatalogueController/affich_cat';
-    //prestations envoyees par le controller
+//Classe vue pour le catalogue
+class VueCatalogue {
+    
+    //prestations ou categories envoyees par le controller
     private $tab;
     //num de l'action a effectuer
     private $sel;
-    //nul ou definissant la prestation a manipuler
+    //nul ou definissant la categorie ou la prestation a afficher sinon
     private $id;
-
-    //contructeur prenant en parametre des prestations a ajouter, afficher,...
-    public function __construct($tableau){
+    //liens vers d'autres pages flexibles selon ou on se trouve
+    private $lienPrest;
+    private $lienCat;
+    private $lienAccueil;
+    
+    //contructeur prenant en parametre des prestations ou des categories
+    public function __construct( $tableau ){
         $this->tab = $tableau;
     }
     
     //methode qui permet d'aiguiller vers differents affichages selon les parametres
-    public function affich_general($selecteur, $id){
+    public function affich_general( $selecteur, $id ){
         $this->sel = $selecteur;
         $this->id = $id;
         $html = $this->render();
         return $html;
     }
     
-    //methode pour permet d'ajouter une prestation au panier
-    public function ajout_prest(){
-        $html = 'La prestation n°' . $this->id . ' a été ajoutée au panier !';
-        return $html;
+    //methode permettant d'afficher la liste des prestations
+    private function affich_liste_prest(){
+        $page = '<h1> Liste des prestations </h1> <ul> ';
+        foreach($this->tab as $pre){
+            $page=$page.'<div class="col-lg-4 col-md-4">
+            <div class="fh5co-blog animate-box">
+            <a href="#"><img class="img-responsive" src="images/'.$pre->img.'"alt=""></a>
+            <div class="blog-text">
+            <h3><a href="#">'.$pre->nom.'</a></h3>
+            <span class="posted_on">'.$pre->prix.' €</span>
+            <a href="#" class="btn btn-primary">Lire plus</a>
+            </div> 
+            </div>
+            </div>';
+        }
+        return $page;
+
     }
     
-    //methode qui permet d'afficher le panier de l'uilisateur
-    public function affich_coffret(){
-        $html = '<h2> Votre coffret cadeau </h2> <br><br>';
-        $montant = 0;
+    //methode permettant d'afficher une prestation en detail
+    private function affich_prest(){
+        $page = '<h1> Description de la prestation n°' . $this->id . '</h1>';
+        $page = $page . '<br> ' . 'Nom : ' . $this->tab->nom . ' Description : ' . $this->tab->descr . '  Prix : ' . $this->tab->prix . '€ ' . '<br><br>' . '<img src="../../../images/'.$this->tab->img.'">' . '</ul><br><br><a href=../../CoffretController/ajout_prest/' . $this->id . '> Ajouter cette prestation a ma commande </a>';
+        
+        $this->lienPrest = '../../CatalogueController/affich_prest';
+        $this->lienCat = '../../CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
+        
+        return $page;
+    }
+   
+    //methode premettant d'afficher la liste des categories
+    private function affich_liste_cat(){
+        $cat = Categorie::get();
+        $this->tab=$cat;
+        $page = '';
+        $i = 1;
         foreach($this->tab as $pre){
-            $html = $html . $pre . '<br>';
-            $prix = $pre->prix;
-            $montant = $montant + $prix;
+            $page = $page. '<li><a href=affich_cat/'.$pre->.'.php>'.$pre->nom.'</a></li>';
+            $i++;
         }
         
-        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br><t> <a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
+        $this->lienPrest = '../../Index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../Index.php/CatalogueController/affich_cat';
+        $this->lienAccueil = '../..';
         
-        return $html;
+        return $page;
+        
     }
     
-    //methode qui permet de confirmer le coffret une fois fini
-    public function confirmer_coffret(){
-        $content = '<form id="f1" method = "post" action = "RedirectionModePaiement.php">
-                        <label for="fNom"> nom : </label>
-                        <input type="text" id="fNom" name="nom" placeholder="<name>" required>
-                        <label for="fPrenom"> prenom : </label>
-                        <input type="text" id="fPrenom" name="prenom" placeholder="<prenom>" required>
-                        <label for="fMail"> mail : </label>
-                        <input type="text" id="fMail" name="mail" placeholder="<mail>" required>
-                        <label for="fComm"> commentaire a envoyer au destinataire : </label>
-                        <input type="text" id="fComm" name="comm" placeholder="<commentaire>" required>
-                        <label for="fMode"> Mode de paiement : </label>
-                        <label>classique</label><input type="radio" name="groupe_radio1" value="classique">
-                        <label>cagnotte</label><input type="radio" name="groupe_radio1" value="cagnotte">';
-        return $content;
+    //methode permettant d'afficher les prestations d'une cateogie en particulier
+    private function affich_liste_prest_par_cat(){
+        $cat = Categorie::where('id', '=', $this->id)->first();
+        $nom = $cat->nom;
+
+        $page = '<h1> Prestations de la catégorie: '.$nom.'</h1> <ul>';
+        $i = 1;
+        foreach($this->tab as $pre){
+            $page=$page.'<div class="col-lg-4 col-md-4">
+            <div class="fh5co-blog animate-box">
+            <a href="#"><img class="img-responsive" src="images/'.$pre->img.'"alt=""></a>
+            <div class="blog-text">
+            <h3><a href="#">'.$pre->nom.'</a></h3>
+            <span class="posted_on">'.$pre->prix.' €</span>
+            <a href="#" class="btn btn-primary">Lire plus</a>
+            </div> 
+            </div>
+            </div>';
+            $i++;
+        }
+        
+        $this->lienPrest = '../../CatalogueController/affich_prest';
+        $this->lienCat = '../../CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
+        
+        return $page;
     }
     
-    //methode permettant l'affichage general de la page et y ajoutant le bon script
-    public function render(){
-        $content = '';
-        switch ($this->sel){
+    //methode qui permet un affichage general des pages en y ajoutant le bon script selon l'action demandee par l'utilisateur
+    private function render(){
+       $content=0;
+        switch ($this->sel) {
             case 1 :
-                $content = $this->ajout_prest();
+                $content = $this->affich_liste_prest();
             break;
             case 2 :
-                $content = $this->affich_coffret();
+                $content = $this->affich_prest();
             break;
             case 3 :
-                $content = $this->confirmer_coffret();
+                $content = $this->affich_liste_cat();
+            break;
+            case 4 :
+                $content = $this->affich_liste_prest_par_cat();
             break;
         }
         
-        $html = '<!DOCTYPE HTML>
+         $html = '
+    <!DOCTYPE HTML>
     <html>
     <head>
     <meta charset="utf-8">
@@ -175,8 +219,8 @@ class VueCoffret {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Coffret</h1>
-    <h2>Voici les éléments de votre coffret courant Gift<a href="#">Box</a></h2>
+    <h1>Catalogue</h1>
+    <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a></h2>
     </div>
     </div>
     </div>
@@ -185,11 +229,7 @@ class VueCoffret {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">CADEAU 1 avec photo et prix CADEAU 3 avec photo et prix  CADEAU 3 avec photo et prix </div>
-   <div class="row">CADEAU 2 avec photo et prix </div>
-   <div class="row">CADEAU 3 avec photo et prix </div>
-   <div class="row">CADEAU 4 avec photo et prix </div>
-
+    <div class="row">'.$content.'</div>
     </div>
     </div>
     
@@ -198,14 +238,13 @@ class VueCoffret {
     <div class="container">
     <div class="row animate-box">
     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-    <h2>Montant total <!-- AFFICHER LE PRIX DYNAMIQUEMENT LÀ --> </h2>
-    <p>Vous pouvez reglez votre paiement de différentes manières</p>
+    <h2>Lets Get Started</h2>
+    <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
     </div>
     </div>
     <div class="row animate-box">
     <div class="col-md-8 col-md-offset-2 text-center">
-    <p><a href="#" class="btn btn-default btn-lg">Payer Directement</a></p>
-    <p><a href="#" class="btn btn-default btn-lg">Payer Via Cagnotte</a></p>
+    <p><a href="#" class="btn btn-default btn-lg">Create A Free Course</a></p>
     </div>
     </div>
     </div>
@@ -290,7 +329,9 @@ class VueCoffret {
     <script src="js/main.js"></script>
 
     </body>
-    </html>';
+    </html>
+    ';
+        
         return $html;
     }
 }

@@ -62,7 +62,7 @@ class VueCoffret {
     //methode qui permet de confirmer le coffret une fois fini
     public function confirmer_coffret(){
         $content = '<h2> Confirmation de votre commande </h2><br><br>
-        <form id="f1" method = "post" action = "">
+        <form id="f1" method = "post" action = "RedirectionModePaiement.php">
                 <label for="fNom"> nom : </label>
                 <input type="text" id="fNom" name="nom" placeholder="<obligatoire>" required><br><br>
                 <label for="fPrenom"> prenom : </label>
@@ -72,8 +72,8 @@ class VueCoffret {
                 <label for="fComm"> commentaire a envoyer au destinataire : </label>
                 <input type="text" id="fComm" name="comm" placeholder="<obligatoire>" required><br><br>
                 <label for="fMode"> Mode de paiement : </label>
-                <label>classique</label><input type="radio" name="groupe_radio1" value=1>
-                <label>cagnotte</label><input type="radio" mane="groupe_radio1" value=2><br><br>
+                <label>classique</label><input type="radio" name="groupe_radio1" value="classique">
+                <label>cagnotte</label><input type="radio" name="groupe_radio1" value="cagnotte"><br><br>
                 <button type="submit" name="valider" value="valid">valider</button>
         </form>';
         return $content;
