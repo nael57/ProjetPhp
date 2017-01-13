@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c35e394a15f13f94eee01b82841063b",
-    "content-hash": "994e51971168ef4be84aa7ee96963793",
+    "hash": "44eb8a7b7f1e96ce507fe37679893eaf",
+    "content-hash": "ef0c46cada3029b9aad8f6fa9962d4d4",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -375,23 +375,24 @@
         },
         {
             "name": "slim/slim",
-            "version": "2.6.2",
+            "version": "2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "20a02782f76830b67ae56a5c08eb1f563c351a37"
+                "reference": "9224ed81ac1c412881e8d762755e3d76ebf580c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/20a02782f76830b67ae56a5c08eb1f563c351a37",
-                "reference": "20a02782f76830b67ae56a5c08eb1f563c351a37",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/9224ed81ac1c412881e8d762755e3d76ebf580c0",
+                "reference": "9224ed81ac1c412881e8d762755e3d76ebf580c0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "suggest": {
-                "ext-mcrypt": "Required for HTTP cookie encryption"
+                "ext-mcrypt": "Required for HTTP cookie encryption",
+                "phpseclib/mcrypt_compat": "Polyfil for mcrypt extension"
             },
             "type": "library",
             "autoload": {
@@ -417,7 +418,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2015-03-08 18:41:17"
+            "time": "2017-01-07 12:21:41"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -480,16 +481,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v3.2.0",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "64ab6fc0b42e5386631f408e6adcaaff8eee5ba1"
+                "reference": "6520f3d4cce604d9dd1e86cac7af954984dd9bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/64ab6fc0b42e5386631f408e6adcaaff8eee5ba1",
-                "reference": "64ab6fc0b42e5386631f408e6adcaaff8eee5ba1",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/6520f3d4cce604d9dd1e86cac7af954984dd9bda",
+                "reference": "6520f3d4cce604d9dd1e86cac7af954984dd9bda",
                 "shasum": ""
             },
             "require": {
@@ -540,7 +541,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:17:59"
+            "time": "2017-01-02 20:32:22"
         }
     ],
     "packages-dev": [],
@@ -550,7 +551,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.4"
     },
     "platform-dev": []
 }
