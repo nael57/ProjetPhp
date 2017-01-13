@@ -95,7 +95,7 @@ class VueCatalogue {
             <div class="blog-text">
             <h3><a href="#">'.$pre->nom.'</a></h3>
             <span class="posted_on">'.$pre->prix.' €</span>
-            <a href="#" class="btn btn-primary">Lire plus</a>
+            <a href="../../../index.php/PrestationController/affich_prest/'.$pre->id.'" class="btn btn-primary">Lire plus</a>
             </div> 
             </div>
             </div>';

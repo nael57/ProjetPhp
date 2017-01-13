@@ -12,6 +12,7 @@ use giftbox\vue\VueCatalogue as VueCatalogue;
 use Illuminate\Database\Capsule\Manager as DB;
 use giftbox\controller\CatalogueController as CatalogueCon;
 use giftbox\controller\CoffretController as CoffretCon;
+use giftbox\controller\PrestationController as PrestaCon;
 use giftbox\controller\IndexController as Index;
 
 //creation de la connexion
@@ -27,6 +28,14 @@ $slim->get('/', function(){
     $html = $c->affichage();
     echo $html;
 });
+
+//on demande ici de decrire une prestation selon l'id passé
+$slim->get('/PrestationController/affich_prest/:id', function($id){
+    $c = new PrestaCon();
+    $html = $c->affich_prest($id);
+    echo $html;
+});
+
 //on demande ici de lister les prestations
 $slim->get('/CatalogueController/affich_prest', function(){
     $c = new CatalogueCon();

@@ -5,7 +5,7 @@ namespace giftbox\controller;
 use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
 use giftbox\vue\VueCatalogue as VueCatalogue;
-
+use giftbox\vue\VuePrestation as VuePrestation;
 //Classe controller pour le catalogue
 class PrestationController {
     
@@ -15,8 +15,9 @@ class PrestationController {
             $liste = Prestation::where('id', '=', $id)->first();
             $v = new VuePrestation($liste);
             $html = $v->affich_general(1, $id);
-        }
         return $html;
     }
+
+
 }
     
