@@ -12,6 +12,24 @@ class VuePrestation {
     public function __construct( $presta ){
         $this->prestation = $presta;
     }
+    
+    private function affich_liste_cat(){
+        $cat = Categorie::get();
+        $this->tab=$cat;
+        $page = '';
+        $i = 1;
+        foreach($this->tab as $pre){
+            $page = $page. '<li><a href="index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $i++;
+        }
+        
+        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
+        
+        return $page;
+        
+    }
     $html='
 
     <!DOCTYPE HTML>

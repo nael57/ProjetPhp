@@ -4,7 +4,7 @@
 namespace giftbox\vue;
 
 //Classe vue pour le catalogue
-class VuePrestation {
+class VueCagnotte {
 
     //prestation envoyee par le controller
     private $prestation;
