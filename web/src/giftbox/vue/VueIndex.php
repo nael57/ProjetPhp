@@ -23,12 +23,12 @@ class VueIndex {
         $page = '';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'.">'.$pre->nom.'</a></li>';
+            $page = $page. '<li><a href="index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
         
-        $this->lienPrest = '../../Index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../Index.php/CatalogueController/affich_cat';
+        $this->lienPrest = '../../index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../index.php/CatalogueController/affich_cat';
         $this->lienAccueil = '../..';
         
         return $page;
@@ -106,7 +106,7 @@ class VueIndex {
                             <li class="active"><a href="index.html">Accueil</a></li>
                             <li><a href="courses.html">Concept</a></li>
                             <li class="has-dropdown">
-                                <a href="catalogue.php">Catalogue</a>
+                                <a href="index.php/CatalogueController/affich_prest">Catalogue</a>
                                 <ul class="dropdown">
                                     '.$this->affich_liste_cat().'
                                 </ul>
