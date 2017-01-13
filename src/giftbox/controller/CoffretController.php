@@ -60,4 +60,5 @@ class CoffretController {
         $html = $v->affich_general(3, null);
         return $html;
     }
+
 }

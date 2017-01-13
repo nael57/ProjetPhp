@@ -79,5 +79,6 @@ $slim->get('/CoffretController/confirmer_coffret', function(){
     echo $html;
 });
 
+
 //on traite ici la requète courante
 $slim->run();
