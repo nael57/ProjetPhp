@@ -7,12 +7,18 @@ namespace giftbox\vue;
 class VuePrestation {
 
     //prestation envoyee par le controller
-    private $prestation;
+    private $prestation,$sel,$id;
     
     public function __construct( $presta ){
         $this->prestation = $presta;
     }
-    
+    public function affich_general( $selecteur, $id ){
+        $this->sel = $selecteur;
+        $this->id = $id;
+        $html = $this->render();
+        return $html;
+    }
+
     private function affich_liste_cat(){
         $cat = Categorie::get();
         $this->tab=$cat;
