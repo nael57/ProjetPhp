@@ -205,7 +205,7 @@ class VueCatalogue {
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="../../index.php"><span>Connexion</span></a></li>
+    <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
@@ -413,7 +413,7 @@ class VueCatalogue {
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
+    <li class="btn-cta"><a href="../../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">

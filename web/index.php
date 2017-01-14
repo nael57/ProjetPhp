@@ -14,6 +14,7 @@ use giftbox\controller\CatalogueController as CatalogueCon;
 use giftbox\controller\CoffretController as CoffretCon;
 use giftbox\controller\PrestationController as PrestaCon;
 use giftbox\controller\IndexController as Index;
+use giftbox\controller\ConnexionController as ConnexionCon;
 
 //creation de la connexion
 $db = new DB();
@@ -82,6 +83,12 @@ $slim->get('/CoffretController/affich_coffret', function(){
 $slim->get('/CoffretController/confirmer_coffret', function(){
     $c = new CoffretCon();
     $html = $c->confirmer_coffret();
+    echo $html;
+});
+
+$slim->get('/ConnexionController/affich', function(){
+    $c = new ConnexionCon();
+    $html = $c->affich();
     echo $html;
 });
 
