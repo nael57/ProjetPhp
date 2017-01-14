@@ -73,7 +73,6 @@ class VueCagnotte {
     <div class="col-xs-11 text-right menu-1">
     <ul>
     <li ><a href="index.php">Accueil</a></li>
-    <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
     <a href="catalogue.php" >Catalogue</a>
     <ul class="dropdown">

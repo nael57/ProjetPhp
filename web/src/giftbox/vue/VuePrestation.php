@@ -104,7 +104,6 @@ class VuePrestation {
     <div class="col-xs-11 text-right menu-1">
     <ul>
     <li ><a href="../../../">Accueil</a></li>
-    <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
     <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">

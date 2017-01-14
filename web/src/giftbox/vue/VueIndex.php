@@ -104,7 +104,6 @@ class VueIndex {
                     <div class="col-xs-11 text-right menu-1">
                         <ul>
                             <li class="active"><a href="#">Accueil</a></li>
-                            <li><a href="courses.html">Concept</a></li>
                             <li class="has-dropdown">
                                 <a href="index.php/CatalogueController/affich_prest">Catalogue</a>
                                 <ul class="dropdown">
@@ -137,7 +136,7 @@ class VueIndex {
                         <div class="display-tc animate-box" data-animate-effect="fadeIn">
                             <h1>GiftBox, offrez un moment de bonheur !</h1>
                             <h2>Offrez un coffret de <a href="#">rêve</a> à vos proches</h2>
-                            <p><a class="btn btn-primary btn-lg btn-learn" href="LIEN POUR PRESENTER CONCEPT">Quel est le concept ?</a> <a class="btn btn-primary" href="index.php/CatalogueController/affich_prest"><i class="icon-book"></i>Voir notre catalogue</a></p>
+                            <p><a class="btn btn-primary" href="index.php/CatalogueController/affich_prest"><i class="icon-book"></i>Voir notre catalogue</a></p>
                         </div>
                     </div>
                 </div>
