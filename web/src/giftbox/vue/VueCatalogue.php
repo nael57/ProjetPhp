@@ -230,6 +230,8 @@ class VueCatalogue {
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
     <h1>Catalogue</h1>
     <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a></h2>
+    <a href="#" class="btn btn-lg">Trier par prix décroissant</a>
+    <a href="#" class="btn btn-lg">Trier par prix croissant</a>
     </div>
     </div>
     </div>
@@ -438,6 +440,8 @@ class VueCatalogue {
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
     <h1>Catalogue</h1>
     <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a> provenant de la catégorie ci dessous </h2>
+    <a href="#" class="btn btn-lg">Trier par prix décroissant</a>
+    <a href="#" class="btn btn-lg">Trier par prix croissant</a>
     </div>
     </div>
     </div>
