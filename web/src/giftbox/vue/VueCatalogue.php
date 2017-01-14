@@ -35,6 +35,7 @@ class VueCatalogue {
     private function affich_liste_prest(){
         $page = '<h1> Liste des prestations </h1> <ul> ';
         foreach($this->tab as $pre){
+            $cat = Categorie::where('id', '=', $pre->cat_id)->first();
             $page=$page.'<div class="col-lg-4 col-md-4">
             <div class="fh5co-blog animate-box">
             <a href="#"><img class="img-responsive" src="../../images/'.$pre->img.'"alt=""></a>
@@ -42,6 +43,7 @@ class VueCatalogue {
             <h3><a href="#">'.$pre->nom.'</a></h3>
             <span class="posted_on">'.$pre->prix.' €</span>
             <a href="../../index.php/PrestationController/affich_prest/'.$pre->id.'" class="btn btn-primary">Lire plus</a>
+            <br> Categorie: '.$cat->nom.'
             </div> 
             </div>
             </div>';
@@ -94,6 +96,7 @@ class VueCatalogue {
         $page = '<h1> Prestations de la catégorie: '.$nom.'</h1> <ul>';
         $i = 1;
         foreach($this->tab as $pre){
+            $cat = Categorie::where('id', '=', $pre->cat_id)->first();
             $page=$page.'<div class="col-lg-4 col-md-4">
             <div class="fh5co-blog animate-box">
             <a href="#"><img class="img-responsive" src="../../../images/'.$pre->img.'"alt=""></a>
@@ -101,6 +104,7 @@ class VueCatalogue {
             <h3><a href="#">'.$pre->nom.'</a></h3>
             <span class="posted_on">'.$pre->prix.' €</span>
             <a href="../../../index.php/PrestationController/affich_prest/'.$pre->id.'" class="btn btn-primary">Lire plus</a>
+             <br> Categorie: '.$cat->nom.'
             </div> 
             </div>
             </div>';
@@ -201,7 +205,7 @@ class VueCatalogue {
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
+    <li class="btn-cta"><a href="../../index.php"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
