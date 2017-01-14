@@ -188,7 +188,7 @@ class VueCatalogue {
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
-    <li><a href="#">Votre coffret est actuellement vide !</a></li>
+    <li><a href="#">Voici le contenu actuel du coffret :</a></li>
     <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
     </ul>
     </li>
@@ -416,7 +416,7 @@ class VueCatalogue {
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
     <h1>Catalogue</h1>
-    <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a></h2>
+    <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a> provenant de la catégorie ci dessous </h2>
     </div>
     </div>
     </div>

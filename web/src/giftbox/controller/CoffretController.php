@@ -31,10 +31,15 @@ class CoffretController {
         }
         else{
             $con = null;
-            echo 'la prestation a deja ete ajoutee';
         }
-        $v = new VueCoffret($con);
-        $html = $v->affich_general(1, $id);
+        if($con == null){
+            $v = new VueCoffret($con);
+            $html= $v->affich_general(4,$id);
+
+        }else{
+            $v = new VueCoffret($con);
+            $html = $v->affich_general(1, $id);
+        }
         return $html;
     }
     

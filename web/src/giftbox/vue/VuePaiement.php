@@ -6,7 +6,7 @@ use giftbox\models\Categorie as Categorie;
 
 
 //Classe vue pour le catalogue
-class VuePrestation {
+class VuePaiement {
 
     //prestation envoyee par le controller
     private $prestation,$sel,$id;
@@ -42,9 +42,7 @@ class VuePrestation {
     private function render()
     {
         $content = $this->affich_liste_cat();
-        $html = '
-
-    <!DOCTYPE HTML>
+        $html = ' <!DOCTYPE HTML>
     <html>
     <head>
     <meta charset="utf-8" />
@@ -135,8 +133,7 @@ class VuePrestation {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Nous vous présentons <br>' . $this->prestation->nom . '</h1>
-    <h2><img class="img-responsive" src="../../../images/'.$this->prestation->img.'"alt=""></h2>
+    <h1>Voici, ci dessous le contenu de votre coffret</h1>
     </div>
     </div>
     </div>
@@ -145,9 +142,9 @@ class VuePrestation {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">Voici la description détaillée de cette prestation: <br>' . $this->prestation->descr . '<br></div><br>
-    <div class="row">Cette prestation coûte:<strong> ' . $this->prestation->prix . ' euros</strong><br></div><br>
-    <div class="row"><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Ajouter au panier</a></div>
+    '..'<-----AFFICHER LE COFFRET COURANT ENTRE CES POINTS
+    <div class="row"></div>
+    <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>
     </div>
     </div>
 

@@ -116,7 +116,7 @@ class VueIndex {
                             <li class="has-dropdown">
                                 <a href="#"><span>Coffret</span></a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Votre coffret est actuellement vide !</a></li>
+                                        <li><a href="#">Voici le contenu actuel du coffret :</a></li>
                                         <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
                                     </ul>
                             </li>
