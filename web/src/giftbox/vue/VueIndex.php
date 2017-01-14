@@ -99,11 +99,11 @@ class VueIndex {
             <div class="container">
                 <div class="row">
                     <div class="col-xs-1">
-                        <div id="fh5co-logo"><a href="index.html">Gift<span>Box</span></a></div>
+                        <div id="fh5co-logo"><a href="#">Gift<span>Box</span></a></div>
                     </div>
                     <div class="col-xs-11 text-right menu-1">
                         <ul>
-                            <li class="active"><a href="index.html">Accueil</a></li>
+                            <li class="active"><a href="#">Accueil</a></li>
                             <li><a href="courses.html">Concept</a></li>
                             <li class="has-dropdown">
                                 <a href="index.php/CatalogueController/affich_prest">Catalogue</a>
@@ -111,7 +111,7 @@ class VueIndex {
                                     '.$this->affich_liste_cat().'
                                 </ul>
                             </li>
-                            <li><a href="contact.html">Qui sommes nous ?</a></li>
+                            <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
                             <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
                             <li class="has-dropdown">
                                 <a href="#"><span>Coffret</span></a>
@@ -137,7 +137,7 @@ class VueIndex {
                         <div class="display-tc animate-box" data-animate-effect="fadeIn">
                             <h1>GiftBox, offrez un moment de bonheur !</h1>
                             <h2>Offrez un coffret de <a href="#">rêve</a> à vos proches</h2>
-                            <p><a class="btn btn-primary btn-lg btn-learn" href="LIEN POUR PRESENTER CONCEPT">Quel est le concept ?</a> <a class="btn btn-primary btn-lg popup-vimeo btn-video"METTRE LE LIEN CATALOGUE"><i class="icon-play"></i>Voir notre catalogue</a></p>
+                            <p><a class="btn btn-primary btn-lg btn-learn" href="LIEN POUR PRESENTER CONCEPT">Quel est le concept ?</a> <a class="btn btn-primary" href="index.php/CatalogueController/affich_prest"><i class="icon-book"></i>Voir notre catalogue</a></p>
                         </div>
                     </div>
                 </div>
@@ -290,7 +290,7 @@ class VueIndex {
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center animate-box">
-                    <p><a class="btn btn-primary btn-lg btn-learn" href="#">Acceder au catalogue complet</a></p>
+                    <p><a class="btn btn-primary btn-lg btn-learn" href="index.php/CatalogueController/affich_prest">Acceder au catalogue complet</a></p>
                 </div>
             </div>
         </div>

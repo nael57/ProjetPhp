@@ -27,7 +27,7 @@ class VuePrestation {
         $page = '';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page. '<li><a href="index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $page = $page. '<li><a href="../../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
         
@@ -99,19 +99,19 @@ class VuePrestation {
     <div class="container">
     <div class="row">
     <div class="col-xs-1">
-    <div id="fh5co-logo"><a href="index.php">Gift<span>Box</span></a></div>
+    <div id="fh5co-logo"><a href="#">Gift<span>Box</span></a></div>
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="index.php">Accueil</a></li>
+    <li ><a href="../../../">Accueil</a></li>
     <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
-    <a href="catalogue.php" >Catalogue</a>
+    <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
-    <!--' . $this->affich_liste_cat() . '-->
+    '.$content.'
     </ul>
     </li>
-    <li><a href="contact.html">Qui sommes nous ?</a></li>
+    <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
     <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
@@ -135,7 +135,7 @@ class VuePrestation {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>' . $this->prestation->nom . '</h1>
+    <h1>Nous vous présentons <br>' . $this->prestation->nom . '</h1>
     <h2><img class="img-responsive" src="../../../images/'.$this->prestation->img.'"alt=""></h2>
     </div>
     </div>
@@ -145,9 +145,9 @@ class VuePrestation {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">' . $this->prestation->description . '</div>
-    <div class="row">' . $this->prestation->prix . '</div>
-    <div class="row">METTRE LAJOUT AU PANIER</div>
+    <div class="row">Voici la description détaillée de cette prestation: <br>' . $this->prestation->descr . '<br></div><br>
+    <div class="row">Cette prestation coûte:<strong> ' . $this->prestation->prix . ' euros</strong><br></div><br>
+    <div class="row"><a class="btn btn-primary btn-lg btn-learn" href="LIEN POUR AJOUTER AU PANIER">Ajouter au panier</a></div>
     </div>
     </div>
 
