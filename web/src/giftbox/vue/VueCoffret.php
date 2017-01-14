@@ -58,6 +58,7 @@ class VueCoffret {
     
     //methode qui permet d'afficher le panier de l'uilisateur
     public function affich_coffret(){
+
         $html = '';
         $montant = 0;
         foreach($this->tab as $pre){
@@ -65,7 +66,7 @@ class VueCoffret {
             $montant = $montant + $pre->prix;
         }
         
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/confirmer_coffret"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
         
         return $html;
     }

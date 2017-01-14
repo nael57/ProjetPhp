@@ -3,6 +3,7 @@
 //definition du namespace
 namespace giftbox\vue;
 use giftbox\models\Categorie as Categorie;
+use giftbox\models\Contient as Contient;
 
 //Classe qui premet l'affichage de 'lindex
 class VueIndex {
@@ -35,6 +36,32 @@ class VueIndex {
         
     }
     
+    public function affich_coffret(){
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+        foreach($liste as $p){
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+        }
+        }
+        $html = '';
+        $montant = 0;
+        if($liste!=null){
+        foreach($prest as $pre){
+            $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+            $montant = $montant + $pre->prix;
+        }
+    }
+        
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        
+        return $html;
+    }
     
 
     //methode qui permet un affichage de l'index
@@ -115,8 +142,9 @@ class VueIndex {
                             <li class="has-dropdown">
                                 <a href="#"><span>Coffret</span></a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Voici le contenu actuel du coffret :</a></li>
-                                        <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
+                                        <li>
+                                        <a href="#">Voici le contenu actuel du coffret :</a></li>
+                                         '.$this->affich_coffret().'
                                     </ul>
                             </li>
                         </ul>

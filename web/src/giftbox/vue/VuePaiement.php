@@ -14,9 +14,7 @@ class VuePaiement {
     public function __construct( $presta ){
         $this->prestation = $presta;
     }
-    public function affich_general( $selecteur, $id ){
-        $this->sel = $selecteur;
-        $this->id = $id;
+    public function affich_general(){
         $html = $this->render();
         return $html;
     }
@@ -27,7 +25,7 @@ class VuePaiement {
         $page = '';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page. '<li><a href="../../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
         
@@ -37,6 +35,33 @@ class VuePaiement {
         
         return $page;
         
+    }
+
+    public function affich_coffret(){
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+        foreach($liste as $p){
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+        }
+        }
+        $html = '';
+        $montant = 0;
+        if($liste!=null){
+        foreach($prest as $pre){
+            $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+            $montant = $montant + $pre->prix;
+        }
+    }
+        
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="#"><strong>Passer au paiement de la commande</strong></a></li>';
+        
+        return $html;
     }
 
     private function render()
@@ -63,24 +88,24 @@ class VuePaiement {
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
     <!-- Animate.css -->
-    <link rel="stylesheet" href="../../../css/animate.css">
+    <link rel="stylesheet" href="../../css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="../../../css/icomoon.css">
+    <link rel="stylesheet" href="../../css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="../../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="../../../css/magnific-popup.css">
+    <link rel="stylesheet" href="../../css/magnific-popup.css">
 
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="../../../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../css/owl.theme.default.min.css">
 
     <!-- Theme style  -->
-    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="../../../js/modernizr-2.6.2.min.js"></script>
+    <script src="../../js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
@@ -101,20 +126,20 @@ class VuePaiement {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../../">Accueil</a></li>
+    <li ><a href="../../">Accueil</a></li>
     <li class="has-dropdown" >
-    <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
+    <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
     '.$content.'
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="../../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
+    <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
     <li><a href="#">Voici le contenu actuel du coffret :</a></li>
-    <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
+                                         '.$this->affich_coffret().'
     </ul>
     </li>
     </ul>
@@ -141,9 +166,9 @@ class VuePaiement {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    '..'<-----AFFICHER LE COFFRET COURANT ENTRE CES POINTS
+    AFFICHER LE COFFRET COURANT ICI MON POTE
     <div class="row"></div>
-    <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>
+    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>
     </div>
     </div>
 
@@ -207,24 +232,24 @@ class VuePaiement {
     </div>
     
     <!-- jQuery -->
-    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
     <!-- jQuery Easing -->
-    <script src="../../../js/jquery.easing.1.3.js"></script>
+    <script src="../../js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
-    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
     <!-- Waypoints -->
-    <script src="../../../js/jquery.waypoints.min.js"></script>
+    <script src="../../js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
-    <script src="../../../js/jquery.stellar.min.js"></script>
+    <script src="../../js/jquery.stellar.min.js"></script>
     <!-- Carousel -->
-    <script src="../../../js/owl.carousel.min.js"></script>
+    <script src="../../js/owl.carousel.min.js"></script>
     <!-- countTo -->
-    <script src="../../../js/jquery.countTo.js"></script>
+    <script src="../../js/jquery.countTo.js"></script>
     <!-- Magnific Popup -->
-    <script src="../../../js/jquery.magnific-popup.min.js"></script>
-    <script src="../../../js/magnific-popup-options.js"></script>
+    <script src="../../js/jquery.magnific-popup.min.js"></script>
+    <script src="../../js/magnific-popup-options.js"></script>
     <!-- Main -->
-    <script src="../../../js/main.js"></script>
+    <script src="../../js/main.js"></script>
 
     </body>
     </html>';

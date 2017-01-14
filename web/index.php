@@ -15,7 +15,7 @@ use giftbox\controller\CoffretController as CoffretCon;
 use giftbox\controller\PrestationController as PrestaCon;
 use giftbox\controller\IndexController as Index;
 use giftbox\controller\ConnexionController as ConnexionCon;
-
+use giftbox\controller\PaiementController as PaiementCon;
 //creation de la connexion
 $db = new DB();
 $tab = parse_ini_file('src/conf/conf.ini');
@@ -76,6 +76,12 @@ $slim->get('/CoffretController/ajout_prest/:id', function($id){
 $slim->get('/CoffretController/affich_coffret', function(){
    $c = new CoffretCon();
     $html = $c->affich_coffret();
+    echo $html;
+});
+
+$slim->get('/PaiementController/afficher_paiement', function(){
+    $c = new PaiementCon();
+    $html = $c->afficher_paiement();
     echo $html;
 });
 

@@ -32,6 +32,32 @@ class VueConnexion {
         return $page;
         
     }
+    public function affich_coffret(){
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+        foreach($liste as $p){
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+        }
+        }
+        $html = '';
+        $montant = 0;
+        if($liste!=null){
+        foreach($prest as $pre){
+            $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+            $montant = $montant + $pre->prix;
+        }
+    }
+        
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        
+        return $html;
+    }
 
     private function render()
     {
@@ -109,7 +135,7 @@ class VueConnexion {
                                     <a href="#"><span>Coffret</span></a>
                                     <ul class="dropdown">
                                         <li><a href="#">Voici le contenu actuel du coffret :</a></li>
-                                        <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
+                                         '.$this->affich_coffret().'
                                     </ul>
                                 </li>
                             </ul>
