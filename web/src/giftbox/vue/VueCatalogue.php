@@ -50,7 +50,7 @@ class VueCatalogue {
 
     }
     //methode premettant d'afficher la liste des categories
-    private function affich_liste_cat(){
+    private function affich_liste_cat_depuiscata(){
         $cat = Categorie::get();
         $this->tab=$cat;
         $page = '';
@@ -63,6 +63,24 @@ class VueCatalogue {
         $this->lienPrest = '../../index.php/CatalogueController/affich_prest';
         $this->lienCat = '../../index.php/CatalogueController/affich_cat';
         $this->lienAccueil = '../..';
+        
+        return $page;
+        
+    }
+
+    private function affich_liste_cat_depuiscat(){
+        $cat = Categorie::get();
+        $this->tab=$cat;
+        $page = '';
+        $i = 1;
+        foreach($this->tab as $pre){
+            $page = $page. '<li><a href="../../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $i++;
+        }
+        
+        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
         
         return $page;
         
@@ -179,7 +197,7 @@ class VueCatalogue {
     <li class="has-dropdown" >
     <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
-    '.$this->affich_liste_cat().'
+    '.$this->affich_liste_cat_depuiscata().'
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
@@ -247,7 +265,7 @@ class VueCatalogue {
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Catalogue</h4>
                     <ul class="fh5co-footer-links">
-                        '.$this->affich_liste_cat().'
+                        '.$this->affich_liste_cat_depuiscata().'
                     </ul>
                 </div>
 
@@ -387,7 +405,7 @@ class VueCatalogue {
     <li class="has-dropdown" >
     <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
-    '.$this->affich_liste_cat().'
+    '.$this->affich_liste_cat_depuiscat().'
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
@@ -455,7 +473,7 @@ class VueCatalogue {
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Catalogue</h4>
                     <ul class="fh5co-footer-links">
-                        '.$this->affich_liste_cat().'
+                        '.$this->affich_liste_cat_depuiscat().'
                     </ul>
                 </div>
 
