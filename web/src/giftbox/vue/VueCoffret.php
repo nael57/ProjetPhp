@@ -4,6 +4,7 @@
 namespace giftbox\vue;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Categorie as Categorie;
+use giftbox\models\Contient as Contient;
 
 //Classe vue pour le coffret (panier cadeau)
 //Les tables ne sont jamais modifiees ici
