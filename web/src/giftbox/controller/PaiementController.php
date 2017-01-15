@@ -30,6 +30,26 @@ class PaiementController {
     }
 
 
+    public function afficher_coffret_validation(){
+        if(isset ($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = array();
+        if($liste!=null){
+
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }
+
+        $v = new VuePaiement($prest);
+        return $v->affich_general(2);
+    }
+
+
     public function afficher_carte(){
         if(isset ($_COOKIE[ 'panier' ])){
         $liste = Contient::prestations($_COOKIE[ 'panier' ]);
@@ -44,6 +64,6 @@ class PaiementController {
         }
     }
         $v = new VuePaiement($prest);
-       return $v->affich_general(2);
+       return $v->affich_general(3);
     }
 }

@@ -44,11 +44,11 @@ class VuePaiement {
         if(!empty($this->prestation)) {
             $montant=0;
             foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix. '<br>';
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
             }
-            $html = $html.'Montant total : '.$montant.'
+            $html = $html.'Montant total : '.$montant.'€<br><br>'.'
     <div class="row"></div>
     <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a>
     <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/' . $this->id . '">Payer via cagnotte</a>';
@@ -58,17 +58,54 @@ class VuePaiement {
         return $html;
     }
 
+    public function affich_coffret_validation(){
+        $html='<h1><font color="red"> Attention !</font></h1><p>Votre coffret doit contenir au moins 2 prestations de 2 catégories différentes</p><br>';
+        if(!empty($this->prestation)) {
+            $montant=0;
+            foreach($this->prestation as $pre){
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
+                $prix = $pre->prix;
+                $montant = $montant + $prix;
+            }
+            $html = $html.'Montant total : '.$montant.'€<br><br>'.'
+    <div class="row"></div>
+    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_paiement">Valider mon coffret</a>';
+        }else{
+            $html='votre panier est vide';
+        }
+        return $html;
+    }
+
     public function affich_paiementcarte(){
-        $html='AFFICHER LE COFFRET COURANT ICI MON POTE
+        $html='';
+        $montant=0;
+            foreach($this->prestation as $pre){
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
+                $prix = $pre->prix;
+                $montant = $montant + $prix;
+            }
+        $html=$html.'<br>
     <div class="row"></div>
     Veuillez remplir le formulaire de paiement<br>
     <form action="nomdelafonctionvalidationpaiement.php" method="post">
-                                
-    Nom<input type="text" name="nom" /><br>
-    Prénom<input type="text" name="prenom" /><br>
-    Numéro de carte bancaire<input type="text" name="numcarte" /><br>
-    Montant total de la transaction : AFFICHER LE MONTANT TOTAL ICI<br>
+     <table>              
+                  <tr>
+                    <td>Nom : </td>
+                    <td> <input type="text" name="nom" /><br></td>
+                  </tr>
+                  <tr>
+                    <td>Prénom : </td>
+                    <td><input type="text" name="prenom" /></td>
+                  </tr>
+   
+                    <tr>
+                     <td>Numéro de carte bancaire : </td>
+                    <td><input type="text" name="numcarte" /></td>
+                  </tr>   
+    </table>
+    Montant total de la transaction : '.$montant.'€<br>
     <input type="submit" value="Valider le paiement">
+    
     </form>';
     return $html;
 
@@ -97,7 +134,7 @@ class VuePaiement {
         }
     }
         
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
         
         return $html;
     }
@@ -107,9 +144,12 @@ class VuePaiement {
         if($i==1){
             $contenu=$this->affich_coffretpaiement();
         }
-        else{
+        elseif($i==2) {
+            $contenu=$this->affich_coffret_validation();
+        }else{
             $contenu=$this->affich_paiementcarte();
         }
+
         $content = $this->affich_liste_cat();
         $html = ' <!DOCTYPE HTML>
     <html>

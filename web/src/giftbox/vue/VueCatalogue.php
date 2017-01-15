@@ -162,7 +162,7 @@ class VueCatalogue {
             }
         }
 
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
 
         return $html;
     }
@@ -189,7 +189,7 @@ class VueCatalogue {
             }
         }
 
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
 
         return $html;
     }
