@@ -24,6 +24,23 @@ class PaiementController {
         }
     }
         $v = new VuePaiement($prest);
-       return $v->affich_general();
+       return $v->affich_general(1);
+    }
+
+    public function afficher_carte(){
+        if(isset ($_COOKIE[ 'panier' ])){
+        $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+    }
+    else{
+        $liste=null;
+    }
+        $prest = null;
+        if(isset ($_COOKIE[ 'panier' ])){
+        foreach($liste as $p){
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+        }
+    }
+        $v = new VuePaiement($prest);
+       return $v->affich_general(2);
     }
 }

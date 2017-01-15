@@ -16,8 +16,8 @@ class VuePaiement {
     public function __construct( $presta ){
         $this->prestation = $presta;
     }
-    public function affich_general(){
-        $html = $this->render();
+    public function affich_general($i){
+        $html = $this->render($i);
         return $html;
     }
 
@@ -39,6 +39,30 @@ class VuePaiement {
         
     }
 
+    public function affich_coffretpaiement(){
+        $html='AFFICHER LE COFFRET COURANT ICI MON POTE
+    <div class="row"></div>
+    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>';
+        return $html;
+    }
+
+    public function affich_paiementcarte(){
+        $html='AFFICHER LE COFFRET COURANT ICI MON POTE
+    <div class="row"></div>
+    Veuillez remplir le formulaire de paiement<br>
+    <form action="nomdelafonctionvalidationpaiement.php" method="post">
+                                
+    Nom<input type="text" name="nom" /><br>
+    Prénom<input type="text" name="prenom" /><br>
+    Numéro de carte bancaire<input type="text" name="numcarte" /><br>
+    Montant total de la transaction : AFFICHER LE MONTANT TOTAL ICI<br>
+    <input type="submit" value="Valider le paiement">
+    </form>';
+    return $html;
+
+    }
+
+
     public function affich_coffret(){
         if (isset($_COOKIE[ 'panier' ])){
             $liste = Contient::prestations($_COOKIE[ 'panier' ]);
@@ -56,18 +80,24 @@ class VuePaiement {
         $montant = 0;
         if($liste!=null){
         foreach($prest as $pre){
-            $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+            $html="<li>".$pre->nom." dune valeur de ".$pre->prix. " €</li>";
             $montant = $montant + $pre->prix;
         }
     }
         
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="#"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
         
         return $html;
     }
 
-    private function render()
+    private function render($i)
     {
+        if($i==1){
+            $contenu=$this->affich_coffretpaiement();
+        }
+        else{
+            $contenu=$this->affich_paiementcarte();
+        }
         $content = $this->affich_liste_cat();
         $html = ' <!DOCTYPE HTML>
     <html>
@@ -168,9 +198,8 @@ class VuePaiement {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    AFFICHER LE COFFRET COURANT ICI MON POTE
-    <div class="row"></div>
-    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>
+    '.$contenu.'
+    
     </div>
     </div>
 

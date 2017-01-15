@@ -84,6 +84,11 @@ $slim->get('/PaiementController/afficher_paiement', function(){
     $html = $c->afficher_paiement();
     echo $html;
 });
+$slim->get('/PaiementController/afficher_carte', function(){
+    $c = new PaiementCon();
+    $html = $c->afficher_carte();
+    echo $html;
+});
 
 //on demande ici a valider le coffret
 $slim->get('/CoffretController/confirmer_coffret', function(){
