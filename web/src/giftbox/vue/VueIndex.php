@@ -4,6 +4,7 @@
 namespace giftbox\vue;
 use giftbox\models\Categorie as Categorie;
 use giftbox\models\Contient as Contient;
+use giftbox\models\Prestation as Prestation;
 
 //Classe qui premet l'affichage de 'lindex
 class VueIndex {

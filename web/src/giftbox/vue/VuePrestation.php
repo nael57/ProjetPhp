@@ -3,6 +3,8 @@
 //definition du namespace
 namespace giftbox\vue;
 use giftbox\models\Categorie as Categorie;
+use giftbox\models\Prestation as Prestation;
+use giftbox\models\Contient as Contient;
 
 
 //Classe vue pour le catalogue
