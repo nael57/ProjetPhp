@@ -30,6 +30,12 @@ $slim->get('/', function(){
     echo $html;
 });
 
+//on demande ici de lister les prestations dans l'ordre croissant ou decroissant du prix
+$slim->get('/CatalogueController/affich_prest_tri/:order', function($order){
+    $c = new CatalogueCon();
+    $html = $c->affich_prest(null,$order);
+    echo $html;
+});
 //on demande ici de decrire une prestation selon l'id passé
 $slim->get('/PrestationController/affich_prest/:id', function($id){
     $c = new PrestaCon();
@@ -44,6 +50,12 @@ $slim->get('/CatalogueController/affich_prest', function(){
     echo $html;
 });
 
+//on demande ici de lister les prestations dans l'ordre croissant ou decroissant du prix
+$slim->get('/CatalogueController/affich_prest_tri/:order', function($order){
+    $c = new CatalogueCon();
+    $html = $c->affich_prest(null,$order);
+    echo $html;
+});
 //on demande ici de decrire une prestation selon l'id passé
 $slim->get('/CatalogueController/affich_prest/:id', function($id){
     $c = new CatalogueCon();
