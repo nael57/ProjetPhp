@@ -40,6 +40,7 @@ class VuePaiement {
     }
 
     public function affich_coffretpaiement(){
+        if()
         $html='AFFICHER LE COFFRET COURANT ICI MON POTE
     <div class="row"></div>
     <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>';

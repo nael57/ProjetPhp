@@ -517,8 +517,8 @@ class VueCatalogue {
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
     <h1>Catalogue</h1>
     <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a> provenant de la catégorie ci dessous </h2>
-    <a href="../../../index.php/CatalogueController/affich_prest_tri/desc" class="btn btn-lg" class="btn btn-lg">Trier par prix décroissant</a>
-    <a href="../../../index.php/CatalogueController/affich_prest_tri/asc" class="btn btn-lg" class="btn btn-lg">Trier par prix croissant</a>
+    <a href="../../../index.php/CatalogueController/affich_cat_tri/'.$this->id.'/desc" class="btn btn-lg" class="btn btn-lg">Trier par prix décroissant</a>
+    <a href="../../../index.php/CatalogueController/affich_cat_tri/'.$this->id.'/asc" class="btn btn-lg" class="btn btn-lg">Trier par prix croissant</a>
     </div>
     </div>
     </div>

@@ -17,15 +17,21 @@ class PaiementController {
     else{
     	$liste=null;
     }
-        $prest = null;
-        if(isset ($_COOKIE[ 'panier' ])){
-        foreach($liste as $p){
-            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+        if($liste!=null){
+
+
+            $prest = null;
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }else{
+            $prest='votre parnier est vide';
         }
-    }
+
         $v = new VuePaiement($prest);
        return $v->affich_general(1);
     }
+
 
     public function afficher_carte(){
         if(isset ($_COOKIE[ 'panier' ])){
