@@ -75,7 +75,7 @@ class VueCoffret {
         $montant = 0;
         if($liste!=null){
             foreach($prest as $pre){
-                $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $html=$html."<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
                 $montant = $montant + $pre->prix;
             }
         }
