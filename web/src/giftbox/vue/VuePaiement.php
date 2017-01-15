@@ -40,10 +40,21 @@ class VuePaiement {
     }
 
     public function affich_coffretpaiement(){
-        if()
-        $html='AFFICHER LE COFFRET COURANT ICI MON POTE
+        $html='';
+        if(!empty($this->prestation)) {
+            $montant=0;
+            foreach($this->prestation as $pre){
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix. '<br>';
+                $prix = $pre->prix;
+                $montant = $montant + $prix;
+            }
+            $html = $html.'Montant total : '.$montant.'
     <div class="row"></div>
-    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a><a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/'.$this->id.'">Payer via cagnotte</a>';
+    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a>
+    <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/' . $this->id . '">Payer via cagnotte</a>';
+        }else{
+            $html='votre panier est vide';
+        }
         return $html;
     }
 

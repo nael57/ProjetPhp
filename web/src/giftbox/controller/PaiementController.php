@@ -13,23 +13,20 @@ class PaiementController {
     public function afficher_paiement(){
     	if(isset ($_COOKIE[ 'panier' ])){
         $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-    }
-    else{
-    	$liste=null;
-    }
+        }
+        else{
+            $liste=null;
+        }
+        $prest = array();
         if($liste!=null){
 
-
-            $prest = null;
             foreach($liste as $p){
                 $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
             }
-        }else{
-            $prest='votre parnier est vide';
         }
 
         $v = new VuePaiement($prest);
-       return $v->affich_general(1);
+        return $v->affich_general(1);
     }
 
 

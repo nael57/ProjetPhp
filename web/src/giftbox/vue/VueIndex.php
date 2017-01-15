@@ -46,18 +46,18 @@ class VueIndex {
         }
         $prest = null;
         if($liste!=null){
-        foreach($liste as $p){
-            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
-        }
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
         }
         $html = '';
         $montant = 0;
         if($liste!=null){
-        foreach($prest as $pre){
-            $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
-            $montant = $montant + $pre->prix;
+            foreach($prest as $pre){
+                $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $montant = $montant + $pre->prix;
+            }
         }
-    }
         
         $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
         
