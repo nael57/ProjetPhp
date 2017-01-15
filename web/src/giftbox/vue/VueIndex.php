@@ -54,7 +54,7 @@ class VueIndex {
         $montant = 0;
         if($liste!=null){
             foreach($prest as $pre){
-                $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $html=$html."<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
                 $montant = $montant + $pre->prix;
             }
         }
@@ -144,7 +144,7 @@ class VueIndex {
                                 <a href="#"><span>Coffret</span></a>
                                     <ul class="dropdown">
                                         <li>
-                                        <a href="#">Voici le contenu actuel du coffret :</a></li>
+                                        <a href="#">Voici la dernière prestation ajoutée :</a></li>
                                          '.$this->affich_coffret().'
                                     </ul>
                             </li>

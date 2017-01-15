@@ -59,16 +59,29 @@ class VueCoffret {
     
     //methode qui permet d'afficher le panier de l'uilisateur
     public function affich_coffret(){
-
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }
         $html = '';
         $montant = 0;
-        foreach($this->tab as $pre){
-            $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
-            $montant = $montant + $pre->prix;
+        if($liste!=null){
+            foreach($prest as $pre){
+                $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $montant = $montant + $pre->prix;
+            }
         }
-        
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
-        
+
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+
         return $html;
     }
     
@@ -185,7 +198,7 @@ class VueCoffret {
         <li class="has-dropdown">
         <a href="#"><span>Coffret</span></a>
         <ul class="dropdown">
-        <li><a href="#">Voici le contenu actuel du coffret :</a></li>
+        <li><a href="#">Voici la dernière prestation ajoutée :</a></li>
         '.$this->affich_coffret().'
         </ul>
         </li>
