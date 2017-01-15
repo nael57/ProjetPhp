@@ -17,11 +17,11 @@ class CatalogueController {
             if($order=='desc'){
                 $liste = Prestation::Orderby('prix', 'desc')->get();
                 $v = new VueCatalogue($liste);
-                $html = $v->affich_general(1, null);
+                $html = $v->affich_general(2, null);
             }elseif ($order=='asc'){
                 $liste = Prestation::Orderby('prix', 'asc')->get();
                 $v = new VueCatalogue($liste);
-                $html = $v->affich_general(1, null);
+                $html = $v->affich_general(2, null);
             }else {
                 $liste = Prestation::get();
                 $v = new VueCatalogue($liste);

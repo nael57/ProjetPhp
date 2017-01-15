@@ -53,6 +53,26 @@ class VueCatalogue {
         return $page;
 
     }
+
+    private function affich_liste_prestdepuiscat(){
+        $page = '<h1> Liste des prestations </h1> <ul> ';
+        foreach($this->tab as $pre){
+            $cat = Categorie::where('id', '=', $pre->cat_id)->first();
+            $page=$page.'<div class="col-lg-4 col-md-4">
+            <div class="fh5co-blog animate-box">
+            <a href="#"><img class="img-responsive" src="../../../images/'.$pre->img.'"alt=""></a>
+            <div class="blog-text">
+            <h3><a href="#">'.$pre->nom.'</a></h3>
+            <span class="posted_on">'.$pre->prix.' €</span>
+            <a href="../../../index.php/PrestationController/affich_prest/'.$pre->id.'" class="btn btn-primary">Lire plus</a>
+            <br> Categorie: '.$cat->nom.'
+            </div> 
+            </div>
+            </div>';
+        }
+        return $page;
+
+    }
     //methode premettant d'afficher la liste des categories
     private function affich_liste_cat_depuiscata(){
         $cat = Categorie::get();
@@ -183,7 +203,7 @@ class VueCatalogue {
                 $content = $this->affich_liste_prest();
             break;
             case 2 :
-                $content = $this->affich_prest();
+                $content = $this->affich_liste_prestdepuiscat();
             break;
             case 3 :
                 $content = $this->affich_liste_cat();
@@ -192,7 +212,7 @@ class VueCatalogue {
                 $content = $this->affich_liste_prest_par_cat();
             break;
         }
-        if($this->sel ==1){
+        if($this->sel ==1 ){
 
          $html = '
     <!DOCTYPE HTML>
@@ -497,8 +517,8 @@ class VueCatalogue {
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
     <h1>Catalogue</h1>
     <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a> provenant de la catégorie ci dessous </h2>
-    <a href="#" class="btn btn-lg">Trier par prix décroissant</a>
-    <a href="#" class="btn btn-lg">Trier par prix croissant</a>
+    <a href="../../../index.php/CatalogueController/affich_prest_tri/desc" class="btn btn-lg" class="btn btn-lg">Trier par prix décroissant</a>
+    <a href="../../../index.php/CatalogueController/affich_prest_tri/asc" class="btn btn-lg" class="btn btn-lg">Trier par prix croissant</a>
     </div>
     </div>
     </div>
