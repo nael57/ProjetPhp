@@ -96,7 +96,7 @@ class PaiementController {
                $coffret->mdp= password_hash($_POST['mdp'], PASSWORD_DEFAULT);
             }
             $coffret->save();
-           // unset($_COOKIE['panier']);
+            unset($_COOKIE['panier']);
             $v = new VuePaiement(null,$lien);
             $html=$v->affich_general(4);
         }
