@@ -44,7 +44,7 @@ class CatalogueController {
         if($id_cat==null){
             $liste = Categorie::get();
             $v = new VueCatalogue($liste);
-            $html = $v->affich_general(3, null);
+            $html = $v->affich_general(4, null);
         }
         else {
             if($order=='asc'){
@@ -61,7 +61,7 @@ class CatalogueController {
                 $categorie = Categorie::where('id', '=', $id_cat)->first();
                 $prest = $categorie->prestations()->get();
                 $v = new VueCatalogue($prest);
-                $html = $v->affich_general(4, $id_cat);
+                $html = $v->affich_general(3, $id_cat);
             }
         }
         return $html;

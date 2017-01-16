@@ -63,6 +63,24 @@ $slim->get('/CatalogueController/affich_prest/:id', function($id){
     echo $html;
 });
 
+$slim->get('/CatalogueController/affich_cat_tri/:order', function($order){
+    $c = new CatalogueCon();
+    $html = $c->affich_cat(null,$order);
+    echo $html;
+});
+//on demande ici de decrire une prestation selon l'id passé
+$slim->get('/CatalogueController/affich_cat_tri/:id', function($id){
+    $c = new CatalogueCon();
+    $html = $c->affich_cat($id);
+    echo $html;
+});
+//on demande ici de decrire une prestation selon l'id passé
+$slim->get('/CatalogueController/affich_cat_tri/:id/:order', function($id,$order){
+    $c = new CatalogueCon();
+    $html = $c->affich_cat($id,$order);
+    echo $html;
+});
+
 //on demande ici de lister les categories
 $slim->get('/CatalogueController/affich_cat', function(){
     $c = new CatalogueCon();

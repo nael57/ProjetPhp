@@ -109,6 +109,20 @@ class VueCatalogue {
         return $page;
         
     }
+
+    private function affich_liste_cat_depuiscatcat(){
+        $cat = Categorie::get();
+        $this->tab=$cat;
+        $page = '';
+        $i = 1;
+        foreach($this->tab as $pre){
+            $page = $page. '<li><a href="../../../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $i++;
+        }
+        
+        return $page;
+        
+    }
     
     //methode permettant d'afficher les prestations d'une cateogie en particulier
     private function affich_liste_prest_par_cat(){
@@ -215,6 +229,33 @@ class VueCatalogue {
         }
 
         $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
+
+        return $html;
+    }
+
+    public function affich_coffret3(){
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }
+        $html = '';
+        $montant = 0;
+        if($liste!=null){
+            foreach($prest as $pre){
+                $html=$html."<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $montant = $montant + $pre->prix;
+            }
+        }
+
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
 
         return $html;
     }
@@ -507,7 +548,7 @@ class VueCatalogue {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../index.php">Accueil</a></li>
+    <li ><a href="../../../">Accueil</a></li>
     <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
     <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
@@ -716,7 +757,7 @@ class VueCatalogue {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../">Accueil</a></li>
+    <li ><a href="../../../">Accueil</a></li>
     <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
     <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
@@ -925,12 +966,12 @@ class VueCatalogue {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../../">Accueil</a></li>
+    <li ><a href="../../../../">Accueil</a></li>
     <li><a href="courses.html">Concept</a></li>
     <li class="has-dropdown" >
     <a href="../../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
-    '.$this->affich_liste_cat_depuiscat().'
+    '.$this->affich_liste_cat_depuiscatcat().'
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
@@ -939,7 +980,7 @@ class VueCatalogue {
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
     <li><a href="#">Voici le contenu actuel du coffret :</a></li>
-                                         '.$this->affich_coffret2().'
+                                         '.$this->affich_coffret3().'
     </ul>
     </li>
     </ul>
@@ -1000,7 +1041,7 @@ class VueCatalogue {
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Catalogue</h4>
                     <ul class="fh5co-footer-links">
-                        '.$this->affich_liste_cat_depuiscat().'
+                        '.$this->affich_liste_cat_depuiscatcat().'
                     </ul>
                 </div>
 
