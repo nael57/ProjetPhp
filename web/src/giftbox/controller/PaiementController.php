@@ -26,7 +26,7 @@ class PaiementController {
         }
 
         $v = new VuePaiement($prest);
-        return $v->affich_general(6);
+        return $v->affich_general(1);
     }
 
 
@@ -76,6 +76,6 @@ class PaiementController {
         }
     }
         $v = new VuePaiement($prest);
-       return $v->affich_general(3);
+       return $v->affich_general(6);
     }
 }
