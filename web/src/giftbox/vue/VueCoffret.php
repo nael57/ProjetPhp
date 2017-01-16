@@ -226,7 +226,7 @@ class VueCoffret {
         </header>
         <div id="fh5co-blog">
         <div class="container">
-        <a href="../../../index.php/PaiementController/afficher_paiement"><h1>Voir mon coffret et procéder au paiement</h1><br></a>
+        <a href="../../../index.php/PaiementController/afficher_coffret_validation"><h1>Voir mon coffret et procéder au paiement</h1><br></a>
         <a href="../../../index.php/CatalogueController/affich_prest"><h1>Retourner au catalogue</h1><br></a>
         </div>
         </div>
