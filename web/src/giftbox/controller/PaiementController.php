@@ -53,7 +53,7 @@ class PaiementController {
         }
         $i=2;
         $taille=count($prest);
-        if(count($listcat)>1 && $taille>=4){
+        if(count($listcat)>1 && $taille>1){
             $i=3;
         }
 
@@ -77,5 +77,9 @@ class PaiementController {
     }
         $v = new VuePaiement($prest);
        return $v->affich_general(6);
+    }
+
+    public function validation_paiement(){
+
     }
 }

@@ -103,7 +103,7 @@ class VuePaiement {
         $html=$html.'<br>
     <div class="row"></div>
     Veuillez remplir le formulaire de paiement<br>
-    <form action="nomdelafonctionvalidationpaiement.php" method="post">
+    <form action="../../index.php/PaiementController/" method="post">
      <table>              
                   <tr>
                     <td>Nom : </td>
