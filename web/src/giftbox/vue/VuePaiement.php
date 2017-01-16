@@ -11,10 +11,11 @@ use giftbox\models\Contient as Contient;
 class VuePaiement {
 
     //prestation envoyee par le controller
-    private $prestation,$sel,$id;
+    private $prestation,$sel,$id,$lien;
     
-    public function __construct( $presta ){
+    public function __construct( $presta=null,$lien=null ){
         $this->prestation = $presta;
+        $this->lien=$lien;
     }
     public function affich_general($i){
         $html = $this->render($i);
@@ -96,32 +97,42 @@ class VuePaiement {
         $html='';
         $montant=0;
             foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
+                $html = $html . $pre->nom.' '.$pre->descr.' : '.$pre->prix.'€'. '<br>';
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
             }
         $html=$html.'<br>
     <div class="row"></div>
     Veuillez remplir le formulaire de paiement<br>
-    <form action="../../index.php/PaiementController/" method="post">
+    <form action="../../index.php/PaiementController/validerpaiement" method="post">
      <table>              
                   <tr>
                     <td>Nom : </td>
-                    <td> <input type="text" name="nom" /><br></td>
+                    <td> <input type="text" name="nom" required/><br></td>
                   </tr>
                   <tr>
                     <td>Prénom : </td>
-                    <td><input type="text" name="prenom" /></td>
-                  </tr>
-   
-                    <tr>
-                     <td>Numéro de carte bancaire : </td>
-                    <td><input type="text" name="numcarte" /></td>
+                    <td><input type="text" name="prenom" required/></td>
                   </tr>   
-                  <tr></tr>
+                  <tr>
+                    <td>Mail : </td>
+                    <td><input type="email" name="mail" required/></td>
+                  </tr>
+                  <tr>
+                    <td>Mot de passe :(optionnel)</td>
+                    <td><input type="password" name="mdp"></td>
+                  </tr>
+                   <tr>
+                     <td>Numéro de carte bancaire : </td>
+                    <td><input type="text" name="numcarte" required/></td>
+                  </tr>                     
+                  <tr>
+                    <td>Commentaire :(optionnel)</td>
+                    <td><textarea name="commentaire" rows="7" cols="30"></textarea></td>
+                  </tr>
     </table>
     Montant total de la transaction : '.$montant.'€<br>
-    <input type="submit" value="Valider le paiement">
+    <input type="submit" name="valider" value="Valider">
     
     </form>';
     return $html;
@@ -155,6 +166,15 @@ class VuePaiement {
         
         return $html;
     }
+    public function paiement_ok($lien){
+
+        $html='Votre paiement a été validé';
+        $html=$html.'<br>Voici url de gestion de votre coffret (NE PAS PERDE CE LIEN !!!): '.$lien;
+        $html=$html.'<br><a href="../../"><strong>Retour à l'."'accueil</strong></a>";
+        return $html;
+
+    }
+
 
     private function render($i)
     {
@@ -163,8 +183,10 @@ class VuePaiement {
         }
         elseif($i==2) {
             $contenu=$this->affich_coffret_validation();
-        }elseif ($i==3) {
+        }elseif($i==3) {
             $contenu=$this->affich_coffret_validation_ok();
+        }elseif($i==4){
+            $contenu=$this->paiement_ok($this->lien);
         }else{
             $contenu=$this->affich_paiementcarte();
         }
@@ -208,7 +230,7 @@ class VuePaiement {
     <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="../../js/modernizr-2.6.2.min.js"></script>
+    <script src="../../'.$this->lien.'js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>

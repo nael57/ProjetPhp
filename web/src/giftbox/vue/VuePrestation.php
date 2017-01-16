@@ -75,7 +75,7 @@ class VuePrestation {
             }
         }
         
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
         
         return $html;
     }
@@ -156,9 +156,9 @@ class VuePrestation {
         <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
         <li class="btn-cta"><a href="../../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
         <li class="has-dropdown">
-        <a href="#"><span>Coffret</span></a>
+        <a href="../../../index.php/PaiementController/afficher_coffret_validation"><span>Coffret</span></a>
         <ul class="dropdown">
-        <li><a href="#">Voici le contenu actuel du coffret :</a></li>
+        <li><a href="../../../index.php/PaiementController/afficher_coffret_validation">Voici le contenu actuel du coffret :</a></li>
         '.$this->affich_coffret().'
         </ul>
         </li>

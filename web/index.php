@@ -127,6 +127,13 @@ $slim->get('/PaiementController/afficher_carte', function(){
     echo $html;
 });
 
+$slim->post('/PaiementController/validerpaiement', function(){
+    $c = new PaiementCon();
+    $html = $c->validation_paiement();
+    echo $html;
+});
+
+
 //on demande ici a valider le coffret
 $slim->get('/CoffretController/confirmer_coffret', function(){
     $c = new CoffretCon();

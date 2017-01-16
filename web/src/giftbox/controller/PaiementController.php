@@ -9,6 +9,7 @@ use giftbox\models\Contient as Contient;
 use giftbox\vue\VueCoffret as VueCoffret;
 use giftbox\vue\VuePaiement as VuePaiement;
 
+
 class PaiementController {
     public function afficher_paiement(){
     	if(isset ($_COOKIE[ 'panier' ])){
@@ -80,6 +81,41 @@ class PaiementController {
     }
 
     public function validation_paiement(){
+        $html='';
+        if(isset($_POST['valider']) && $_POST['valider']=='Valider'){
+            $coffret=Coffret::where('id', '=', $_COOKIE['panier'])->first();
+            $coffret->nom=$_POST['nom'];
+            $coffret->prenom=$_POST['prenom'];
+            $coffret->mail=$_POST['mail'];
+            $coffret->commentaire=$_POST['commentaire'];
+            $coffret->modePaiement='classique';
+            $coffret->etat='paye';
+            $lien=$this->getGUID();
+            $coffret->lien=$lien;
+            if($_POST['mdp']!=null){
+               $coffret->mdp= password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+            }
+            $coffret->save();
+           // unset($_COOKIE['panier']);
+            $v = new VuePaiement(null,$lien);
+            $html=$v->affich_general(4);
+        }
+        return $html;
+    }
+
+    private function getGUID(){
+        if (function_exists('com_create_guid')){
+            return com_create_guid();
+        }
+        else {
+            mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+            $charid = strtoupper(md5(uniqid(rand(), true)));
+            $uuid=substr($charid, 0, 8).substr($charid, 8, 4)
+                .substr($charid,12, 4);
+
+            return $uuid;
+        }
 
     }
+
 }
