@@ -30,7 +30,8 @@ class Coffret extends Model {
         }
         return $prest;
     }
-    
+
+
     /**
      * Methode toString définissant l'affichage d'un coffret
      *

@@ -3,6 +3,8 @@
 //definition du namespace
 namespace giftbox\vue;
 use giftbox\models\Categorie as Categorie;
+use giftbox\models\Contient as Contient;
+use giftbox\models\Prestation as Prestation;
 
 //Classe qui premet l'affichage de 'lindex
 class VueIndex {
@@ -23,18 +25,44 @@ class VueIndex {
         $page = '';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'.">'.$pre->nom.'</a></li>';
+            $page = $page. '<li><a href="index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
         
-        $this->lienPrest = '../../Index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../Index.php/CatalogueController/affich_cat';
+        $this->lienPrest = '../../index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../index.php/CatalogueController/affich_cat';
         $this->lienAccueil = '../..';
         
         return $page;
         
     }
     
+    public function affich_coffret(){
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }
+        $html = '';
+        $montant = 0;
+        if($liste!=null){
+            foreach($prest as $pre){
+                $html=$html."<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $montant = $montant + $pre->prix;
+            }
+        }
+        
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
+        
+        return $html;
+    }
     
 
     //methode qui permet un affichage de l'index
@@ -99,25 +127,25 @@ class VueIndex {
             <div class="container">
                 <div class="row">
                     <div class="col-xs-1">
-                        <div id="fh5co-logo"><a href="index.html">Gift<span>Box</span></a></div>
+                        <div id="fh5co-logo"><a href="#">Gift<span>Box</span></a></div>
                     </div>
                     <div class="col-xs-11 text-right menu-1">
                         <ul>
-                            <li class="active"><a href="index.html">Accueil</a></li>
-                            <li><a href="courses.html">Concept</a></li>
+                            <li class="active"><a href="#">Accueil</a></li>
                             <li class="has-dropdown">
-                                <a href="catalogue.php">Catalogue</a>
+                                <a href="index.php/CatalogueController/affich_prest">Catalogue</a>
                                 <ul class="dropdown">
                                     '.$this->affich_liste_cat().'
                                 </ul>
                             </li>
-                            <li><a href="contact.html">Qui sommes nous ?</a></li>
-                            <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
+                            <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
+                            <li class="btn-cta"><a href="index.php/ConnexionController/affich"><span>Connexion</span></a></li>
                             <li class="has-dropdown">
-                                <a href="#"><span>Panier</span></a>
+                                <a href="#"><span>Coffret</span></a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Votre coffret est actuellement vide !</a></li>
-                                        <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
+                                        <li>
+                                        <a href="#">Voici le contenu actuel du coffret  :</a></li>
+                                         '.$this->affich_coffret().'
                                     </ul>
                             </li>
                         </ul>
@@ -137,7 +165,7 @@ class VueIndex {
                         <div class="display-tc animate-box" data-animate-effect="fadeIn">
                             <h1>GiftBox, offrez un moment de bonheur !</h1>
                             <h2>Offrez un coffret de <a href="#">rêve</a> à vos proches</h2>
-                            <p><a class="btn btn-primary btn-lg btn-learn" href="#">Quel est le concept ?</a> <a class="btn btn-primary btn-lg popup-vimeo btn-video" href="https://vimeo.com/channels/staffpicks/93951774"><i class="icon-play"></i>Voir notre catalogue</a></p>
+                            <p><a class="btn btn-primary" href="index.php/CatalogueController/affich_prest"><i class="icon-book"></i>Voir notre catalogue</a></p>
                         </div>
                     </div>
                 </div>
@@ -290,7 +318,7 @@ class VueIndex {
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center animate-box">
-                    <p><a class="btn btn-primary btn-lg btn-learn" href="#">Acceder au catalogue complet</a></p>
+                    <p><a class="btn btn-primary btn-lg btn-learn" href="index.php/CatalogueController/affich_prest">Acceder au catalogue complet</a></p>
                 </div>
             </div>
         </div>
@@ -377,7 +405,7 @@ class VueIndex {
             <div class="row row-pb-md">
                 <div class="col-md-3 fh5co-widget">
                     <h4>À propos</h4>
-                    <p>GiftBox est une entreprise purement fictive réalisée dans le cadre du projet de notre 3ème semestre de DUT Informatique, toute ressemblance avec une entreprise existante nest pas voulue.</p>
+                    <p>GiftBox est une entreprise purement fictive réalisée dans le cadre du projet de notre 3ème semestre de DUT Informatique, toute ressemblance avec une entreprise existante n\'est pas voulue.</p>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Catalogue</h4>
@@ -387,7 +415,7 @@ class VueIndex {
                 </div>
 
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-                    <h4>Laventure GiftBox</h4>
+                    <h4>L\'aventure GiftBox</h4>
                     <ul class="fh5co-footer-links">
                         <li><a href="#">Le concept</a></li>
                         <li><a href="#">Qui sommes nous</a></li>
@@ -397,10 +425,10 @@ class VueIndex {
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Nos partenaires</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">IUT Charlemagne</a></li>
+                        <li><a href="http://iut-charlemagne.univ-lorraine.fr/">IUT Charlemagne</a></li>
                         <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-                        <li><a href="#">OpenClassroom</a></li>
-                        <li><a href="#">Youtube</a></li>
+                        <li><a href="https://openclassrooms.com/">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr">Youtube</a></li>
                     </ul>
                 </div>
 

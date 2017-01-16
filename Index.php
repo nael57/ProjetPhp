@@ -86,5 +86,4 @@ $slim->get('/CoffretController/finaliser_coffret', function(){
     echo $html;
 });
 
-//on traite la requète courante
 $slim->run();
