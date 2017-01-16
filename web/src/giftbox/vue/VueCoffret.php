@@ -108,7 +108,7 @@ class VueCoffret {
     }
     
     public function supp_prest(){
-        $content = '<h2>La prestation " . $this->tab->nom . " a été supprimée de votre panier !</h2><br><br> <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_coffret_validation">Retourner voir mon coffret</a>';
+        $content = '<h2>La prestation "'.$this->tab->nom .'" a été supprimée de votre panier !</h2><br><br> <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/PaiementController/afficher_coffret_validation">Retourner au coffret</a>';
         return $content;
     }
     

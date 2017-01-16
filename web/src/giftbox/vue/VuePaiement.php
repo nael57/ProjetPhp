@@ -80,9 +80,9 @@ class VuePaiement {
             $montant=0;
             foreach($this->prestation as $pre){
                 $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€  ';
+                $html = $html . '<a class="btn btn-primary btn-lg btn-learn" href="../CoffretController/supp_prest/' . $pre->id . '">Supprimer</a><br>';
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
-                $html = $html . '<a href="../CoffretController/supp_prest/' . $pre->id . '">supprimer</a><br>';
             }
             $html = $html.'Montant total : '.$montant.'€<br><br>'.'
     <div class="row"></div>

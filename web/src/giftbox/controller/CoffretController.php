@@ -42,6 +42,19 @@ class CoffretController {
         }
         return $html;
     }
+
+
+   //methode qui supprime la prestation en parametre au coffret 
+   public function supp_prest($id){
+        if(isset($_COOKIE['panier'])){
+            $panier = $_COOKIE['panier'];
+            $con = Contient::where('id_coo', '=', $panier)->where('id_pre', '=', $id)->delete();
+            $pre = Prestation::where('id', '=', $id)->first();
+            $v = new VueCoffret($pre);
+        }
+        $html = $v->affich_general(5, null);
+        return $html;
+    }
     
     //methode qui permettra d'afficher le coffret courant 
     public function affich_coffret(){
@@ -65,13 +78,5 @@ class CoffretController {
         $html = $v->affich_general(3, null);
         return $html;
     }
-    
-   public function supp_prest($id){
-        $panier = $_COOKIE['panier'];
-        $con = Contient::where('id_coo', '=', $panier)->where('id_pre', '=', $id)->delete();
-        $pre = Prestation::where('id', '=', $id)->first();
-        $v = new VueCoffret($pre);
-        $html = $v->affich_general(5, null);
-        return $html;
-    }
+
 }
