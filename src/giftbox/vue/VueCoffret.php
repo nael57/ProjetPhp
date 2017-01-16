@@ -27,7 +27,7 @@ class VueCoffret {
     }
     
     //methode qui permet d'aiguiller vers differents affichages selon les parametres
-    public function affich_general($selecteur, $id){
+    public function affich_general($selecteur, $id = NULL){
         $this->sel = $selecteur;
         $this->id = $id;
         $html = $this->render();
@@ -79,6 +79,11 @@ class VueCoffret {
         return $content;
     }
     
+    //methode qui permet de finaliser son coffret
+    public function finaliser_coffret(){
+        echo 'ta meeere';
+    }
+    
     //methode permettant l'affichage general de la page et y ajoutant le bon script
     public function render(){
         $content = '';
@@ -95,6 +100,10 @@ class VueCoffret {
                 $this->liens=false;
                 $content = $this->confirmer_coffret();
             break;
+            case 4 : 
+                $this->liens=false;
+                $content = $this->finaliser_coffret();
+            break;
         }
         
         $html = '
@@ -105,11 +114,8 @@ class VueCoffret {
             <meta charset="utf-8">
         </head>
         <boby>
-            <nav>
-                <br><br>
-                <a href="'.$this->lienPrest.'">Liste des prestations</a>
-                <br><br>
-                <a href="'.$this->lienCat.'">Liste des categories</a>
+            <nav>'.
+                $this->lienhaut.'
             </nav>
             <section>
                 '.

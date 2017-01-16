@@ -153,5 +153,12 @@ $slim->get('/PrestationController/vote/:id/:num', function($id,$num){
     $html = $c->vote($id,$num);
     echo $html;
 });
+
+$slim->get('/CoffretController/supp_prest/:id', function($id){
+    $c = new CoffretCon();
+    $html = $c->supp_prest($id);
+    echo $html;
+});
+
 $slim->run();
 

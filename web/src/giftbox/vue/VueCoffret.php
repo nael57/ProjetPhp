@@ -107,6 +107,11 @@ class VueCoffret {
         return $content;
     }
     
+    public function supp_prest(){
+        $content = '<h2>La prestation "'.$this->tab->nom .'" a été supprimée de votre panier !</h2><br><br> <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/PaiementController/afficher_coffret_validation">Retourner au coffret</a>';
+        return $content;
+    }
+    
     //methode permettant l'affichage general de la page et y ajoutant le bon script
     public function render(){
         $content = '';
@@ -122,6 +127,9 @@ class VueCoffret {
             break;
             case 4 :
             $content = $this->deja_dans_coffret();
+            break;
+            case 5 :
+            $content = $this->supp_prest();
             break;
         }
         $content1 = $this->affich_liste_cat();

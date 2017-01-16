@@ -46,7 +46,7 @@ class CoffretController {
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
         }
         $v = new VueCoffret($prest);
-        $html = $v->affich_general(2, null);
+        $html = $v->affich_general(2);
         return $html;
     }
     
@@ -54,10 +54,22 @@ class CoffretController {
     public function confirmer_coffret(){
         $coffret=null;
         if(isset($_COOKIE['panier'])){
-            $coffret = Coffret::where('id', '=', $_COOKIE['panier']);
+            $coffret = Coffret::where('id', '=', $_COOKIE['panier'])->get();
         }
         $v = new VueCoffret($coffret);
-        $html = $v->affich_general(3, null);
+        $html = $v->affich_general(3);
+        return $html;
+    }
+    
+    //methode qui permet la finalisation du coffret une fois le formulaire rempli
+    public function finaliser_coffret(){
+        echo $_POST;
+        $coffret=null;
+        if(isset($_COOKIE['panier'])){
+            $coffret = Coffret::where('id', '=', $_COOKIE['panier'])->first();
+        }
+        $v = new VueCoffret($coffret);
+        $html = $v->affich_general(4);
         return $html;
     }
 

@@ -30,55 +30,60 @@ $slim->get('/', function(){
     echo $html;
 });
 
-//on demande ici de lister les prestations
+//on demande de lister les prestations
 $slim->get('/CatalogueController/affich_prest', function(){
     $c = new CatalogueCon();
     $html = $c->affich_prest(null);
     echo $html;
 });
 
-//on demande ici de decrire une prestation selon l'id passé
+//on demande de decrire une prestation selon l'id passé
 $slim->get('/CatalogueController/affich_prest/:id', function($id){
     $c = new CatalogueCon();
     $html = $c->affich_prest($id);
     echo $html;
 });
 
-//on demande ici de lister les categories
+//on demande de lister les categories
 $slim->get('/CatalogueController/affich_cat', function(){
     $c = new CatalogueCon();
     $html = $c->affich_cat(null);
     echo $html;
 });
 
-//on demande ici de lister les prestations d'une categorie
+//on demande de lister les prestations d'une categorie
 $slim->get('/CatalogueController/affich_cat/:id', function($id){
     $c = new CatalogueCon();
     $html = $c->affich_cat($id);
     echo $html;
 });
 
-//on demande ici l'ajout d'une prestation au coffret
+//on demande l'ajout d'une prestation au coffret
 $slim->get('/CoffretController/ajout_prest/:id', function($id){
     $c = new CoffretCon();
     $html = $c->ajout_prest($id);
     echo $html;
 });
 
-//on demande ici l'affichage du coffret
+//on demande l'affichage du coffret
 $slim->get('/CoffretController/affich_coffret', function(){
    $c = new CoffretCon();
     $html = $c->affich_coffret();
     echo $html;
 });
 
-//on demande ici a valider le coffret
+//on demande a valider le coffret
 $slim->get('/CoffretController/confirmer_coffret', function(){
     $c = new CoffretCon();
     $html = $c->confirmer_coffret();
     echo $html;
 });
 
+//on demande le recapitulatif final du coffret
+$slim->get('/CoffretController/finaliser_coffret', function(){
+    $c = new CoffretCon();
+    $html = $c->finaliser_coffret();
+    echo $html;
+});
 
-//on traite ici la requète courante
 $slim->run();
