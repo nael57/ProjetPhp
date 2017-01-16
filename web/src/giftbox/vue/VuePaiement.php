@@ -67,6 +67,22 @@ class VuePaiement {
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
             }
+            $html = $html.'Montant total : '.$montant.'€<br><br>';
+        }else{
+            $html='votre panier est vide';
+        }
+        return $html;
+    }
+
+    public function affich_coffret_validation_ok(){
+        $html='';
+        if(!empty($this->prestation)) {
+            $montant=0;
+            foreach($this->prestation as $pre){
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
+                $prix = $pre->prix;
+                $montant = $montant + $prix;
+            }
             $html = $html.'Montant total : '.$montant.'€<br><br>'.'
     <div class="row"></div>
     <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_paiement">Valider mon coffret</a>';
@@ -102,6 +118,7 @@ class VuePaiement {
                      <td>Numéro de carte bancaire : </td>
                     <td><input type="text" name="numcarte" /></td>
                   </tr>   
+                  <tr></tr>
     </table>
     Montant total de la transaction : '.$montant.'€<br>
     <input type="submit" value="Valider le paiement">
@@ -146,6 +163,8 @@ class VuePaiement {
         }
         elseif($i==2) {
             $contenu=$this->affich_coffret_validation();
+        }elseif ($i==3) {
+            $contenu=$this->affich_coffret_validation_ok();
         }else{
             $contenu=$this->affich_paiementcarte();
         }

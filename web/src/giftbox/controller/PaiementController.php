@@ -26,7 +26,7 @@ class PaiementController {
         }
 
         $v = new VuePaiement($prest);
-        return $v->affich_general(1);
+        return $v->affich_general(6);
     }
 
 
@@ -44,9 +44,21 @@ class PaiementController {
                 $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
             }
         }
+        $listcat=array();
+        foreach($prest as $value){
+            $cat=$value->cat_id;
+            if(!in_array($cat,$listcat)){
+                $listcat[]=$cat;
+            }
+        }
+        $i=2;
+        $taille=count($prest);
+        if(count($listcat)>1 && $taille>=4){
+            $i=3;
+        }
 
         $v = new VuePaiement($prest);
-        return $v->affich_general(2);
+        return $v->affich_general($i);
     }
 
 
