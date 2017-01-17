@@ -18,6 +18,8 @@ class CadeauController {
     public function confirmcad($id){
         $v = new VueCadeau();
         $coffret=Coffret::where('id','=',$id)->first();
+        $coffret->etatcadeau='fermé';
+        $coffret->save();
         if(Cadeau::where('id_coffret','=',$id)->count()!=0){
             $cadeau=Cadeau::where('id_coffret','=',$id)->first();
 
@@ -36,7 +38,7 @@ class CadeauController {
         echo $coffret->mail;
         mail($coffret->mail,'GIFTBOX', $messageOK);
         */
-        $v= new VueCadeau($coffret,$cadeau->idca);
+        $v= new VueCadeau($coffret,$cadeau->idca,'../');
         $html = $v->affich_general(1);
         return $html;
     }

@@ -160,7 +160,7 @@ class VueCagnotte {
 
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
-    Veuillez saisir votre identifiant cagnotte</h3><br><br>
+    Veuillez saisir votre identifiant coffret</h3><br><br>
       <form action="../../index.php/CagnotteController/affich_coffret" method="post">
          <table>              
                       <tr>
@@ -185,7 +185,11 @@ class VueCagnotte {
         }
 
         $html=$html.'<br> Montant total :'.$montant;
-        $html=$html.'<br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
+        if($this->coffret->etatcadeau!=null){
+
+            $html=$html.'<br><br>Voici '."l'état de votre Cadeau : ".$this->coffret->etatcadeau;
+        }
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
 
         return $html;
     }

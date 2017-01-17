@@ -46,23 +46,25 @@ class CagnotteController {
         $prest = null;
 
         if(isset($_POST['liencadeau']) && $_POST['liencadeau']!=null ){
-            $post=$_POST['liencadeau'];
-            $c = Cadeau::where('idca','=',$post)->count();
+                $post=$_POST['liencadeau'];
+                $c = Cadeau::where('idca','=',$post)->count();
+                if($c>0) {
+                    $cof=Cadeau::where('idca','=',$post)->first();
+                    $coffret = Coffret::where('id', '=', $cof->id_coffret)->first();
+                    $coffret->etatcadeau = 'Ouvert';
+                    $coffret->save();
+                    $liste = Contient::prestations($coffret->id);
+                    foreach ($liste as $p) {
+                        $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+                    }
+                    $i = 2;
 
-
-            if($c>0) {
-                $cof=Cadeau::where('idca','=',$post)->first();
-                $coffret = Coffret::where('id', '=', $cof->id_coffret)->first();
-                $liste = Contient::prestations($coffret->id);
-                foreach ($liste as $p) {
-                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+                    $v = new VueCadeau($coffret);
+                } else {
+                    $i = 3;
+                    $v = new VueCagnotte();
                 }
-                $i = 2;
-                $v = new VueCadeau($coffret);
-            } else {
-                $i = 3;
-                $v = new VueCagnotte();
-            }
+
         }elseif (isset($_POST['lien4']) && $_POST['lien4']!=null ) {
                 $post = $_POST['lien4'];
                 $c = Coffret::where('lien', '=', $post)->count();
@@ -79,11 +81,13 @@ class CagnotteController {
                     $i = 3;
                     $v = new VueCagnotte();
                 }
-        }else {
 
+        }else {
+            echo 'test';
             $i = 3;
             $v = new VueCagnotte();
         }
+
 
         $html = $v->affich_general($i);
         return $html;
