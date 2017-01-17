@@ -7,16 +7,64 @@ namespace giftbox\vue;
 class VueCagnotte {
 
     //prestation envoyee par le controller
-    private $prestation;
-    
-    public function __construct( $presta ){
-        $this->prestation = $presta;
+    private $coffret;
+
+    public function __construct($po=null){
+        $this->coffret = $po;
     }
-    $html='
-    <!DOCTYPE HTML>
+
+    public function affich_general($i){
+        $this->render($i);
+    }
+    public function affich_form(){
+
+        $html='<br>
+    <div class="row"></div>
+    Veuillez saisir le lien fourni<br>
+    <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+     <table>              
+                  <tr>
+                    <td>Lien : </td>
+                    <td> <input type="text" name="lien" required/><br></td>
+                  </tr>
+    </table>
+    <input type="submit" name="valider" value="Valider">
+    
+    </form>';
+        return $html;
+    }
+
+    private function affich_liste_cat(){
+        $cat = Categorie::get();
+        $this->tab=$cat;
+        $page = '';
+        $i = 1;
+        foreach($this->tab as $pre){
+            $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $i++;
+        }
+
+        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
+        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
+        $this->lienAccueil = '../../..';
+
+        return $page;
+
+    }
+
+    private function render($i)
+    {
+        if($i==1){
+            $contenu=$this->affich_form();
+        }else{
+            $contenu=$this->affich_paiementcarte();
+        }
+
+        $content = $this->affich_liste_cat();
+        $html = ' <!DOCTYPE HTML>
     <html>
     <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GiftBox, offrez du rêve</title>
 
@@ -34,24 +82,24 @@ class VueCagnotte {
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
     <!-- Animate.css -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="../../css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="../../css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="../../css/magnific-popup.css">
 
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../css/owl.theme.default.min.css">
 
     <!-- Theme style  -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="js/modernizr-2.6.2.min.js"></script>
+    <script src="../../'.$this->lien.'js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
@@ -68,24 +116,24 @@ class VueCagnotte {
     <div class="container">
     <div class="row">
     <div class="col-xs-1">
-    <div id="fh5co-logo"><a href="index.php">Gift<span>Box</span></a></div>
+    <div id="fh5co-logo"><a href="#">Gift<span>Box</span></a></div>
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="index.php">Accueil</a></li>
+    <li ><a href="../../">Accueil</a></li>
     <li class="has-dropdown" >
-    <a href="catalogue.php" >Catalogue</a>
+    <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
-    '.$this->affich_liste_cat().'
+    '.$content.'
     </ul>
     </li>
-    <li><a href="contact.html">Qui sommes nous ?</a></li>
-    <li class="btn-cta"><a href="#"><span>Connexion</span></a></li>
+    <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
+    <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
-    <li><a href="#">Votre coffret est actuellement vide !</a></li>
-    <!-- METTRE LES ARTICLES DYNAMIQUEMENT LÀ -->
+    <li><a href="#">Voici le contenu actuel du coffret :</a></li>
+                                         '.$this->affich_coffret().'
     </ul>
     </li>
     </ul>
@@ -103,8 +151,7 @@ class VueCagnotte {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Cagnotte</h1>
-    <h2>Voici la cagnotte permettant de financer le coffret Gift<a href="#">Box</a> numéro 123456. Vous trouverez les objets de la cagnottes ci-dessous</h2>
+    <h1>Voici, ci dessous le contenu de votre coffret</h1>
     </div>
     </div>
     </div>
@@ -113,36 +160,13 @@ class VueCagnotte {
     </header>
     <div id="fh5co-blog">
     <div class="container">
-    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
-    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
-    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
-    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
-    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
-    <div class="row">OBJET 1 PHOTO DESCRIPTION PRIX</div>
-    </div>
-    </div>
+    '.$contenu.'
     
-    <div id="fh5co-started" style="background-image:url(images/img_bg_2.jpg);">
-    <div class="overlay"></div>
-    <div class="container">
-    <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-    <h2>Pour linstant nous avons récoltés 13451 euros sur les 1233131 nécessaires. On a donc atteint 10% de notre objectif.</h2>
-    <p>Participer à la cagnotte dès maintenant en saisissant un montant en euros<br></p>
-    </div>
-    </div>
-    <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center"><input type="number" />
-    <p><a href="#" class="btn btn-default btn-lg">Je participe !</a><br>
-    <!-- SI ON ARRIVE DEPUIS LESPACE GESTION ET QUE LA VALEUR DES PARTICIPATIONS EST > AU MONTANT TOTAL ALORS AFFICHER LE BOUTON CI DESSOUS
-    <a href="#" class="btn btn-default btn-lg">Je cloture la cagnotte</a></p> 
-    -->
-    </div>
-    </div>
     </div>
     </div>
 
-     <footer id="fh5co-footer" role="contentinfo">
+
+ <footer id="fh5co-footer" role="contentinfo">
         <div class="container">
             <div class="row row-pb-md">
                 <div class="col-md-3 fh5co-widget">
@@ -152,7 +176,7 @@ class VueCagnotte {
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Catalogue</h4>
                     <ul class="fh5co-footer-links">
-                        '.$this->affich_liste_cat().'
+                        ' . $this->affich_liste_cat() . '
                     </ul>
                 </div>
 
@@ -201,26 +225,27 @@ class VueCagnotte {
     </div>
     
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
     <!-- jQuery Easing -->
-    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="../../js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
     <!-- Waypoints -->
-    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="../../js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
-    <script src="js/jquery.stellar.min.js"></script>
+    <script src="../../js/jquery.stellar.min.js"></script>
     <!-- Carousel -->
-    <script src="js/owl.carousel.min.js"></script>
+    <script src="../../js/owl.carousel.min.js"></script>
     <!-- countTo -->
-    <script src="js/jquery.countTo.js"></script>
+    <script src="../../js/jquery.countTo.js"></script>
     <!-- Magnific Popup -->
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/magnific-popup-options.js"></script>
+    <script src="../../js/jquery.magnific-popup.min.js"></script>
+    <script src="../../js/magnific-popup-options.js"></script>
     <!-- Main -->
-    <script src="js/main.js"></script>
+    <script src="../../js/main.js"></script>
 
     </body>
     </html>';
-    return $html;
+        return $html;
+    }
 }

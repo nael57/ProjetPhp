@@ -12,6 +12,7 @@ use giftbox\vue\VueCatalogue as VueCatalogue;
 use Illuminate\Database\Capsule\Manager as DB;
 use giftbox\controller\CatalogueController as CatalogueCon;
 use giftbox\controller\CoffretController as CoffretCon;
+use giftbox\controller\CagnotteController as CagnotteCon;
 use giftbox\controller\PrestationController as PrestaCon;
 use giftbox\controller\IndexController as Index;
 use giftbox\controller\ConnexionController as ConnexionCon;
@@ -23,7 +24,6 @@ $db->addConnection($tab);
 $db->setAsGlobal();
 $db->bootEloquent();
 $slim = new \Slim\Slim();
-unset($_COOKIE['panier']);
 $slim->get('/', function(){
     $c = new Index();
     $html = $c->affichage();
@@ -191,6 +191,17 @@ $slim->post('/AdministrateurController/suppr_prest',function(){
     echo $html;
 });
 
+$slim->get('/CagnotteController/', function(){
+    $c = new CagnotteCon();
+    $html = $c->afficher_form();
+    echo $html;
+});
+
+$slim->post('/CagnotteController/affich_coffret', function(){
+    $c = new CagnotteCon();
+    $html = $c->afficher_coffret();
+    echo $html;
+});
 
 $slim->run();
 

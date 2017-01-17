@@ -11,11 +11,11 @@ use giftbox\models\Contient as Contient;
 class VuePaiement {
 
     //prestation envoyee par le controller
-    private $prestation,$sel,$id,$lien;
+    private $prestation,$sel,$id,$url;
     
     public function __construct( $presta=null,$lien=null ){
         $this->prestation = $presta;
-        $this->lien=$lien;
+        $this->url=$lien;
     }
     public function affich_general($i){
         $html = $this->render($i);
@@ -187,7 +187,7 @@ class VuePaiement {
         }elseif($i==3) {
             $contenu=$this->affich_coffret_validation_ok();
         }elseif($i==4){
-            $contenu=$this->paiement_ok($this->lien);
+            $contenu=$this->paiement_ok($this->url);
             unset($_COOKIE['panier']);
         }else{
             $contenu=$this->affich_paiementcarte();
