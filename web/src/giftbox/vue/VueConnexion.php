@@ -55,7 +55,7 @@ class VueConnexion {
         }
     }
         
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
         
         return $html;
     }
@@ -155,12 +155,11 @@ class VueConnexion {
                         <div class="display-t">
                             <div class="display-tc animate-box" data-animate-effect="fadeIn">
                                 <h1>Connectez vous</h1>
-                                <form action="nomdelafonctionconnexion.php" method="post"><p>
+                                <form action="../../index.php/AdministrateurController/afficher" method="post"><p>
                                     Nom dutilisateur <input type="text" name="nomutil" /><br>
-                                    Mot de passe <input type="text" name="mdp" /><br><br>
+                                    Mot de passe  <input type="text" name="mdp" /><br><br>
                                     <input type="submit" value="Me connecter">
                                 </form><br><br>
-                               <strong><a href="#">Sinon inscrivez vous !</a></strong></p><br>
                             </div>
                         </div>
                     </div>
