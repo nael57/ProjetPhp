@@ -14,7 +14,7 @@ use giftbox\vue\VueCadeau as VueCadeau;
 class CadeauController {
 
 
-    //methode qui permettra d'afficher le coffret
+    //methode qui permettra de confirmer l'envoie d'un cadeau
     public function confirmcad($id){
         $v = new VueCadeau();
         $coffret=Coffret::where('id','=',$id)->first();
@@ -28,8 +28,6 @@ class CadeauController {
             $cadeau->id_coffret=$id;
             $cadeau->save();
         }
-
-
         /*// Le message
         $message =$coffret->commentaire;
         // Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en utilisant wordwrap()
@@ -44,22 +42,23 @@ class CadeauController {
     }
 
 
-    //methode qui permettra d'afficher le coffret courant
-    public function affich_coffret(){
+    //methode qui permettra d'afficher le cadeau
+    public function affich_cadeau(){
         $i=0;
         $prest = null;
 
-        $c = Coffret::where('lien','=',$_POST[ 'lien' ])->count();
-        $cofrret=null;
+        $c = Cadeau::where('idca','=',$_POST[ 'liencadeau' ])->count();
+        $coffret=null;
         if($c>0){
-            $coffret = Coffret::where('lien','=',$_POST[ 'lien' ])->first();
+            $coffret = Cadeau::where('idca','=',$_POST[ 'liencadeau' ])->first();
             $liste = Contient::prestations($coffret->id);
             foreach($liste as $p){
                 $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
             }
             $i=2;
-            $v = new VueCagnotte($coffret,$prest);
+            $v = new VueCadeau($coffret);
         }else{
+
             $i=3;
             $v = new VueCagnotte();
         }

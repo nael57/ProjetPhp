@@ -217,5 +217,12 @@ $slim->get('/CadeauController/confirm/:id', function($id){
     $html = $c->confirmcad($id);
     echo $html;
 });
+
+$slim->post('/CadeauController/affich_cadeau', function(){
+    $c = new CadeauCon();
+    $html = $c->affich_cadeau();
+    $html='test';
+    return $html;
+});
 $slim->run();
 

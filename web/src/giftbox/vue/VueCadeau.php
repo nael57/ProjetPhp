@@ -11,11 +11,12 @@ use giftbox\models\Contient as Contient;
 class VueCadeau {
 
     //prestation envoyee par le controller
-    private $prestation,$sel,$id,$urlca,$coffret;
+    private $prestation,$sel,$id,$urlca,$coffret,$problemelien='';
     
     public function __construct( $cof=null,$lien=null ){
         $this->coffret = $cof;
         $this->urlca=$lien;
+        $this->problemelien=null;
     }
     public function affich_general($i){
         $html = $this->render($i);
@@ -47,7 +48,25 @@ class VueCadeau {
         
     }
 
+    public function affich_contenu_coffret(){
+        $html='Voici le contenu de ce cadeau :<br>';
+        $montant=0;
+        $liste = Contient::prestations($this->coffret->id);
+        $prest=array();
 
+        foreach($liste as $p){
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+        }
+        foreach($prest as $pre){
+            $html = $html .'<br><br><img src="../../images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr;
+
+        }
+
+        $html= $html . '<br><br>'.$this->coffret->commentaire;
+        $html=$html.'<br><a href="../../"><strong>Retour à l'."'accueil</strong></a>";
+
+        return $html;
+    }
 
 
 
@@ -83,11 +102,10 @@ class VueCadeau {
     {
         if($i==1){
             $contenu=$this->confirmer_envoie();
-        }elseif($i==4){
-            $contenu=$this->paiement_ok($this->url);
-            unset($_COOKIE['panier']);
+        }elseif($i==2){
+        $contenu=$this->affich_contenu_coffret();
         }else{
-            $contenu=$this->affich_paiementcarte();
+
         }
 
         $content = $this->affich_liste_cat();
@@ -112,21 +130,21 @@ class VueCadeau {
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
     <!-- Animate.css -->
-    <link rel="stylesheet" href="../../../css/animate.css">
+    <link rel="stylesheet" href="../../css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="../../../css/icomoon.css">
+    <link rel="stylesheet" href="../../css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="../../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="../../../css/magnific-popup.css">
+    <link rel="stylesheet" href="../../css/magnific-popup.css">
 
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="../../../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../css/owl.theme.default.min.css">
 
     <!-- Theme style  -->
-    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Modernizr JS -->
     <script src="../../js/modernizr-2.6.2.min.js"></script>
@@ -150,15 +168,15 @@ class VueCadeau {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../../">Accueil</a></li>
+    <li ><a href="../../">Accueil</a></li>
     <li class="has-dropdown" >
     <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
     '.$content.'
     </ul>
     </li>
-    <li><a href="../../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="../../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
+    <li><a href="../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
+    <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
@@ -255,24 +273,24 @@ class VueCadeau {
     </div>
     
     <!-- jQuery -->
-    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
     <!-- jQuery Easing -->
-    <script src="../../../js/jquery.easing.1.3.js"></script>
+    <script src="../../js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
-    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
     <!-- Waypoints -->
-    <script src="../../../js/jquery.waypoints.min.js"></script>
+    <script src="../../js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
-    <script src="../../../js/jquery.stellar.min.js"></script>
+    <script src="../../js/jquery.stellar.min.js"></script>
     <!-- Carousel -->
-    <script src="../../../js/owl.carousel.min.js"></script>
+    <script src="../../js/owl.carousel.min.js"></script>
     <!-- countTo -->
-    <script src="../../../js/jquery.countTo.js"></script>
+    <script src="../../js/jquery.countTo.js"></script>
     <!-- Magnific Popup -->
-    <script src="../../../js/jquery.magnific-popup.min.js"></script>
-    <script src="../../../js/magnific-popup-options.js"></script>
+    <script src="../../js/jquery.magnific-popup.min.js"></script>
+    <script src="../../js/magnific-popup-options.js"></script>
     <!-- Main -->
-    <script src="../../../js/main.js"></script>
+    <script src="../../js/main.js"></script>
 
     </body>
     </html>';
