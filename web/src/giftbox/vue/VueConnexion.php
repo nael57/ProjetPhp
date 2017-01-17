@@ -157,7 +157,7 @@ class VueConnexion {
                                 <h1>Connectez vous</h1>
                                 <form action="../../index.php/AdministrateurController/afficher" method="post"><p>
                                     Nom dutilisateur <input type="text" name="nomutil" /><br>
-                                    Mot de passe  <input type="text" name="mdp" /><br><br>
+                                    Mot de passe  <input type="password" name="mdp" /><br><br>
                                     <input type="submit" value="Me connecter">
                                 </form><br><br>
                             </div>

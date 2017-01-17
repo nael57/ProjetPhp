@@ -7,8 +7,6 @@ use giftbox\models\Membre as Membre;
 use giftbox\models\Contient as Contient;
 use giftbox\vue\VueAdministrateur as VueAdministrateur;
 use giftbox\vue\VueConnexion as VueConnexion;
-use giftbox\models\Vote as Vote;
-
 class AdministrateurController{
 
 	public function afficher_admin(){
@@ -38,7 +36,7 @@ class AdministrateurController{
 	}
 
 	public function ajouter_presta(){
-		if(!empty($_POST['nom']) && !empty($_POST['tarif']) && !empty($_POST['description' && isset($_POST['ajout'])])){
+		if(!empty($_POST['nom']) && !empty($_POST['tarif']) && !empty($_POST['description']) && isset($_POST['ajout'])){
 			if(isset($_FILES['nom_du_fichier'])){
 				$errors= array();
 				$file_name = $_FILES['nom_du_fichier']['name'];
@@ -65,10 +63,6 @@ class AdministrateurController{
 					$con->cat_id= $cat['id'];
 					$con->etat="actif";
 					$con->save();
-					$id=Prestation::where('nom','=',$_POST['nom'])->first();
-					$id=$id['id'];
-					$vo = new Vote();
-					$vo->save();
 					echo"Upload réussi !";
 				}
 				else{
@@ -114,9 +108,9 @@ class AdministrateurController{
 
 	public function supprimer_presta(){
 		$presta =Prestation::where('nom','=',$_POST['sup'])->first();
-		$id = $presta['id'];
+		$img = $presta['img'];
+		unlink ('images/'.$img);
 		$presta->delete();
-		$vote = Vote::where('id','=',$id)->delete();
 		echo "<h2> Suppression OK ! </h2>";
 		$v = new VueAdministrateur();
 		return $v->affich_general();

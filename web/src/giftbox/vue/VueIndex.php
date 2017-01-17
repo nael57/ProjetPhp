@@ -36,6 +36,37 @@ class VueIndex {
         return $page;
         
     }
+    private function compter_presta(){
+        $nombre=Prestation::count();
+        return $nombre;
+    }
+
+    private function compter_panier(){
+
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+            $res = sizeof($liste);
+        }
+        else{
+            $res=0;
+        }
+        return $res;
+    }
+
+    private function affich_meilleurs(){
+        $cat = Categorie::get();
+        $html='';
+        foreach ($cat as $value) {
+            $moy=Prestation::where("cat_id","=",$value->id)->max('moyenne');
+            $res=Prestation::where("cat_id","=",$value->id)->where("moyenne","=",$moy)->first();
+            $html=$html.'<div class="col-md-4 col-sm-6 fh5co-project animate-box" data-animate-effect="fadeIn">
+                    <a href="index.php/PrestationController/affich_prest/'.$res->id.'"><img src="images/'.$res->img.'" class="img-responsive">
+                        <h3>'.$res->nom.'</h3><br><br><p>Notée '.$res->moyenne.'/5 !</p>
+                    </a>
+            </div>';
+        }
+        return $html;
+    }
     
     public function affich_coffret(){
         if (isset($_COOKIE[ 'panier' ])){
@@ -185,11 +216,11 @@ class VueIndex {
                     <span class="fh5co-counter-label">Partenaires de confiance</span>
                 </div>
                 <div class="col-md-3 text-center animate-box">
-                    <span class="fh5co-counter js-counter" data-from="0" data-to="27" data-speed="4000" data-refresh-interval="50"></span>
+                    <span class="fh5co-counter js-counter" data-from="0" data-to="'.$this->compter_presta().'" data-speed="4000" data-refresh-interval="50"></span>
                     <span class="fh5co-counter-label">Prestations proposées</span>
                 </div>
-                <div class="col-md-3 text-center animate-box"><!-- Mettre dans le data-to le nombre courant darticle dans lpanier -->
-                    <span class="fh5co-counter js-counter" data-from="0" data-to="0" data-speed="4000" data-refresh-interval="50"></span>
+                <div class="col-md-3 text-center animate-box">
+                    <span class="fh5co-counter js-counter" data-from="0" data-to="'.$this->compter_panier().'" data-speed="2000" data-refresh-interval="50"></span>
                     <span class="fh5co-counter-label">Prestations dans votre panier</span>
                 </div>
             </div>
@@ -306,14 +337,9 @@ class VueIndex {
             </div>
         </div>
         <div class="container-fluid proj-bottom">
-            <!--  METTRE DE MANIÈRE DYNAMIQUE LES 6 MEILLEURS ACHATS DU MOMENT AVEC LES IMAGES ASSOCIÉES -->
+
             <div class="row">
-                <div class="col-md-4 col-sm-6 fh5co-project animate-box" data-animate-effect="fadeIn">
-                    <a href="#"><img src="images/animateur.jpg" class="img-responsive">
-                        <h3>Un cours dAqua-Gym</h3>
-                        <span>Plus dinfos</span>
-                    </a>
-            </div>
+                '.$this->affich_meilleurs().'
         </div>
         <div class="container">
             <div class="row">

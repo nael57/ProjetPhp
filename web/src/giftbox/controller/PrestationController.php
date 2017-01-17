@@ -4,7 +4,6 @@
 namespace giftbox\controller;
 use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
-use giftbox\models\Vote as Vote;
 use giftbox\models\Ip as Ip;
 use giftbox\vue\VueCatalogue as VueCatalogue;
 use giftbox\vue\VuePrestation as VuePrestation;
@@ -32,9 +31,10 @@ class PrestationController {
     	$toutvotes= Ip::where('ip_utilise','=',$adresse_ip)->get();//A FINIR VERIF IP
 
     	$votes=null;
-        $vote= Vote::find($id);
+        $vote= Prestation::find($id);
         $vote['sommevotes']=$vote['sommevotes']+$num;
         $vote['nbvotes']=$vote['nbvotes']+1;
+        $vote['moyenne']=$vote['sommevotes']/$vote['nbvotes'];
         $vote->save();
     	$v= new VuePrestation($liste);
     	$html = $v->affich_general(2,$id);
