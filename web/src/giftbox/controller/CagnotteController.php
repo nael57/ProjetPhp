@@ -21,7 +21,8 @@ class CagnotteController {
 
     //methode qui permettra d'afficher le coffret courant
     public function affich_coffret(){
-        $coffret = Coffret::where('lien','=',$_POST[ 'lien' ])->first();
+        $coffret = Coffret::where('lien','=',$_POST[ 'lien' ])->count();
+
         $liste = Contient::prestations($coffret->id);
         $prest = null;
         foreach($liste as $p){

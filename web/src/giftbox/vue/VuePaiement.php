@@ -232,7 +232,7 @@ class VuePaiement {
     <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="../../'.$this->lien.'js/modernizr-2.6.2.min.js"></script>
+    <script src="../../js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
