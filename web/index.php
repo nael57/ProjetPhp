@@ -160,5 +160,37 @@ $slim->get('/CoffretController/supp_prest/:id', function($id){
     echo $html;
 });
 
+$slim->post('/AdministrateurController/afficher', function(){
+    $c = new AdminCon();
+    $html = $c->afficher_admin();
+    echo $html;
+});
+
+$slim->post('/AdministrateurController/ajout_prest', function(){
+    $c = new AdminCon();
+    $html = $c->ajouter_presta();
+    echo $html;
+});
+
+$slim->post('/AdministrateurController/desactiver_prest', function(){
+    $c = new AdminCon();
+    $html = $c->desactiver_presta();
+    echo $html;
+});
+
+$slim->post('/AdministrateurController/activer_prest', function(){
+    $c = new AdminCon();
+    $html = $c->activer_presta();
+    echo $html;
+});
+
+
+$slim->post('/AdministrateurController/suppr_prest',function(){
+    $c = new AdminCon();
+    $html = $c->supprimer_presta();
+    echo $html;
+});
+
+
 $slim->run();
 
