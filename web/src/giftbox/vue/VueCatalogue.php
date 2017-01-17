@@ -16,10 +16,8 @@ class VueCatalogue {
     //nul ou definissant la categorie ou la prestation a afficher sinon
     private $id;
     //liens vers d'autres pages flexibles selon ou on se trouve
-    private $lienPrest;
-    private $lienCat;
-    private $lienAccueil;
     private $lien = '../../';
+    public $methode='affich_prest_tri';
     
     //contructeur prenant en parametre des prestations ou des categories
     public function __construct( $tableau ){
@@ -54,32 +52,10 @@ class VueCatalogue {
             </div>
             </div>';
         }
-
+        $this->methode='affich_prest_tri';
         return $page;
 
     }
-    /*
-    private function affich_liste_prestdepuiscat(){
-        $page = '<h1> Liste des prestations </h1> <ul> ';
-        $this->lien = $this->lien.'../';
-        foreach($this->tab as $pre){
-            $cat = Categorie::where('id', '=', $pre->cat_id)->first();
-            $page=$page.'<div class="col-lg-4 col-md-4">
-            <div class="fh5co-blog animate-box">
-            <a href="#"><img class="img-responsive" src="../../../images/'.$pre->img.'"alt=""></a>
-            <div class="blog-text">
-            <h3><a href="#">'.$pre->nom.'</a></h3>
-            <span class="posted_on">'.$pre->prix.' €</span>
-            <a href="'.$this->lien.'index.php/PrestationController/affich_prest/'.$pre->id.'" class="btn btn-primary">Lire plus</a>
-            <br> Categorie: '.$cat->nom.'
-            </div> 
-            </div>
-            </div>';
-        }
-        return $page;
-
-    }
-    */
     //methode premettant d'afficher la liste des categories
     private function affich_liste_cat_depuiscata(){
         $cat = Categorie::get();
@@ -90,11 +66,6 @@ class VueCatalogue {
             $page = $page. '<li><a href="'.$this->lien.'index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
-        
-        $this->lienPrest = '../../index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../index.php/CatalogueController/affich_cat';
-        $this->lienAccueil = '../..';
-        
         return $page;
         
     }
@@ -109,11 +80,6 @@ class VueCatalogue {
             $page = $page. '<li><a href="'.$this->lien.'index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
-        
-        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
-        $this->lienAccueil = '../../..';
-        
         return $page;
         
     }
@@ -156,9 +122,7 @@ class VueCatalogue {
             $i++;
         }
         
-        $this->lienPrest = '../../CatalogueController/affich_prest';
-        $this->lienCat = '../../CatalogueController/affich_cat';
-        $this->lienAccueil = '../../..';
+         $this->methode='affich_cat_tri/'.$this->id;
         
         return $page;
     }
@@ -184,6 +148,7 @@ class VueCatalogue {
             </div>';
             $i++;
         }
+        $this->methode='affich_cat_tri/'.$this->id;
         
         return $page;
     }
@@ -300,7 +265,7 @@ class VueCatalogue {
     '.$this->affich_liste_cat_depuiscata().'
     </ul>
     </li>
-    <li><a href="'.$this->lien.'index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
+    <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
     <li class="btn-cta"><a href="'.$this->lien.'index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
@@ -326,8 +291,8 @@ class VueCatalogue {
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
     <h1>Catalogue</h1>
     <h2>Sur ce catalogue, vous pourrez trouver tous les produits proposés par Gift<a href="#">Box</a></h2>
-    <a href="'.$this->lien.'index.php/CatalogueController/affich_prest_tri/desc" class="btn btn-lg">Trier par prix décroissant</a>
-    <a href="'.$this->lien.'index.php/CatalogueController/affich_prest_tri/asc" class="btn btn-lg">Trier par prix croissant</a>
+    <a href="'.$this->lien.'index.php/CatalogueController/'.$this->methode.'/desc" class="btn btn-lg">Trier par prix décroissant</a>
+    <a href="'.$this->lien.'index.php/CatalogueController/'.$this->methode.'/asc" class="btn btn-lg">Trier par prix croissant</a>
     </div>
     </div>
     </div>
@@ -339,24 +304,6 @@ class VueCatalogue {
     <div class="row">'.$content.'</div>
     </div>
     </div>
-    
-    <div id="fh5co-started" style="background-image:url(images/img_bg_2.jpg);">
-    <div class="overlay"></div>
-    <div class="container">
-    <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-    <h2>Lets Get Started</h2>
-    <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-    </div>
-    </div>
-    <div class="row animate-box">
-    <div class="col-md-8 col-md-offset-2 text-center">
-    <p><a href="#" class="btn btn-default btn-lg">Create A Free Course</a></p>
-    </div>
-    </div>
-    </div>
-    </div>
-
      <footer id="fh5co-footer" role="contentinfo">
         <div class="container">
             <div class="row row-pb-md">
