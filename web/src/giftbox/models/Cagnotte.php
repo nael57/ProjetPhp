@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 //on defini le namespace et on recupere la superclasse de cagnotte
 namespace giftbox\models;

@@ -23,7 +23,7 @@ $db->addConnection($tab);
 $db->setAsGlobal();
 $db->bootEloquent();
 $slim = new \Slim\Slim();
-
+unset($_COOKIE['panier']);
 $slim->get('/', function(){
     $c = new Index();
     $html = $c->affichage();

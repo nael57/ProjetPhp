@@ -157,11 +157,11 @@ class VuePaiement {
         $html = '';
         $montant = 0;
         if($liste!=null){
-        foreach($prest as $pre){
-            $html="<li>".$pre->nom." dune valeur de ".$pre->prix. " €</li>";
-            $montant = $montant + $pre->prix;
+            foreach($prest as $pre){
+                $html="<li>".$pre->nom." dune valeur de ".$pre->prix. " €</li>";
+                $montant = $montant + $pre->prix;
+            }
         }
-    }
         
         $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
         
@@ -188,6 +188,7 @@ class VuePaiement {
             $contenu=$this->affich_coffret_validation_ok();
         }elseif($i==4){
             $contenu=$this->paiement_ok($this->lien);
+            unset($_COOKIE['panier']);
         }else{
             $contenu=$this->affich_paiementcarte();
         }
