@@ -51,8 +51,12 @@ class CagnotteController {
                 if($c>0) {
                     $cof=Cadeau::where('idca','=',$post)->first();
                     $coffret = Coffret::where('id', '=', $cof->id_coffret)->first();
-                    $coffret->etatcadeau = 'Ouvert';
-                    $coffret->save();
+                    if($coffret->dateouverture==null || $coffret->etatcadeau != 'Ouvert'){
+                        $coffret->etatcadeau = 'Ouvert';
+                        $coffret->dateouverture = date('l jS \of F Y h:i:s A');
+                        $coffret->save();
+                    }
+
                     $liste = Contient::prestations($coffret->id);
                     foreach ($liste as $p) {
                         $prest[] = Prestation::where('id', '=', $p->id_pre)->first();

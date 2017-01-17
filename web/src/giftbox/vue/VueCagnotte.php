@@ -39,20 +39,6 @@ class VueCagnotte {
     
     </form>';
 
-    $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un cadeau</h1>".' <br>
-    <div class="row"></div><h3>
-    Veuillez saisir votre identifiant cadeau</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
-     <table>              
-                  <tr>
-                    <td>Identifiant : </td>
-                    <td> <input type="text" name="lien2" required/><br></td>
-                  </tr>
-    </table><br>
-    <input type="submit" name="valider" value="Valider">
-    
-    </form>';
-
     $html=$html.'<br><br><br><h1> Accéder à une cagnotte</h1> <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
@@ -110,20 +96,6 @@ class VueCagnotte {
                   <tr>
                     <td>Identifiant : </td>
                     <td> <input type="text" name="liencadeau" required/><br></td>
-                  </tr>
-    </table><br>
-    <input type="submit" name="valider" value="Valider">
-    
-    </form>';
-
-        $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un cadeau</h1>".' <br>
-    <div class="row"></div><h3>
-    Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
-     <table>              
-                  <tr>
-                    <td>Identifiant : </td>
-                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -188,6 +160,9 @@ class VueCagnotte {
         if($this->coffret->etatcadeau!=null){
 
             $html=$html.'<br><br>Voici '."l'état de votre Cadeau : ".$this->coffret->etatcadeau;
+            if($this->coffret->dateouverture!=null){
+                $html=$html.'<br>Date : '.$this->coffret->dateouverture;
+            }
         }
         $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
 
