@@ -24,15 +24,57 @@ class VueCagnotte {
 
     }
     public function affich_form(){
-        $html='<h1> Accéder à un coffret ou à une cagnotte</h1>';
+        $html='<h1> Accéder à un cadeau</h1>';
         $html=$html.'<br>
     <div class="row"></div><h3>
-    Veuillez saisir le lien fourni</h3><br><br>
+    Veuillez saisir votre identifiant coffret</h3><br><br>
     <form action="../../index.php/CagnotteController/affich_coffret" method="post">
      <table>              
                   <tr>
-                    <td>Lien : </td>
-                    <td> <input type="text" name="lien" required/><br></td>
+                    <td>Identifiant : </td>
+                    <td> <input type="text" name="lien1" required/><br></td>
+                  </tr>
+    </table><br>
+    <input type="submit" name="valider" value="Valider">
+    
+    </form>';
+
+    $html=$html.'<br><br><br><h1> Accéder à la gestion dun cadeau</h1> <br>
+    <div class="row"></div><h3>
+    Veuillez saisir votre identifiant cagnotte</h3><br><br>
+    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+     <table>              
+                  <tr>
+                    <td>Identifiant : </td>
+                    <td> <input type="text" name="lien2" required/><br></td>
+                  </tr>
+    </table><br>
+    <input type="submit" name="valider" value="Valider">
+    
+    </form>';
+
+    $html=$html.'<br><br><br><h1> Accéder à une cagnotte</h1> <br>
+    <div class="row"></div><h3>
+    Veuillez saisir votre identifiant cagnotte</h3><br><br>
+    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+     <table>              
+                  <tr>
+                    <td>Identifiant : </td>
+                    <td> <input type="text" name="lien3" required/><br></td>
+                  </tr>
+    </table><br>
+    <input type="submit" name="valider" value="Valider">
+    
+    </form>';
+
+    $html=$html.'<br><br><br><h1> Accéder à la gestion dune cagnotte</h1> <br>
+    <div class="row"></div><h3>
+    Veuillez saisir votre identifiant cagnotte</h3><br><br>
+    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+     <table>              
+                  <tr>
+                    <td>Identifiant : </td>
+                    <td> <input type="text" name="lien4" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
