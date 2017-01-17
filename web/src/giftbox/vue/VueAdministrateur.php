@@ -209,7 +209,7 @@ class VueAdministrateur {
 <br>
             Tarif:<input type="text" name="tarif" /><br>
             Description:<textarea name="description" ></textarea><br>   
-            Image: <input type="file" name="nom_du_fichier" /><br>
+            Image: <input type="file" name="nom_du_fichier"/><br>
             <input type = "submit" value = "Ajouter une prestation">
         </form>
 

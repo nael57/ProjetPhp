@@ -36,7 +36,7 @@ class AdministrateurController{
 	}
 
 	public function ajouter_presta(){
-		if(!empty($_POST['nom']) && !empty($_POST['tarif']) && !empty($_POST['description' && isset($_POST['ajout'])])){
+		if(!empty($_POST['nom']) && !empty($_POST['tarif']) && !empty($_POST['description']) && isset($_POST['ajout'])){
 			if(isset($_FILES['nom_du_fichier'])){
 				$errors= array();
 				$file_name = $_FILES['nom_du_fichier']['name'];
@@ -63,8 +63,6 @@ class AdministrateurController{
 					$con->cat_id= $cat['id'];
 					$con->etat="actif";
 					$con->save();
-					$id=Prestation::where('nom','=',$_POST['nom'])->first();
-					$id=$id['id'];
 					echo"Upload réussi !";
 				}
 				else{
