@@ -2,25 +2,50 @@
 
 //definition du namespace
 namespace giftbox\vue;
-
+use giftbox\models\Prestation as Prestation;
+use giftbox\models\Categorie as Categorie;
+use giftbox\models\Contient as Contient;
 //Classe vue pour le catalogue
 class VueCagnotte {
-
+    private $problemelien;
     //prestation envoyee par le controller
+    private $presta;
     private $coffret;
 
-    public function __construct($po=null){
-        $this->coffret = $po;
+    public function __construct($coff=null,$po=null,$probleme=null){
+        $this->presta = $po;
+        $this->coffret=$coff;
+        $this->problemelien=$probleme;
     }
 
     public function affich_general($i){
-        $this->render($i);
+        $html=$this->render($i);
+        return $html;
+
     }
     public function affich_form(){
+        $html='<h1> Accéder à un coffret ou à une cagnotte</h1>';
+        $html=$html.'<br>
+    <div class="row"></div><h3>
+    Veuillez saisir le lien fourni</h3><br><br>
+    <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+     <table>              
+                  <tr>
+                    <td>Lien : </td>
+                    <td> <input type="text" name="lien" required/><br></td>
+                  </tr>
+    </table><br>
+    <input type="submit" name="valider" value="Valider">
+    
+    </form>';
+        return $html;
+    }
+
+    public function affich_form_erreur(){
 
         $html='<br>
     <div class="row"></div>
-    Veuillez saisir le lien fourni<br>
+    <font color="red">Veuillez saisir un lien valide</font><br>
     <form action="../../index.php/CagnotteController/affich_coffret" method="post">
      <table>              
                   <tr>
@@ -31,6 +56,50 @@ class VueCagnotte {
     <input type="submit" name="valider" value="Valider">
     
     </form>';
+        return $html;
+    }
+
+    public function affich_contenu_coffret(){
+        $html='Voici le contenu de ce coffret :<br>';
+        $montant=0;
+        foreach($this->presta as $pre){
+            $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.'€';
+            $html= $html.'      <a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/supp_prest/' . $this->coffret->id . '/'.$pre->id.'">Supprimer</a><br>';
+            $prix = $pre->prix;
+            $montant = $montant + $prix;
+        }
+
+        $html=$html.'<br> Montant total :'.$montant;
+        $html=$html.'<br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
+
+        return $html;
+    }
+
+
+    public function affich_coffret()
+    {
+        if (isset($_COOKIE['panier'])) {
+            $liste = Contient::prestations($_COOKIE['panier']);
+        } else {
+            $liste = null;
+        }
+        $prest = null;
+        if ($liste != null) {
+            foreach ($liste as $p) {
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }
+        $html = '';
+        $montant = 0;
+        if ($liste != null && $prest != null) {
+            foreach ($prest as $pre) {
+                $html = "<li>" . $pre->nom . " dune valeur de " . $pre->prix . " €</li>";
+                $montant = $montant + $pre->prix;
+            }
+        }
+
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../'.$this->problemelien.'index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
+
         return $html;
     }
 
@@ -54,13 +123,16 @@ class VueCagnotte {
 
     private function render($i)
     {
-        if($i==1){
-            $contenu=$this->affich_form();
+        if($i==2){
+            $contenu=$this->affich_contenu_coffret();
+        }elseif($i==3){
+            $contenu=$this->affich_form_erreur();
         }else{
-            $contenu=$this->affich_paiementcarte();
+            $contenu=$this->affich_form();
         }
 
         $content = $this->affich_liste_cat();
+
         $html = ' <!DOCTYPE HTML>
     <html>
     <head>
@@ -82,24 +154,24 @@ class VueCagnotte {
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
     <!-- Animate.css -->
-    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="../../css/icomoon.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/bootstrap.css">
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="../../css/magnific-popup.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/magnific-popup.css">
 
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/owl.theme.default.min.css">
 
     <!-- Theme style  -->
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../'.$this->problemelien.'css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="../../'.$this->lien.'js/modernizr-2.6.2.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
@@ -120,7 +192,7 @@ class VueCagnotte {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../">Accueil</a></li>
+    <li ><a href="../../'.$this->problemelien.'">Accueil</a></li>
     <li class="has-dropdown" >
     <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
@@ -128,7 +200,7 @@ class VueCagnotte {
     </ul>
     </li>
     <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
+    <li class="btn-cta"><a href="../../'.$this->problemelien.'index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
@@ -225,27 +297,28 @@ class VueCagnotte {
     </div>
     
     <!-- jQuery -->
-    <script src="../../js/jquery.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/jquery.min.js"></script>
     <!-- jQuery Easing -->
-    <script src="../../js/jquery.easing.1.3.js"></script>
+    <script src="../../'.$this->problemelien.'js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
-    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/bootstrap.min.js"></script>
     <!-- Waypoints -->
-    <script src="../../js/jquery.waypoints.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
-    <script src="../../js/jquery.stellar.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/jquery.stellar.min.js"></script>
     <!-- Carousel -->
-    <script src="../../js/owl.carousel.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/owl.carousel.min.js"></script>
     <!-- countTo -->
-    <script src="../../js/jquery.countTo.js"></script>
+    <script src="../../'.$this->problemelien.'js/jquery.countTo.js"></script>
     <!-- Magnific Popup -->
-    <script src="../../js/jquery.magnific-popup.min.js"></script>
-    <script src="../../js/magnific-popup-options.js"></script>
+    <script src="../../'.$this->problemelien.'js/jquery.magnific-popup.min.js"></script>
+    <script src="../../'.$this->problemelien.'js/magnific-popup-options.js"></script>
     <!-- Main -->
-    <script src="../../js/main.js"></script>
+    <script src="../../'.$this->problemelien.'js/main.js"></script>
 
     </body>
     </html>';
+
         return $html;
     }
 }

@@ -86,7 +86,7 @@ class VueAdministrateur {
         }
         $html = '';
         $montant = 0;
-        if($liste!=null){
+        if($liste!=null && $prest != null){
         foreach($prest as $pre){
             $html="<li>".$pre->nom." dune valeur de ".$pre->prix. " €</li>";
             $montant = $montant + $pre->prix;

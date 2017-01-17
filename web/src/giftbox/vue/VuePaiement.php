@@ -64,7 +64,7 @@ class VuePaiement {
         if(!empty($this->prestation)) {
             $montant=0;
             foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br><br>';
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
             }
@@ -81,7 +81,7 @@ class VuePaiement {
             $montant=0;
             foreach($this->prestation as $pre){
                 $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€  ';
-                $html = $html . '<a class="btn btn-primary btn-lg btn-learn" href="../CoffretController/supp_prest/' . $pre->id . '">Supprimer</a><br>';
+                $html = $html . '<a class="btn btn-primary btn-lg btn-learn" href="../CoffretController/supp_prest/' . $pre->id . '">Supprimer</a><br><br>';
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
             }
@@ -149,14 +149,14 @@ class VuePaiement {
             $liste=null;
         }
         $prest = null;
-        if($liste!=null){
+        if($liste!=null && $prest != null){
         foreach($liste as $p){
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
         }
         }
         $html = '';
         $montant = 0;
-        if($liste!=null){
+        if($liste!=null && $prest != null){
             foreach($prest as $pre){
                 $html="<li>".$pre->nom." dune valeur de ".$pre->prix. " €</li>";
                 $montant = $montant + $pre->prix;

@@ -52,7 +52,7 @@ class VueIndex {
         }
         $html = '';
         $montant = 0;
-        if($liste!=null){
+        if($liste!=null && $prest != null){
             foreach($prest as $pre){
                 $html=$html."<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
                 $montant = $montant + $pre->prix;
@@ -138,7 +138,7 @@ class VueIndex {
                                     '.$this->affich_liste_cat().'
                                 </ul>
                             </li>
-                            <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
+                            <li><a href="index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
                             <li class="btn-cta"><a href="index.php/ConnexionController/affich"><span>Connexion</span></a></li>
                             <li class="has-dropdown">
                                 <a href="#"><span>Coffret</span></a>

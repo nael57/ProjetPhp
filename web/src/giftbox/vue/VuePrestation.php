@@ -68,7 +68,7 @@ class VuePrestation {
         }
         $html = '';
         $montant = 0;
-        if($liste!=null){
+        if($liste!=null && $prest != null){
             foreach($prest as $pre){
                 $html="<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
                 $montant = $montant + $pre->prix;

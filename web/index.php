@@ -9,6 +9,7 @@
 require_once 'vendor/autoload.php';
 
 use giftbox\vue\VueCatalogue as VueCatalogue;
+use giftbox\vue\VueCagnotte as VueCagnotte;
 use Illuminate\Database\Capsule\Manager as DB;
 use giftbox\controller\CatalogueController as CatalogueCon;
 use giftbox\controller\CoffretController as CoffretCon;
@@ -192,15 +193,21 @@ $slim->post('/AdministrateurController/suppr_prest',function(){
     echo $html;
 });
 
-$slim->get('/CagnotteController/', function(){
+$slim->get('/CagnotteController/form', function(){
     $c = new CagnotteCon();
-    $html = $c->afficher_form();
+    $html = $c->affich_form();
     echo $html;
 });
 
 $slim->post('/CagnotteController/affich_coffret', function(){
     $c = new CagnotteCon();
-    $html = $c->afficher_coffret();
+    $html = $c->affich_coffret();
+    echo $html;
+});
+
+$slim->get('/CagnotteController/supp_prest/:co/:id', function($co,$id){
+    $c = new CagnotteCon();
+    $html = $c->supp_prest($co,$id);
     echo $html;
 });
 
