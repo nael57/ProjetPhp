@@ -98,7 +98,7 @@ class PaiementController {
             $coffret->save();
 
             $c = new Coffret();
-            unset($_COOKIE['panier']);
+            setcookie('panier', '', time() - 3600, '/');
             $v = new VuePaiement(null,$lien);
             $html=$v->affich_general(4);
         }

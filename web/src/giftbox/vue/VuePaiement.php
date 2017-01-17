@@ -64,13 +64,14 @@ class VuePaiement {
         if(!empty($this->prestation)) {
             $montant=0;
             foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br><br>';
+                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€  ';
+                $html = $html . '<a class="btn btn-primary btn-lg btn-learn" href="../CoffretController/supp_prest/' . $pre->id . '">Supprimer</a><br><br>';
                 $prix = $pre->prix;
                 $montant = $montant + $prix;
             }
             $html = $html.'Montant total : '.$montant.'€<br><br>';
         }else{
-            $html='votre panier est vide';
+            $html='Votre panier est vide';
         }
         return $html;
     }
@@ -260,7 +261,7 @@ class VuePaiement {
     '.$content.'
     </ul>
     </li>
-    <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
+    <li><a href="../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
     <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>

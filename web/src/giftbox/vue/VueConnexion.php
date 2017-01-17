@@ -130,7 +130,7 @@ class VueConnexion {
                                         '.$content.'
                                     </ul>
                                 </li>
-                                <li><a href="#">Accéder à un coffret ou à une cagnotte</a></li>
+                                <li><a href="../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
                                 <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
                                 <li class="has-dropdown">
                                     <a href="#"><span>Coffret</span></a>
