@@ -44,13 +44,7 @@ class VuePrestation {
 
     public function affich_moyenne(){
         $vote = Vote::where('id_vote','=',$this->id)->first();
-        if($vote['nbvotes']==0){
-            $moyenne=0;
-        }
-        else{
-            $moyenne=$vote['sommevotes']/$vote['nbvotes'];
-        }
-        return $moyenne;
+        return $vote['moyenne'];
     }
 
     public function affich_coffret(){

@@ -35,6 +35,7 @@ class PrestationController {
         $vote= Vote::find($id);
         $vote['sommevotes']=$vote['sommevotes']+$num;
         $vote['nbvotes']=$vote['nbvotes']+1;
+        $vote['moyenne']=$vote['sommevotes']/$vote['nbvotes'];
         $vote->save();
     	$v= new VuePrestation($liste);
     	$html = $v->affich_general(2,$id);
