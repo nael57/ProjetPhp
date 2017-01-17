@@ -38,7 +38,7 @@ class AdministrateurController{
 	}
 
 	public function ajouter_presta(){
-		if(!empty($_POST['nom']) && !empty($_POST['tarif']) && !empty($_POST['description'])){
+		if(!empty($_POST['nom']) && !empty($_POST['tarif']) && !empty($_POST['description' && isset($_POST['ajout'])])){
 			if(isset($_FILES['nom_du_fichier'])){
 				$errors= array();
 				$file_name = $_FILES['nom_du_fichier']['name'];
@@ -84,6 +84,7 @@ class AdministrateurController{
 
 	public function desactiver_presta(){
 		$presta =Prestation::get();
+		if(isset($_POST['desac'])){
 		foreach ($presta as $value) {
 			if($value['nom']==$_POST['desac']){
 				$value['etat']="desactif";
@@ -91,12 +92,14 @@ class AdministrateurController{
 			}
 		}
 		echo "<h2> Desactivation OK ! </h2>";
+	 }
 		$v = new VueAdministrateur();
 		return $v->affich_general();
 	}
 
 	public function activer_presta(){
 		$presta =Prestation::get();
+		if(isset($_POST['acti'])){
 		foreach ($presta as $value) {
 			if($value['nom']==$_POST['acti']){
 				$value['etat']="actif";
@@ -104,12 +107,13 @@ class AdministrateurController{
 			}
 		}
 		echo "<h2> Activation OK ! </h2>";
+	}
 		$v = new VueAdministrateur();
 		return $v->affich_general();
 	}
 
 	public function supprimer_presta(){
-		$presta =Prestation::where('nom','=',$_POST['sup']);
+		$presta =Prestation::where('nom','=',$_POST['sup'])->first();
 		$id = $presta['id'];
 		$presta->delete();
 		$vote = Vote::where('id','=',$id)->delete();
