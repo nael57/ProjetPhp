@@ -17,6 +17,7 @@ use giftbox\controller\PrestationController as PrestaCon;
 use giftbox\controller\IndexController as Index;
 use giftbox\controller\ConnexionController as ConnexionCon;
 use giftbox\controller\PaiementController as PaiementCon;
+use giftbox\controller\AdministrateurController as AdminCon;
 //creation de la connexion
 $db = new DB();
 $tab = parse_ini_file('src/conf/conf.ini');
