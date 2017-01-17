@@ -5,7 +5,6 @@ namespace giftbox\vue;
 use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Contient as Contient;
-use giftbox\models\Vote as Vote;
 
 
 //Classe vue pour le catalogue
@@ -43,7 +42,7 @@ class VuePrestation {
     }
 
     public function affich_moyenne(){
-        $vote = Vote::where('id_vote','=',$this->id)->first();
+        $vote = Prestation::where('id','=',$this->id)->first();
         return $vote['moyenne'];
     }
 
