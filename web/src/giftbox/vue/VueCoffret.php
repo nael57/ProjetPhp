@@ -19,6 +19,7 @@ class VueCoffret {
     private $sel;
     //nul ou definissant la prestation a manipuler
     private $id;
+    private $l;
 
     //contructeur prenant en parametre des prestations a ajouter, afficher,...
     public function __construct($tableau){
@@ -35,24 +36,20 @@ class VueCoffret {
     
     //methode pour permet d'ajouter une prestation au panier
     public function ajout_prest(){
-        $html = 'La prestation numéro ' . $this->id . ' a été ajoutée au coffret !<br>';
+        $p=Prestation::find($this->tab->id_pre);
+        $html = 'La prestation ' . $p->nom . ' a été ajoutée au coffret !<br>';
         return $html;
     }
 
     private function affich_liste_cat(){
         $cat = Categorie::get();
-        $this->tab=$cat;
+        $this->l=$cat;
         $page = '';
         $i = 1;
-        foreach($this->tab as $pre){
+        foreach($this->l as $pre){
             $page = $page. '<li><a href="../../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
-        
-        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
-        $this->lienAccueil = '../../..';
-        
         return $page;
         
     }
