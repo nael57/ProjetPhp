@@ -108,7 +108,8 @@ class AdministrateurController{
 
 	public function supprimer_presta(){
 		$presta =Prestation::where('nom','=',$_POST['sup'])->first();
-		$id = $presta['id'];
+		$img = $presta['img'];
+		unlink ('images/'.$img);
 		$presta->delete();
 		echo "<h2> Suppression OK ! </h2>";
 		$v = new VueAdministrateur();
