@@ -14,6 +14,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 use giftbox\controller\CatalogueController as CatalogueCon;
 use giftbox\controller\CoffretController as CoffretCon;
 use giftbox\controller\CagnotteController as CagnotteCon;
+use giftbox\controller\CadeauController as CadeauCon;
 use giftbox\controller\PrestationController as PrestaCon;
 use giftbox\controller\IndexController as Index;
 use giftbox\controller\ConnexionController as ConnexionCon;
@@ -211,5 +212,10 @@ $slim->get('/CagnotteController/supp_prest/:co/:id', function($co,$id){
     echo $html;
 });
 
+$slim->get('/CadeauController/confirm/:id', function($id){
+    $c = new CadeauCon();
+    $html = $c->confirmcad($id);
+    echo $html;
+});
 $slim->run();
 

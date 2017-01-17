@@ -8,17 +8,24 @@ use giftbox\models\Contient as Contient;
 
 
 //Classe vue pour le catalogue
-class VuePaiement {
+class VueCadeau {
 
     //prestation envoyee par le controller
-    private $prestation,$sel,$id,$url,$coffret;
+    private $prestation,$sel,$id,$urlca,$coffret;
     
-    public function __construct( $presta=null,$coffret=null ){
-        $this->prestation = $presta;
-        $this->coffret=$coffret;
+    public function __construct( $cof=null,$lien=null ){
+        $this->coffret = $cof;
+        $this->urlca=$lien;
     }
     public function affich_general($i){
         $html = $this->render($i);
+        return $html;
+    }
+
+    public function confirmer_envoie(){
+        $html='<h1>Envoi de cadeau</h1><br>';
+        $html=$html."Le cadeau à bien été envoyé à l'adresse : ".$this->coffret->mail;
+        $html=$html.'<br>(Le lien cadeau est : '.$this->urlca.')';
         return $html;
     }
 
@@ -40,106 +47,8 @@ class VuePaiement {
         
     }
 
-    public function affich_coffretpaiement(){
-        $html='';
-        if(!empty($this->prestation)) {
-            $montant=0;
-            foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€'. '<br>';
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
-            $html = $html.'Montant total : '.$montant.'€<br><br>'.'
-    <div class="row"></div>
-    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a>
-    <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/CoffretController/ajout_prest/' . $this->id . '">Payer via cagnotte</a>';
-        }else{
-            $html='votre panier est vide';
-        }
-        return $html;
-    }
 
-    public function affich_coffret_validation(){
-        $html='<h1><font color="red"> Attention !</font></h1><p>Votre coffret doit contenir au moins 2 prestations de 2 catégories différentes</p><br>';
-        if(!empty($this->prestation)) {
-            $montant=0;
-            foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€  ';
-                $html = $html . '<a class="btn btn-primary btn-lg btn-learn" href="../CoffretController/supp_prest/' . $pre->id . '">Supprimer</a><br><br>';
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
-            $html = $html.'Montant total : '.$montant.'€<br><br>';
-        }else{
-            $html='Votre panier est vide';
-        }
-        return $html;
-    }
 
-    public function affich_coffret_validation_ok(){
-        $html='';
-        if(!empty($this->prestation)) {
-            $montant=0;
-            foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' '.$pre->prix.'€  ';
-                $html = $html . '<a class="btn btn-primary btn-lg btn-learn" href="../CoffretController/supp_prest/' . $pre->id . '">Supprimer</a><br><br>';
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
-            $html = $html.'Montant total : '.$montant.'€<br><br>'.'
-    <div class="row"></div>
-    <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_paiement">Valider mon coffret</a>';
-        }else{
-            $html='votre panier est vide';
-        }
-        return $html;
-    }
-
-    public function affich_paiementcarte(){
-        $html='';
-        $montant=0;
-            foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' : '.$pre->prix.'€'. '<br>';
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
-        $html=$html.'<br>
-    <div class="row"></div>
-    Veuillez remplir le formulaire de paiement<br>
-    <form action="../../index.php/PaiementController/validerpaiement" method="post">
-     <table>              
-                  <tr>
-                    <td>Nom : </td>
-                    <td> <input type="text" name="nom" required/><br></td>
-                  </tr>
-                  <tr>
-                    <td>Prénom : </td>
-                    <td><input type="text" name="prenom" required/></td>
-                  </tr>   
-                  <tr>
-                    <td>Mail : </td>
-                    <td><input type="email" name="mail" required/></td>
-                  </tr>
-                  <tr>
-                    <td>Mot de passe :(optionnel)</td>
-                    <td><input type="password" name="mdp"></td>
-                  </tr>
-                   <tr>
-                     <td>Numéro de carte bancaire : </td>
-                    <td><input type="text" name="numcarte" required/></td>
-                  </tr>                     
-                  <tr>
-                    <td>Commentaire :(optionnel)</td>
-                    <td><textarea name="commentaire" rows="7" cols="30"></textarea></td>
-                  </tr>
-    </table>
-    Montant total de la transaction : '.$montant.'€<br>
-    <input type="submit" name="valider" value="Valider">
-    
-    </form>';
-    return $html;
-
-    }
 
 
     public function affich_coffret(){
@@ -152,7 +61,7 @@ class VuePaiement {
         $prest = null;
         if($liste!=null && $prest != null){
         foreach($liste as $p){
-            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
         }
         }
         $html = '';
@@ -163,33 +72,19 @@ class VuePaiement {
                 $montant = $montant + $pre->prix;
             }
         }
-        
+
         $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
-        
-        return $html;
-    }
-    public function paiement_ok($lien){
 
-        $html='Votre paiement a été validé';
-        $html=$html.'<br>Voici url de gestion de votre coffret (NE PAS PERDE CE LIEN !!!): '.$lien;
-        $html = $html . '<br><a class="btn btn-primary btn-lg btn-learn" href="../CadeauController/confirm/' . $this->coffret->id . '">Offrir en cadeau</a><br><br>';
-        $html=$html.'<br><a href="../../"><strong>Retour à l'."'accueil</strong></a>";
         return $html;
-
     }
 
 
     private function render($i)
     {
         if($i==1){
-            $contenu=$this->affich_coffretpaiement();
-        }
-        elseif($i==2) {
-            $contenu=$this->affich_coffret_validation();
-        }elseif($i==3) {
-            $contenu=$this->affich_coffret_validation_ok();
+            $contenu=$this->confirmer_envoie();
         }elseif($i==4){
-            $contenu=$this->paiement_ok($this->coffret->lien);
+            $contenu=$this->paiement_ok($this->url);
             unset($_COOKIE['panier']);
         }else{
             $contenu=$this->affich_paiementcarte();
@@ -217,21 +112,21 @@ class VuePaiement {
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
     <!-- Animate.css -->
-    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="stylesheet" href="../../../css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="../../css/icomoon.css">
+    <link rel="stylesheet" href="../../../css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../../css/bootstrap.css">
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="../../css/magnific-popup.css">
+    <link rel="stylesheet" href="../../../css/magnific-popup.css">
 
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../../css/owl.theme.default.min.css">
 
     <!-- Theme style  -->
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../../css/style.css">
 
     <!-- Modernizr JS -->
     <script src="../../js/modernizr-2.6.2.min.js"></script>
@@ -255,15 +150,15 @@ class VuePaiement {
     </div>
     <div class="col-xs-11 text-right menu-1">
     <ul>
-    <li ><a href="../../">Accueil</a></li>
+    <li ><a href="../../../">Accueil</a></li>
     <li class="has-dropdown" >
-    <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
+    <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
     '.$content.'
     </ul>
     </li>
-    <li><a href="../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
-    <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
+    <li><a href="../../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
+    <li class="btn-cta"><a href="../../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
     <ul class="dropdown">
@@ -360,24 +255,24 @@ class VuePaiement {
     </div>
     
     <!-- jQuery -->
-    <script src="../../js/jquery.min.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
     <!-- jQuery Easing -->
-    <script src="../../js/jquery.easing.1.3.js"></script>
+    <script src="../../../js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
-    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
     <!-- Waypoints -->
-    <script src="../../js/jquery.waypoints.min.js"></script>
+    <script src="../../../js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
-    <script src="../../js/jquery.stellar.min.js"></script>
+    <script src="../../../js/jquery.stellar.min.js"></script>
     <!-- Carousel -->
-    <script src="../../js/owl.carousel.min.js"></script>
+    <script src="../../../js/owl.carousel.min.js"></script>
     <!-- countTo -->
-    <script src="../../js/jquery.countTo.js"></script>
+    <script src="../../../js/jquery.countTo.js"></script>
     <!-- Magnific Popup -->
-    <script src="../../js/jquery.magnific-popup.min.js"></script>
-    <script src="../../js/magnific-popup-options.js"></script>
+    <script src="../../../js/jquery.magnific-popup.min.js"></script>
+    <script src="../../../js/magnific-popup-options.js"></script>
     <!-- Main -->
-    <script src="../../js/main.js"></script>
+    <script src="../../../js/main.js"></script>
 
     </body>
     </html>';
