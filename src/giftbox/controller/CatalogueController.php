@@ -15,15 +15,15 @@ class CatalogueController {
 
         if($id==null){
             if($order=='desc'){
-                $liste = Prestation::where('etat','=','actif')->Orderby('prix', 'desc')->get();
+                $liste = Prestation::Orderby('prix', 'desc')->get();
                 $v = new VueCatalogue($liste);
                 $html = $v->affich_general(2, null);
             }elseif ($order=='asc'){
-                $liste = Prestation::where('etat','=','actif')->Orderby('prix', 'asc')->get();
+                $liste = Prestation::Orderby('prix', 'asc')->get();
                 $v = new VueCatalogue($liste);
                 $html = $v->affich_general(2, null);
             }else {
-                $liste = Prestation::where('etat','=','actif')->get();
+                $liste = Prestation::get();
                 $v = new VueCatalogue($liste);
                 $html = $v->affich_general(1, null);
             }
@@ -42,21 +42,24 @@ class CatalogueController {
     */
     public function affich_cat($id_cat,$order=null){
         if($id_cat==null){
-            $liste = Prestation::get();
+            $liste = Categorie::get();
             $v = new VueCatalogue($liste);
             $html = $v->affich_general(4, null);
         }
         else {
             if($order=='asc'){
-                $prest=Prestation::where('etat','=','actif')->where('cat_id','=',$id_cat)->Orderby('prix','asc')->get();
+                $categorie = Categorie::where('id', '=', $id_cat)->first();
+                $prest = $categorie->prestations()->Orderby('prix','asc')->get();
                 $v = new VueCatalogue($prest);
                 $html = $v->affich_general(4, $id_cat);
             }elseif($order=='desc'){
-                $prest=Prestation::where('etat','=','actif')->where('cat_id','=',$id_cat)->Orderby('prix','desc')->get();
+                $categorie = Categorie::where('id', '=', $id_cat)->first();
+                $prest = $categorie->prestations()->Orderby('prix','desc')->get();
                 $v = new VueCatalogue($prest);
                 $html = $v->affich_general(4, $id_cat);
             }else {
-                $prest=Prestation::where('etat','=','actif')->where('cat_id','=',$id_cat)->get();
+                $categorie = Categorie::where('id', '=', $id_cat)->first();
+                $prest = $categorie->prestations()->get();
                 $v = new VueCatalogue($prest);
                 $html = $v->affich_general(3, $id_cat);
             }
