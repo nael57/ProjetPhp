@@ -49,7 +49,12 @@ class VueCadeau {
     }
 
     public function affich_contenu_coffret(){
-        $html='Voici le contenu de ce cadeau :<br>';
+        $html='<h2>Voici le contenu de ce cadeau :</h2><br><div id="fh5co-testimonial" class="fh5co-bg-section">
+        <div class="container"><div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row animate-box">
+                        <div class="owl-carousel owl-carousel-fullwidth">
+';
         $montant=0;
         $liste = Contient::prestations($this->coffret->id);
         $prest=array();
@@ -58,11 +63,16 @@ class VueCadeau {
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
         }
         foreach($prest as $pre){
-            $html = $html .'<br><br><img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr;
+            $html = $html .'<div class="item">
+                                <div class="testimony-slide active text-center">
+                                    <figure>
+                                        <img src="../../images/'.$pre->img.'" alt="user" class="img-responsive">
+                                    </figure><span>'. $pre->nom.'</span><blockquote> '.$pre->descr.'</blockquote></div>
+                            </div>';
 
         }
 
-        $html= $html . '<br><br>'.$this->coffret->commentaire;
+        $html= $html . '<br></div></div></div></div></div></div><br>Voici le commentaire de '.$this->coffret->prenom.': '.$this->coffret->commentaire;
         $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
 
         return $html;
@@ -170,7 +180,7 @@ class VueCadeau {
     <ul>
     <li ><a href="../../'.$this->problemelien.'">Accueil</a></li>
     <li class="has-dropdown" >
-    <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
+    <a href="../../'.$this->problemelien.'index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
     '.$content.'
     </ul>
@@ -199,7 +209,7 @@ class VueCadeau {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Voici, ci dessous le contenu de votre coffret</h1>
+    <h1>Voici, ci dessous le contenu de votre coffret cadeau offert par '.$this->coffret->prenom.'</h1>
     </div>
     </div>
     </div>
@@ -227,30 +237,20 @@ class VueCadeau {
                         ' . $this->affich_liste_cat() . '
                     </ul>
                 </div>
-
-                <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-                    <h4>Laventure GiftBox</h4>
-                    <ul class="fh5co-footer-links">
-                        <li><a href="#">Le concept</a></li>
-                        <li><a href="#">Qui sommes nous</a></li>
-                    </ul>
-                </div>
-
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Nos partenaires</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">IUT Charlemagne</a></li>
+                       <li><a href="http://iut-charlemagne.univ-lorraine.fr/" target="_blank">IUT Charlemagne</a></li>
                         <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-                        <li><a href="#">OpenClassroom</a></li>
-                        <li><a href="#">Youtube</a></li>
+                        <li><a href="https://openclassrooms.com/" target="_blank">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr" target="_blank">Youtube</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Connexion</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">Se connecter</a></li>
-                        <li><a href="#">Se déconnecter</a></li>
+                        <li><a href="../../'.$this->problemelien.'index.php/ConnexionController/affich">Se connecter</a></li>
                     </ul>
                 </div>
             </div>

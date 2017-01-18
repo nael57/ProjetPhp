@@ -5,7 +5,7 @@ namespace giftbox\models;
 require_once 'vendor/illuminate/database/Eloquent/Model.php';
 use Illuminate\Database\Eloquent\Model as Model;
 
-//classe Cagnotte qui extends de Model 
+//classe Cagnotte qui extends de Model
 class Cagnotte extends Model
 {
 

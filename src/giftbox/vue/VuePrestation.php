@@ -207,30 +207,20 @@ class VuePrestation {
         ' . $this->affich_liste_cat() . '
         </ul>
         </div>
-
-        <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-        <h4>Laventure GiftBox</h4>
-        <ul class="fh5co-footer-links">
-        <li><a href="#">Le concept</a></li>
-        <li><a href="#">Qui sommes nous</a></li>
-        </ul>
-        </div>
-
         <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
         <h4>Nos partenaires</h4>
         <ul class="fh5co-footer-links">
-        <li><a href="#">IUT Charlemagne</a></li>
-        <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-        <li><a href="#">OpenClassroom</a></li>
-        <li><a href="#">Youtube</a></li>
+        <li><a href="http://iut-charlemagne.univ-lorraine.fr/" target="_blank">IUT Charlemagne</a></li>
+                        <li><a href="#">Cours en PHP de Monsieur B.</a></li>
+                        <li><a href="https://openclassrooms.com/" target="_blank">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr" target="_blank">Youtube</a></li>
         </ul>
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
         <h4>Connexion</h4>
         <ul class="fh5co-footer-links">
-        <li><a href="#">Se connecter</a></li>
-        <li><a href="#">Se déconnecter</a></li>
+        <li><a href="../../../index.php/ConnexionController/affich">Se connecter</a></li>
         </ul>
         </div>
         </div>
@@ -408,28 +398,19 @@ class VuePrestation {
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-        <h4>Laventure GiftBox</h4>
-        <ul class="fh5co-footer-links">
-        <li><a href="#">Le concept</a></li>
-        <li><a href="#">Qui sommes nous</a></li>
-        </ul>
-        </div>
-
-        <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
         <h4>Nos partenaires</h4>
         <ul class="fh5co-footer-links">
-        <li><a href="#">IUT Charlemagne</a></li>
-        <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-        <li><a href="#">OpenClassroom</a></li>
-        <li><a href="#">Youtube</a></li>
+        <li><a href="http://iut-charlemagne.univ-lorraine.fr/" target="_blank">IUT Charlemagne</a></li>
+                        <li><a href="#">Cours en PHP de Monsieur B.</a></li>
+                        <li><a href="https://openclassrooms.com/" target="_blank">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr" target="_blank">Youtube</a></li>
         </ul>
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
         <h4>Connexion</h4>
         <ul class="fh5co-footer-links">
-        <li><a href="#">Se connecter</a></li>
-        <li><a href="#">Se déconnecter</a></li>
+        <li><a href="../../../../index.php/ConnexionController/affich">Se connecter</a></li>
         </ul>
         </div>
         </div>

@@ -3,10 +3,10 @@
 //definition du namespace et des classes a utiliser
 namespace giftbox\controller;
 use giftbox\models\Categorie as Categorie;
-use giftbox\models\Cagnotte as Cagnotte;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Coffret as Coffret;
 use giftbox\models\Contient as Contient;
+use giftbox\models\Cagnotte as Cagnotte;
 use giftbox\vue\VueCoffret as VueCoffret;
 use giftbox\vue\VuePaiement as VuePaiement;
 
@@ -15,7 +15,6 @@ class PaiementController {
     public function afficher_paiement(){
     	if(isset ($_COOKIE[ 'panier' ])){
         $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-        $coffret = Coffret::where('id','=',$_COOKIE[ 'panier' ])->first();
         }
         else{
             $liste=null;
@@ -27,7 +26,7 @@ class PaiementController {
                 $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
             }
         }
-
+        $coffret = Coffret::where('id','=',$_COOKIE[ 'panier' ])->first();
         $v = new VuePaiement($prest,$coffret);
         return $v->affich_general(1);
     }
@@ -59,8 +58,8 @@ class PaiementController {
         if(count($listcat)>1 && $taille>1){
             $i=3;
         }
-
-        $v = new VuePaiement($prest);
+        $coffret = Coffret::where('id','=',$_COOKIE[ 'panier' ])->first();
+        $v = new VuePaiement($prest,$coffret);
         return $v->affich_general($i);
     }
 
@@ -95,7 +94,7 @@ class PaiementController {
             $lien=$this->getGUID();
             $coffret->lien=$lien;
             if($_POST['mdp']!=null){
-               $coffret->mdp= password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+               $coffret->mdp= crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls");
             }
             $coffret->save();
 
@@ -108,7 +107,6 @@ class PaiementController {
     }
 
     public function validerCagnotte($id){
-
         $html='';
         $coffret=Coffret::where('id', '=', $id)->first();
         if($coffret!=null) {
@@ -118,12 +116,12 @@ class PaiementController {
 
             $prest = array();
 
-                $liste = Contient::prestations($id);
-                if($liste!=null){
-                    foreach ($liste as $p) {
-                        $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
-                    }
+            $liste = Contient::prestations($id);
+            if($liste!=null){
+                foreach ($liste as $p) {
+                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
                 }
+            }
 
             $montant=0;
 
@@ -145,8 +143,6 @@ class PaiementController {
 
             }
 
-
-
             $v=new VuePaiement(null,$coffret,$cagnotte,'../');
             setcookie('panier', '', time() - 3600, '/');
             $html=$v->affich_general(10);
@@ -163,7 +159,7 @@ class PaiementController {
             return com_create_guid();
         }
         else {
-            mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+            mt_srand((double)microtime()*10000);
             $charid = strtoupper(md5(uniqid(rand(), true)));
             $uuid=substr($charid, 0, 8).substr($charid, 8, 4)
                 .substr($charid,12, 4);

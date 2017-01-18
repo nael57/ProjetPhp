@@ -11,12 +11,15 @@ class VueCagnotte {
     //prestation envoyee par le controller
     private $presta;
     private $coffret;
+    private $titre;
+    private $cagnotte;
 
-    public function __construct($coff=null,$po=null,$probleme=null,$cagnott=null){
+    public function __construct($coff=null,$po=null,$probleme=null,$cagn=null){
         $this->presta = $po;
         $this->coffret=$coff;
-        $this->cagnotte=$cagnott;
+        $this->cagnotte=$cagn;
         $this->problemelien=$probleme;
+        $this->titre="<h1>Entrez votre lien dans la case correspondante</h1>";
     }
 
     public function affich_general($i){
@@ -47,7 +50,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="liencagnotte" required/><br></td>
+                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -57,11 +60,11 @@ class VueCagnotte {
     $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'une cagnotte</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+    <form action="../../index.php/CagnotteController/afficher_gestion_cagnotte" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien4" required/><br></td>
+                    <td> <input type="text" name="lien3" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -71,7 +74,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant coffret</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+    <form action="../../index.php/CagnotteController/affich_gestion" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -110,7 +113,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="liencagnotte" required/><br></td>
+                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -120,11 +123,11 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'une cagnotte</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+    <form action="../../index.php/CagnotteController/afficher_gestion_cagnotte" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien4" required/><br></td>
+                    <td> <input type="text" name="lien3" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -134,7 +137,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant coffret</h3><br><br>
-      <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+      <form action="../../index.php/CagnotteController/affich_gestion" method="post">
          <table>              
                       <tr>
                         <td>Identifiant : </td>
@@ -148,7 +151,8 @@ class VueCagnotte {
     }
 
     public function affich_contenu_coffret(){
-        $html='Voici le contenu de ce coffret :<br>';
+        $this->titre='<h1>Voici le contenu du coffret</h1>';
+        $html='';
         $montant=0;
         foreach($this->presta as $pre){
             $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.'€';
@@ -170,6 +174,83 @@ class VueCagnotte {
         return $html;
     }
 
+
+    public function affich_gestion_cagnotte($recal=""){
+        $this->titre='<h1>Voici le contenu de votre cagnotte</h1>';
+        $html='';
+
+        if($recal!=""){
+            $html='<h2><font color="red">'.$recal.'</font></h2><br><br>';
+        }
+
+        $montant=0;
+        foreach($this->presta as $pre){
+            $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.' €';
+            $prix = $pre->prix;
+            $montant = $montant + $prix;
+        }
+
+        $html=$html.'<br><br> Montant total :'.$montant.' €';
+
+        $html=$html.'<br> Contribution total :'.$this->cagnotte->contribution.' €';
+
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'index.php/CagnotteController/cloturer_cangotte/'.$this->cagnotte->idcagnotte.'"><strong>Cloturer cagnotte</strong></a>';
+
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
+
+        return $html;
+    }
+
+    public function affich_cagnotte(){
+
+        $this->titre='<h1>Voici le contenu de cette cagnotte</h1>';
+        $html='';
+        $montant=0;
+        if($this->presta!=null){
+            foreach($this->presta as $pre){
+                $html = $html .'<br><br><img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr;
+
+                $prix = $pre->prix;
+                $montant = $montant + $prix;
+            }
+
+
+
+            $html=$html.'<br><br> Montant total : '.$montant.' €';
+            $html=$html.'<br><br> Contribution totale : '.$this->cagnotte->contribution.' €';
+
+            $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/participer_cagn/'.$this->cagnotte->idcagnotte.'">Participer à la cagnotte</a>';
+            $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'">Retour à l'."'accueil".'</a>';
+        }
+        return $html;
+    }
+
+    public function confirmer_paiement(){
+        $this->titre='<h1>Merci !</h1>';
+        $html='<h1>Merci pour votre contribution</h1><br>';
+        $html=$html.$this->affich_cagnotte();
+        return $html;
+    }
+
+    public function affich_participation(){
+
+        $this->titre='<h1>Participez dès à présent dans cette cagnotte !</h1>';
+        $html='<h1> Participer à une cagnotte</h1><br>
+        <div class="row"></div><h3>
+        Veuillez saisir le montant de votre participation</h3><br><br>
+        <form action="../../../index.php/CagnotteController/confirmer_paiement/'.$this->cagnotte->idcagnotte.'" method="post">
+         <table>              
+                      <tr>
+                        <td>Montant : </td>
+                        <td> <input type="number" name="montant" required/><br></td>
+                      </tr>
+        </table><br>
+        <input type="submit" name="valider" value="Valider">
+        
+        </form>';
+
+        return $html;
+    }
 
     public function affich_coffret()
     {
@@ -198,6 +279,14 @@ class VueCagnotte {
         return $html;
     }
 
+    public function cloture_cagnotte(){
+        $this->titre='<h1>Cloturation de la cagnotte</h1>';
+        $html='<h1>Clôture de la cagnotte</h1>';
+        $html=$html.'Votre cagnotte a été cloturée';
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
+
+        return $html;
+    }
     private function affich_liste_cat(){
         $cat = Categorie::get();
         $this->tab=$cat;
@@ -208,58 +297,8 @@ class VueCagnotte {
             $i++;
         }
 
-        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
-        $this->lienAccueil = '../../..';
-
         return $page;
 
-    }
-
-    public function affich_cagnotte(){
-        $html='Voici le contenu de ce cagnotte :<br>';
-        $montant=0;
-        if($this->presta!=null){
-            foreach($this->presta as $pre){
-                $html = $html .'<br><br><img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr;
-
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
-
-
-
-        $html=$html.'<br><br> Montant total : '.$montant.'€';
-        $html=$html.'<br><br> Contribution total : '.$this->cagnotte->contribution;
-
-        $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/participer_cagn/'.$this->cagnotte->idcagnotte.'">Participer à la cagnotte</a>';
-        $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'">Retour à l'."'accueil".'</a>';
-        }
-        return $html;
-    }
-
-    public function confirmer_paiement(){
-        $html='<h1>Merci pour votre contribution</h1><br>';
-        $html=$html.$this->affich_cagnotte();
-        return $html;
-    }
-
-    public function affich_participation(){
-        $html='<h1> Participer à une cagnotte</h1><br>
-        <div class="row"></div><h3>
-        Veuillez saisir le montant de votre participation</h3><br><br>
-        <form action="../../../index.php/CagnotteController/confirmer_paiement/'.$this->cagnotte->idcagnotte.'" method="post">
-         <table>              
-                      <tr>
-                        <td>Montant : </td>
-                        <td> <input type="number" name="montant" required/><br></td>
-                      </tr>
-        </table><br>
-        <input type="submit" name="valider" value="Valider">
-        
-        </form>';
-
-        return $html;
     }
 
     private function render($i)
@@ -274,6 +313,12 @@ class VueCagnotte {
             $contenu=$this->affich_participation();
         }elseif ($i==11){
             $contenu=$this->confirmer_paiement();
+        }elseif ($i==15){
+            $contenu=$this->affich_gestion_cagnotte();
+        }elseif($i==16){
+            $contenu=$this->affich_gestion_cagnotte('Vous ne pouvez pas cloturer la cagnotte car le montant des contributions est inférieur au montant du coffret');
+        }elseif ($i==17){
+            $contenu=$this->cloture_cagnotte();
         }else{
             $contenu=$this->affich_form();
         }
@@ -341,12 +386,12 @@ class VueCagnotte {
     <ul>
     <li ><a href="../../'.$this->problemelien.'">Accueil</a></li>
     <li class="has-dropdown" >
-    <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
+    <a href="../../'.$this->problemelien.'index.php/CatalogueController/affich_prest" >Catalogue</a>
     <ul class="dropdown">
     '.$content.'
     </ul>
     </li>
-    <li><a href="../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
+    <li><a href="../../'.$this->problemelien.'index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
     <li class="btn-cta"><a href="../../'.$this->problemelien.'index.php/ConnexionController/affich"><span>Connexion</span></a></li>
     <li class="has-dropdown">
     <a href="#"><span>Coffret</span></a>
@@ -370,7 +415,7 @@ class VueCagnotte {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Voici, ci dessous le contenu de votre coffret</h1>
+    '.$this->titre.'
     </div>
     </div>
     </div>
@@ -399,29 +444,21 @@ class VueCagnotte {
                     </ul>
                 </div>
 
-                <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-                    <h4>Laventure GiftBox</h4>
-                    <ul class="fh5co-footer-links">
-                        <li><a href="#">Le concept</a></li>
-                        <li><a href="#">Qui sommes nous</a></li>
-                    </ul>
-                </div>
 
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Nos partenaires</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">IUT Charlemagne</a></li>
+                          <li><a href="http://iut-charlemagne.univ-lorraine.fr/" target="_blank">IUT Charlemagne</a></li>
                         <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-                        <li><a href="#">OpenClassroom</a></li>
-                        <li><a href="#">Youtube</a></li>
+                        <li><a href="https://openclassrooms.com/" target="_blank">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr" target="_blank">Youtube</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Connexion</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">Se connecter</a></li>
-                        <li><a href="#">Se déconnecter</a></li>
+                        <li><a href="../../'.$this->problemelien.'index.php/ConnexionController/affich">Se connecter</a></li>
                     </ul>
                 </div>
             </div>

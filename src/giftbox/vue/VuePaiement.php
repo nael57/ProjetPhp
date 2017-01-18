@@ -13,7 +13,7 @@ class VuePaiement {
 
     //prestation envoyee par le controller
     private $prestation,$sel,$id,$url,$coffret,$problemelien,$cagnotte;
-    
+
     public function __construct( $presta=null,$coffret=null,$cagnotte=null,$prob=null ){
         $this->prestation = $presta;
         $this->coffret=$coffret;
@@ -34,13 +34,13 @@ class VuePaiement {
             $page = $page. '<li><a href="../../'.$this->problemelien.'index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
-        
+
         $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
         $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
         $this->lienAccueil = '../../..';
-        
+
         return $page;
-        
+
     }
 
     public function affich_coffretpaiement(){
@@ -57,7 +57,7 @@ class VuePaiement {
     <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_carte">Payer via carte bancaire</a>
     <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/confirmCagnotte/' . $this->coffret->id . '">Payer via cagnotte</a>';
         }else{
-            $html='votre panier est vide';
+            $html='Votre panier est vide';
         }
         return $html;
     }
@@ -93,7 +93,7 @@ class VuePaiement {
     <div class="row"></div>
     <a class="btn btn-primary btn-lg btn-learn" href="../../index.php/PaiementController/afficher_paiement">Valider mon coffret</a>';
         }else{
-            $html='votre panier est vide';
+            $html='Votre panier est vide';
         }
         return $html;
     }
@@ -101,11 +101,11 @@ class VuePaiement {
     public function affich_paiementcarte(){
         $html='';
         $montant=0;
-            foreach($this->prestation as $pre){
-                $html = $html . $pre->nom.' '.$pre->descr.' : '.$pre->prix.'€'. '<br>';
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
+        foreach($this->prestation as $pre){
+            $html = $html . $pre->nom.' '.$pre->descr.' : '.$pre->prix.'€'. '<br>';
+            $prix = $pre->prix;
+            $montant = $montant + $prix;
+        }
         $html=$html.'<br>
     <div class="row"></div>
     Veuillez remplir le formulaire de paiement<br>
@@ -140,7 +140,7 @@ class VuePaiement {
     <input type="submit" name="valider" value="Valider">
     
     </form>';
-    return $html;
+        return $html;
 
     }
 
@@ -154,9 +154,9 @@ class VuePaiement {
         }
         $prest = null;
         if($liste!=null && $prest != null){
-        foreach($liste as $p){
-            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
-        }
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
         }
         $html = '';
         $montant = 0;
@@ -166,9 +166,9 @@ class VuePaiement {
                 $montant = $montant + $pre->prix;
             }
         }
-        
+
         $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
-        
+
         return $html;
     }
     public function paiement_ok($lien){
