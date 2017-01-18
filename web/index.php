@@ -129,11 +129,6 @@ $slim->get('/PaiementController/afficher_carte', function(){
     $html = $c->afficher_carte();
     echo $html;
 });
-$slim->get('/PaiementController/valider_paiement/:id', function($id){
-    $c = new PaiementCon();
-    $html = $c->validerCagnote($id);
-    echo $html;
-});
 
 $slim->post('/PaiementController/validerpaiement', function(){
     $c = new PaiementCon();
@@ -240,47 +235,6 @@ $slim->post('/CagnotteController/affich_gestion/', function(){
     $c = new CagnotteCon();
     $html = $c->afficher_gestion();
    echo $html;
-});
-
-$slim->post('/CagnotteController/affich_cofmdp/:a', function($a){
-    $c = new CagnotteCon();
-    $html = $c->affich_coffretmdp($a);
-    echo $html;
-});
-
-$slim->post('/CagnotteController/affich_gestion/', function(){
-    $c = new CagnotteCon();
-    $html = $c->afficher_gestion();
-    echo $html;
-});
-$slim->post('/CagnotteController/affich_cagnotte', function(){
-    $c = new CagnotteCon();
-    $html = $c->affich_cagnotte();
-    echo $html;
-});
-
-$slim->get('/PaiementController/confirmCagnotte/:id', function($id){
-    $c = new PaiementCon();
-    $html = $c->validerCagnotte($id);
-    echo $html;
-});
-
-$slim->get('/CagnotteController/participer_cagn/:id', function($id){
-    $c = new CagnotteCon();
-    $html = $c->participer_cagnotte($id);
-    echo $html;
-});
-
-$slim->post('/CagnotteController/afficher_gestion_cagnotte', function(){
-    $c = new CagnotteCon();
-    $html = $c->affich_gestion();
-    echo $html;
-});
-
-$slim->post('/CagnotteController/confirmer_paiement/:id', function($id){
-    $c = new CagnotteCon();
-    $html = $c->confirmer_paiement($id);
-    echo $html;
 });
 
 $slim->run();

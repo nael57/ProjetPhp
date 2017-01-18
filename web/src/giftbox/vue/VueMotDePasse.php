@@ -9,8 +9,10 @@ use giftbox\models\Contient as Contient;
 class VueMotDePasse {
     private $atr;
     private $tab;
-  public function __construct( $tableau ){
+    private $lien="";
+  public function __construct( $tableau,$l="" ){
         $this->atr = $tableau;
+        $this->lien=$l;
     }
 
     public function affich_general($i){
@@ -24,7 +26,7 @@ class VueMotDePasse {
         $page = '';
         $i = 1;
         foreach($this->tab as $pre){
-            $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $page = $page. '<li><a href="'.$this->lien.'../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
         
@@ -53,7 +55,7 @@ class VueMotDePasse {
         }
     }
         
-        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="'.$this->lien.'../../index.php/PaiementController/afficher_paiement"><strong>Passer au paiement de la commande</strong></a></li>';
         
         return $html;
     }
@@ -83,24 +85,24 @@ class VueMotDePasse {
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
     <!-- Animate.css -->
-    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="../../css/icomoon.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/bootstrap.css">
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="../../css/magnific-popup.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/magnific-popup.css">
 
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/owl.theme.default.min.css">
 
     <!-- Theme style  -->
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="'.$this->lien.'../../css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="../../../js/modernizr-2.6.2.min.js"></script>
+    <script src="'.$this->lien.'../../../js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
@@ -121,15 +123,15 @@ class VueMotDePasse {
                         </div>
                         <div class="col-xs-11 text-right menu-1">
                             <ul>
-                                <li ><a href="../../">Accueil</a></li>
+                                <li ><a href="'.$this->lien.'../../">Accueil</a></li>
                                 <li class="has-dropdown" >
-                                    <a href="../../index.php/CatalogueController/affich_prest" >Catalogue</a>
+                                    <a href="'.$this->lien.'../../index.php/CatalogueController/affich_prest" >Catalogue</a>
                                     <ul class="dropdown">
                                         '.$content.'
                                     </ul>
                                 </li>
-                                <li><a href="../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
-                                <li class="btn-cta"><a href="../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
+                                <li><a href="'.$this->lien.'../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
+                                <li class="btn-cta"><a href="'.$this->lien.'../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
                                 <li class="has-dropdown">
                                     <a href="#"><span>Coffret</span></a>
                                     <ul class="dropdown">
@@ -153,7 +155,7 @@ class VueMotDePasse {
                         <div class="display-t">
                             <div class="display-tc animate-box" data-animate-effect="fadeIn">
                                 <h1>Cet élément est protégé par un mot de passe, veuillez le saisir</h1>
-                                <form action="../../index.php/CagnotteController/affich_cofmdp/'.$this->atr.'" method="post"><p>
+                                <form action="'.$this->lien.'../../index.php/CagnotteController/affich_cofmdp/'.$this->atr.'" method="post"><p>
                                 <table><tr>
                                    <tr><td> Mot de passe </td> <td><input type="password" name="mdp" /></td></tr>
                                   <td> <br><br><br><input type="submit" value="Accéder"></td>
@@ -191,7 +193,7 @@ class VueMotDePasse {
                     <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                         <h4>Connexion</h4>
                         <ul class="fh5co-footer-links">
-                            <li><a href="../../index.php/ConnexionController/affich">Se connecter</a></li>
+                            <li><a href="'.$this->lien.'../../index.php/ConnexionController/affich">Se connecter</a></li>
                         </ul>
                     </div>
                 </div>
@@ -214,24 +216,24 @@ class VueMotDePasse {
     </div>
 
     <!-- jQuery -->
-    <script src="../../js/jquery.min.js"></script>
+    <script src="'.$this->lien.'../../js/jquery.min.js"></script>
     <!-- jQuery Easing -->
-    <script src="../../js/jquery.easing.1.3.js"></script>
+    <script src="'.$this->lien.'../../js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
-    <script src="../../js/bootstrap.min.js"></script>
+    <script src="'.$this->lien.'../../js/bootstrap.min.js"></script>
     <!-- Waypoints -->
-    <script src="../../js/jquery.waypoints.min.js"></script>
+    <script src="'.$this->lien.'../../js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
-    <script src="../../js/jquery.stellar.min.js"></script>
+    <script src="'.$this->lien.'../../js/jquery.stellar.min.js"></script>
     <!-- Carousel -->
-    <script src="../../js/owl.carousel.min.js"></script>
+    <script src="'.$this->lien.'../../js/owl.carousel.min.js"></script>
     <!-- countTo -->
-    <script src="../../js/jquery.countTo.js"></script>
+    <script src="'.$this->lien.'../../js/jquery.countTo.js"></script>
     <!-- Magnific Popup -->
-    <script src="../../js/jquery.magnific-popup.min.js"></script>
-    <script src="../../js/magnific-popup-options.js"></script>
+    <script src="'.$this->lien.'../../js/jquery.magnific-popup.min.js"></script>
+    <script src="'.$this->lien.'../../js/magnific-popup-options.js"></script>
     <!-- Main -->
-    <script src="../../js/main.js"></script>
+    <script src="'.$this->lien.'../../js/main.js"></script>
 
 </body>
 </html>';
