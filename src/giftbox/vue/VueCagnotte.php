@@ -11,11 +11,13 @@ class VueCagnotte {
     //prestation envoyee par le controller
     private $presta;
     private $coffret;
+    private $titre;
 
     public function __construct($coff=null,$po=null,$probleme=null){
         $this->presta = $po;
         $this->coffret=$coff;
         $this->problemelien=$probleme;
+        $this->titre="<h1>Entrez votre lien dans la case correspondante</h1>";
     }
 
     public function affich_general($i){
@@ -147,7 +149,8 @@ class VueCagnotte {
     }
 
     public function affich_contenu_coffret(){
-        $html='Voici le contenu de ce coffret :<br>';
+        $this->titre='<h1>Voici le contenu du coffret</h1>';
+        $html='';
         $montant=0;
         foreach($this->presta as $pre){
             $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.'€';
@@ -317,7 +320,7 @@ class VueCagnotte {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Entrez votre lien dans la case correspondante</h1>
+    '.$this->titre.'
     </div>
     </div>
     </div>
