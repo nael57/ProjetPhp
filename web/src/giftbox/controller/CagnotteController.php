@@ -6,7 +6,6 @@ use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Coffret as Coffret;
 use giftbox\models\Cadeau as Cadeau;
-use giftbox\models\Cagnotte as Cagnotte;
 use giftbox\models\Contient as Contient;
 use giftbox\vue\VueCagnotte as VueCagnotte;
 use giftbox\vue\VueCadeau as VueCadeau;
@@ -170,7 +169,6 @@ class CagnotteController {
                 $v = new VueCagnotte();
             }
         }else {
-            echo 'test1';
             $i = 3;
             $v = new VueCagnotte();
         }
@@ -192,7 +190,7 @@ class CagnotteController {
                     $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
                 }
                 $i = 2;
-                $v = new VueCagnotte($cadeau, $prest);
+                $v = new VueCagnotte($cadeau, $prest,'../');
             } else {
 
                 $i = 3;
@@ -200,9 +198,8 @@ class CagnotteController {
             }
 
 
-            $html = $v->affich_general($i);
-            return $html;
         }
+
     }
 
     public function confirmer_paiement($id){
@@ -261,6 +258,7 @@ class CagnotteController {
     public function participer_cagnotte($id){
         $v=new VueCagnotte(null,null,'../',Cagnotte::where('idcagnotte','=',$id)->first());
         $html=$v->affich_general(10);
+
         return $html;
     }
 }

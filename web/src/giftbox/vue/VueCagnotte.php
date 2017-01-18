@@ -13,10 +13,9 @@ class VueCagnotte {
     private $coffret;
     private $titre;
 
-    public function __construct($coff=null,$po=null,$probleme=null,$cagnott=null){
+    public function __construct($coff=null,$po=null,$probleme=null){
         $this->presta = $po;
         $this->coffret=$coff;
-        $this->cagnotte=$cagnott;
         $this->problemelien=$probleme;
         $this->titre="<h1>Entrez votre lien dans la case correspondante</h1>";
     }
@@ -59,7 +58,7 @@ class VueCagnotte {
     $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'une cagnotte</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/afficher_gestion_cagnotte" method="post">
+    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -122,7 +121,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'une cagnotte</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/afficher_gestion_cagnotte" method="post">
+    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -172,6 +171,7 @@ class VueCagnotte {
 
         return $html;
     }
+
 
     public function affich_gestion_cagnotte($recal=""){
         $this->titre='<h1>Voici le contenu de votre cagnotte</h1>';

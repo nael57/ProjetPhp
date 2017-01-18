@@ -129,11 +129,6 @@ $slim->get('/PaiementController/afficher_carte', function(){
     $html = $c->afficher_carte();
     echo $html;
 });
-$slim->get('/PaiementController/valider_paiement/:id', function($id){
-    $c = new PaiementCon();
-    $html = $c->validerCagnote($id);
-    echo $html;
-});
 
 $slim->post('/PaiementController/validerpaiement', function(){
     $c = new PaiementCon();
