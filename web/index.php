@@ -206,9 +206,27 @@ $slim->post('/CagnotteController/affich_coffret', function(){
     echo $html;
 });
 
+$slim->post('/CagnotteController/affich_cagnotte', function(){
+    $c = new CagnotteCon();
+    $html = $c->affich_coffret();
+    echo $html;
+});
+
 $slim->get('/CagnotteController/supp_prest/:co/:id', function($co,$id){
     $c = new CagnotteCon();
     $html = $c->supp_prest($co,$id);
+    echo $html;
+});
+
+$slim->get('/CagnotteController/participer_cagn/:id', function($id){
+    $c = new CagnotteCon();
+    $html = $c->participer_cagnotte($id);
+    echo $html;
+});
+
+$slim->post('/CagnotteController/confirmer_paiement/:id', function($id){
+    $c = new CagnotteCon();
+    $html = $c->confirmer_paiement($id);
     echo $html;
 });
 
@@ -224,5 +242,12 @@ $slim->post('/CadeauController/affich_cadeau', function(){
     $html='test';
     return $html;
 });
+
+$slim->get('/PaiementController/confirmCagnotte/:id', function($id){
+    $c = new PaiementCon();
+    $html = $c->validerCagnotte($id);
+    echo $html;
+});
+
 $slim->run();
 
