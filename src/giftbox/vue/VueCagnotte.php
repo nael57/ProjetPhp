@@ -161,7 +161,7 @@ class VueCagnotte {
             $montant = $montant + $prix;
         }
 
-        $html=$html.'<br> Montant total :'.$montant;
+        $html=$html.'<br> Montant total :'.$montant.' €';
         if($this->coffret->etatcadeau!=null){
 
             $html=$html.'<br><br>Voici '."l'état de votre Cadeau : ".$this->coffret->etatcadeau;

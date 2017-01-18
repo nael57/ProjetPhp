@@ -58,7 +58,9 @@ class PaiementController {
         if(count($listcat)>1 && $taille>1){
             $i=3;
         }
+        if(isset ($_COOKIE[ 'panier' ])){
         $coffret = Coffret::where('id','=',$_COOKIE[ 'panier' ])->first();
+    }
         $v = new VuePaiement($prest,$coffret);
         return $v->affich_general($i);
     }

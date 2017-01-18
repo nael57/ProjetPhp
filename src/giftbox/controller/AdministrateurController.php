@@ -43,7 +43,8 @@ class AdministrateurController{
 				$file_size =$_FILES['nom_du_fichier']['size'];
 				$file_tmp =$_FILES['nom_du_fichier']['tmp_name'];
 				$file_type=$_FILES['nom_du_fichier']['type'];
-				$file_ext=strtolower(end(explode('.',$_FILES['nom_du_fichier']['name'])));
+				$tmp=explode('.',strtolower($_FILES['nom_du_fichier']['name']));
+				$file_ext=end($tmp);
 				$expensions= array("jpeg","jpg","png","gif");
 				if(in_array($file_ext,$expensions)=== false){
 					$errors[]="Extension non autorisé";
@@ -66,6 +67,7 @@ class AdministrateurController{
 					echo"Upload réussi !";
 				}
 				else{
+					echo var_dump($errors);
 					echo"Upload échoué !";
 				}
 			}
