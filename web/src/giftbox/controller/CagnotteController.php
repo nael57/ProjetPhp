@@ -6,6 +6,7 @@ use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Coffret as Coffret;
 use giftbox\models\Cadeau as Cadeau;
+use giftbox\models\Cagnotte as Cagnotte;
 use giftbox\models\Contient as Contient;
 use giftbox\vue\VueCagnotte as VueCagnotte;
 use giftbox\vue\VueCadeau as VueCadeau;
@@ -120,6 +121,37 @@ class CagnotteController {
         return $html;
     }
 
+    public function affich_cagnotte(){
+        $i=0;
+        $prest = null;
+        if(isset($_POST['lien2']) && $_POST['lien2']!=null ){
+            $post = $_POST['lien2'];
+            $c = Cagnotte::where('Lienparticipation', '=', $post)->count();
+            if ($c > 0) {
+                $cagnotte = Cagnotte::where('Lienparticipation', '=', $post)->first();
+                $coffret = Coffret::where('id', '=', $cagnotte->id_coffret)->first();
+                $liste = Contient::prestations($coffret->id);
+                foreach ($liste as $p) {
+                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+                }
+                $i = 4;
+                $v = new VueCagnotte($coffret, $prest,null, $cagnotte);
+            } else {
+                echo $c;
+                $i = 3;
+                $v = new VueCagnotte();
+            }
+        }else {
+            $i = 3;
+            $v = new VueCagnotte();
+        }
+
+
+        $html = $v->affich_general($i);
+        return $html;
+    }
+
+
     public function affich_coffretmdp($c)
     {
         $cadeau = Coffret::where('id', '=', $c)->first();
@@ -142,6 +174,21 @@ class CagnotteController {
             $html = $v->affich_general($i);
             return $html;
         }
+    }
+
+    public function confirmer_paiement($id){
+        $cagnotte=Cagnotte::where('idcagnotte','=',$id)->first();
+        if($_POST['montant']>0){
+            $cagnotte->contribution+=$_POST['montant'];
+            $cagnotte->save();
+        }
+        $coffret = Coffret::where('id', '=', $cagnotte->id_coffret)->first();
+        $liste = Contient::prestations($coffret->id);
+        foreach ($liste as $p) {
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+        }
+        $v= new VueCagnotte(null,$prest,'../',$cagnotte);
+        return $v->affich_general(11);
     }
 
 
