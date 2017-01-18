@@ -173,22 +173,26 @@ class VueCagnotte {
         return $html;
     }
 
-    public function affich_gestion_cagnotte(){
+    public function affich_gestion_cagnotte($recal=""){
         $this->titre='<h1>Voici le contenu de votre cagnotte</h1>';
         $html='';
+
+        if($recal!=""){
+            $html='<h2><font color="red">'.$recal.'</font></h2><br><br>';
+        }
+
         $montant=0;
         foreach($this->presta as $pre){
-            $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.'€';
-            $html= $html.'      <a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/supp_prest/' . $this->coffret->id . '/'.$pre->id.'">Supprimer</a><br>';
+            $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.' €';
             $prix = $pre->prix;
             $montant = $montant + $prix;
         }
 
-        $html=$html.'<br> Montant total :'.$montant;
+        $html=$html.'<br><br> Montant total :'.$montant.' €';
 
-        $html=$html.'<br> Contribution total :'.$this->cagnotte->contribution;
+        $html=$html.'<br> Contribution total :'.$this->cagnotte->contribution.' €';
 
-        $html=$html.'<br><br><a href="../../'.$this->problemelien.'/CagnotteController/cloturer_cangotte"><strong>Clôturer cagnotte</strong></a>';
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'index.php/CagnotteController/cloturer_cangotte/'.$this->cagnotte->idcagnotte.'"><strong>Cloturer cagnotte</strong></a>';
 
         $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
 
@@ -196,7 +200,9 @@ class VueCagnotte {
     }
 
     public function affich_cagnotte(){
-        $html='Voici le contenu de ce cagnotte :<br>';
+
+        $this->titre='<h1>Voici le contenu de cette cagnotte</h1>';
+        $html='';
         $montant=0;
         if($this->presta!=null){
             foreach($this->presta as $pre){
@@ -208,8 +214,8 @@ class VueCagnotte {
 
 
 
-            $html=$html.'<br><br> Montant total : '.$montant.'€';
-            $html=$html.'<br><br> Contribution total : '.$this->cagnotte->contribution;
+            $html=$html.'<br><br> Montant total : '.$montant.' €';
+            $html=$html.'<br><br> Contribution totale : '.$this->cagnotte->contribution.' €';
 
             $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/participer_cagn/'.$this->cagnotte->idcagnotte.'">Participer à la cagnotte</a>';
             $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'">Retour à l'."'accueil".'</a>';
@@ -218,12 +224,15 @@ class VueCagnotte {
     }
 
     public function confirmer_paiement(){
+        $this->titre='<h1>Merci !</h1>';
         $html='<h1>Merci pour votre contribution</h1><br>';
         $html=$html.$this->affich_cagnotte();
         return $html;
     }
 
     public function affich_participation(){
+
+        $this->titre='<h1>Participez dès à présent dans cette cagnotte !</h1>';
         $html='<h1> Participer à une cagnotte</h1><br>
         <div class="row"></div><h3>
         Veuillez saisir le montant de votre participation</h3><br><br>
@@ -268,6 +277,14 @@ class VueCagnotte {
         return $html;
     }
 
+    public function cloture_cagnotte(){
+        $this->titre='<h1>Cloturation de la cagnotte</h1>';
+        $html='<h1>Clôture de la cagnotte</h1>';
+        $html=$html.'Votre cagnotte a été cloturée';
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
+
+        return $html;
+    }
     private function affich_liste_cat(){
         $cat = Categorie::get();
         $this->tab=$cat;
@@ -277,10 +294,6 @@ class VueCagnotte {
             $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
-
-        $this->lienPrest = '../../../index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../../index.php/CatalogueController/affich_cat';
-        $this->lienAccueil = '../../..';
 
         return $page;
 
@@ -300,6 +313,10 @@ class VueCagnotte {
             $contenu=$this->confirmer_paiement();
         }elseif ($i==15){
             $contenu=$this->affich_gestion_cagnotte();
+        }elseif($i==16){
+            $contenu=$this->affich_gestion_cagnotte('Vous ne pouvez pas cloturer la cagnotte car le montant des contributions est inférieur au montant du coffret');
+        }elseif ($i==17){
+            $contenu=$this->cloture_cagnotte();
         }else{
             $contenu=$this->affich_form();
         }

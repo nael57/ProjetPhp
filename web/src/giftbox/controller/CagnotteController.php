@@ -166,7 +166,6 @@ class CagnotteController {
                 $i = 15;
                 $v = new VueCagnotte($coffret, $prest,null, $cagnotte);
             } else {
-                echo'test';
                 $i = 3;
                 $v = new VueCagnotte();
             }
@@ -214,11 +213,48 @@ class CagnotteController {
         }
         $coffret = Coffret::where('id', '=', $cagnotte->id_coffret)->first();
         $liste = Contient::prestations($coffret->id);
+        $prest=null;
         foreach ($liste as $p) {
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
         }
         $v= new VueCagnotte(null,$prest,'../',$cagnotte);
         return $v->affich_general(11);
+    }
+
+    public function cloturer_cagnotte($id){
+        $cagnotte=Cagnotte::where('idcagnotte','=',$id)->first();
+        $contribution=$cagnotte->contribution;
+
+        $liste = Contient::prestations($cagnotte->id_coffret);
+
+        foreach ($liste as $p) {
+            $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+        }
+
+        $montant=0;
+        foreach ($prest as $p){
+            $montant+=$p->prix;
+        }
+        $i=15;
+        $coffret=Coffret::where('id','=',$cagnotte->id_coffret)->first();
+
+        if($contribution<$montant){
+
+            $i=16;
+
+
+        }else{
+
+            $coffret->etat='paye';
+            $coffret->save();
+            $cagnotte->delete();
+            $i=17;
+        }
+
+        $v=new VueCagnotte($coffret, $prest,'../', $cagnotte);
+
+        $html=$v->affich_general($i);
+        return $html;
     }
 
 
