@@ -31,10 +31,28 @@ class CoffretController {
         }
         else{
             $con = null;
-            echo 'la prestation a deja ete ajoutee';
         }
-        $v = new VueCoffret($con);
-        $html = $v->affich_general(1, $id);
+        if($con == null){
+            $v = new VueCoffret($con);
+            $html= $v->affich_general(4,$id);
+
+        }else{
+            $v = new VueCoffret($con);
+            $html = $v->affich_general(1, $id);
+        }
+        return $html;
+    }
+
+
+   //methode qui supprime la prestation en parametre au coffret 
+   public function supp_prest($id){
+        if(isset($_COOKIE['panier'])){
+            $panier = $_COOKIE['panier'];
+            $con = Contient::where('id_coo', '=', $panier)->where('id_pre', '=', $id)->delete();
+            $pre = Prestation::where('id', '=', $id)->first();
+            $v = new VueCoffret($pre);
+        }
+        $html = $v->affich_general(5, null);
         return $html;
     }
     
@@ -46,7 +64,7 @@ class CoffretController {
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
         }
         $v = new VueCoffret($prest);
-        $html = $v->affich_general(2);
+        $html = $v->affich_general(2, null);
         return $html;
     }
     
@@ -54,22 +72,10 @@ class CoffretController {
     public function confirmer_coffret(){
         $coffret=null;
         if(isset($_COOKIE['panier'])){
-            $coffret = Coffret::where('id', '=', $_COOKIE['panier'])->get();
+            $coffret = Coffret::where('id', '=', $_COOKIE['panier']);
         }
         $v = new VueCoffret($coffret);
-        $html = $v->affich_general(3);
-        return $html;
-    }
-    
-    //methode qui permet la finalisation du coffret une fois le formulaire rempli
-    public function finaliser_coffret(){
-        echo $_POST;
-        $coffret=null;
-        if(isset($_COOKIE['panier'])){
-            $coffret = Coffret::where('id', '=', $_COOKIE['panier'])->first();
-        }
-        $v = new VueCoffret($coffret);
-        $html = $v->affich_general(4);
+        $html = $v->affich_general(3, null);
         return $html;
     }
 

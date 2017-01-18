@@ -1,0 +1,14 @@
+diff a/web/index.php b/web/index.php	(rejected hunks)
+@@ -44,12 +44,6 @@
+     echo $html;
+ });
+ 
+-//on demande ici de lister les prestations dans l'ordre croissant ou decroissant du prix
+-$slim->get('/CatalogueController/affich_prest_tri/:order', function($order){
+-    $c = new CatalogueCon();
+-    $html = $c->affich_prest(null,$order);
+-    echo $html;
+-});
+ //on demande ici de decrire une prestation selon l'id passé
+ $slim->get('/CatalogueController/affich_prest/:id', function($id){
+     $c = new CatalogueCon();
