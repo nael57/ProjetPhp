@@ -46,7 +46,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien3" required/><br></td>
+                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -60,7 +60,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien4" required/><br></td>
+                    <td> <input type="text" name="lien3" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -70,7 +70,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant coffret</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+    <form action="../../index.php/CagnotteController/affich_gestion" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -109,7 +109,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien3" required/><br></td>
+                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -123,7 +123,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien4" required/><br></td>
+                    <td> <input type="text" name="lien3" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -133,7 +133,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant coffret</h3><br><br>
-      <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+      <form action="../../index.php/CagnotteController/affich_gestion" method="post">
          <table>              
                       <tr>
                         <td>Identifiant : </td>
@@ -317,7 +317,7 @@ class VueCagnotte {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Voici, ci dessous le contenu de votre coffret</h1>
+    <h1>Entrez votre lien dans la case correspondante</h1>
     </div>
     </div>
     </div>
