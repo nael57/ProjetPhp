@@ -93,7 +93,7 @@ class PaiementController {
             $lien=$this->getGUID();
             $coffret->lien=$lien;
             if($_POST['mdp']!=null){
-               $coffret->mdp= password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+               $coffret->mdp= crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls");
             }
             $coffret->save();
 

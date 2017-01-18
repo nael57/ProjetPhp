@@ -9,6 +9,7 @@ use giftbox\models\Cadeau as Cadeau;
 use giftbox\models\Contient as Contient;
 use giftbox\vue\VueCagnotte as VueCagnotte;
 use giftbox\vue\VueCadeau as VueCadeau;
+use giftbox\vue\VueMotDePasse as VueMotDePasse;
 
 //classe CoffretController
 class CagnotteController {
@@ -46,8 +47,14 @@ class CagnotteController {
         $prest = null;
 
         if(isset($_POST['liencadeau']) && $_POST['liencadeau']!=null ){
-                $post=$_POST['liencadeau'];
-                $c = Cadeau::where('idca','=',$post)->count();
+            $post=$_POST['liencadeau'];
+            $c = Cadeau::where('idca','=',$post)->count();
+            $coo= Cadeau::where('idca','=',$post)->first();
+            $co = Coffret::where('id', '=', $coo->id_coffret)->first();
+            if($co->mdp != null){
+                $v=new VueMotDePasse($co->id);
+            }
+            else{
                 if($c>0) {
                     $cof=Cadeau::where('idca','=',$post)->first();
                     $coffret = Coffret::where('id', '=', $cof->id_coffret)->first();
@@ -68,23 +75,24 @@ class CagnotteController {
                     $i = 3;
                     $v = new VueCagnotte();
                 }
+            }
 
         }elseif (isset($_POST['lien4']) && $_POST['lien4']!=null ) {
-                $post = $_POST['lien4'];
-                $c = Coffret::where('lien', '=', $post)->count();
-                if ($c > 0) {
-                    $coffret = Coffret::where('lien', '=', $post)->first();
-                    $liste = Contient::prestations($coffret->id);
-                    foreach ($liste as $p) {
-                        $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
-                    }
-                    $i = 2;
-                    $v = new VueCagnotte($coffret, $prest);
-                } else {
-
-                    $i = 3;
-                    $v = new VueCagnotte();
+            $post = $_POST['lien4'];
+            $c = Coffret::where('lien', '=', $post)->count();
+            if ($c > 0) {
+                $coffret = Coffret::where('lien', '=', $post)->first();
+                $liste = Contient::prestations($coffret->id);
+                foreach ($liste as $p) {
+                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
                 }
+                $i = 2;
+                $v = new VueCagnotte($coffret, $prest);
+            } else {
+
+                $i = 3;
+                $v = new VueCagnotte();
+            }
 
         }else {
             echo 'test';
@@ -97,5 +105,28 @@ class CagnotteController {
         return $html;
     }
 
+    public function affich_coffretmdp($c){
+        $cadeau=Coffret::where('id','=',$c)->first();
+        if(crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls")==$cadeau->mdp){
+            if($cadeau->dateouverture==null || $cadeau->etatcadeau != 'Ouvert'){
+                $cadeau->etatcadeau = 'Ouvert';
+                $cadeau->dateouverture = date('l jS \of F Y h:i:s A');
+                $cadeau->save();
+            }
 
+            $liste = Contient::prestations($cadeau->id);
+            foreach ($liste as $p) {
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+            $i = 2;
+            $v = new VueCadeau($cadeau);
+        }
+        else{
+            $i=3;
+            echo "Mot de passe incorrect";
+            $v= new VueMotDePasse($cadeau->id);
+        }
+        $html=$v->affich_general($i);
+        return $html;
+    }
 }
