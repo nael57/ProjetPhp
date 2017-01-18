@@ -49,7 +49,12 @@ class VueCadeau {
     }
 
     public function affich_contenu_coffret(){
-        $html='Voici le contenu de ce cadeau :<br>';
+        $html='<h2>Voici le contenu de ce cadeau :</h2><br><div id="fh5co-testimonial" class="fh5co-bg-section">
+        <div class="container"><div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row animate-box">
+                        <div class="owl-carousel owl-carousel-fullwidth">
+';
         $montant=0;
         $liste = Contient::prestations($this->coffret->id);
         $prest=array();
@@ -58,11 +63,16 @@ class VueCadeau {
             $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
         }
         foreach($prest as $pre){
-            $html = $html .'<br><br><img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr;
+            $html = $html .'<div class="item">
+                                <div class="testimony-slide active text-center">
+                                    <figure>
+                                        <img src="../../images/'.$pre->img.'" alt="user" class="img-responsive">
+                                    </figure><span>'. $pre->nom.'</span><blockquote> '.$pre->descr.'</blockquote></div>
+                            </div>';
 
         }
 
-        $html= $html . '<br><br>'.$this->coffret->commentaire;
+        $html= $html . '<br></div></div></div></div></div></div><br>Voici le commentaire de '.$this->coffret->prenom.': '.$this->coffret->commentaire;
         $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
 
         return $html;
@@ -199,7 +209,7 @@ class VueCadeau {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Voici, ci dessous le contenu de votre coffret</h1>
+    <h1>Voici, ci dessous le contenu de votre coffret cadeau offert par '.$this->coffret->prenom.'</h1>
     </div>
     </div>
     </div>

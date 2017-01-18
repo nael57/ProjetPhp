@@ -12,8 +12,10 @@ use giftbox\vue\VuePaiement as VuePaiement;
 
 class PaiementController {
     public function afficher_paiement(){
+
         if(isset ($_COOKIE[ 'panier' ])){
             $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+
         }
         else{
             $liste=null;
@@ -93,7 +95,9 @@ class PaiementController {
             $lien=$this->getGUID();
             $coffret->lien=$lien;
             if($_POST['mdp']!=null){
+
                 $coffret->mdp= crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls");
+
             }
             $coffret->save();
 
@@ -153,21 +157,6 @@ class PaiementController {
         }
 
         return $html;
-
-    }
-
-    private function getGUID(){
-        if (function_exists('com_create_guid')){
-            return com_create_guid();
-        }
-        else {
-            mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
-            $charid = strtoupper(md5(uniqid(rand(), true)));
-            $uuid=substr($charid, 0,8).substr($charid, 8, 4)
-            .substr($charid,12, 4);
-
-            return $uuid;
-        }
 
     }
 

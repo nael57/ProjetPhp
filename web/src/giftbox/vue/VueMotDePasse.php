@@ -5,13 +5,15 @@ namespace giftbox\vue;
 use giftbox\models\Categorie as Categorie;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Contient as Contient;
-
 //Classe vue pour le catalogue
-class VueConnexion {
+class VueMotDePasse {
+    private $atr;
+    private $tab;
+  public function __construct( $tableau ){
+        $this->atr = $tableau;
+    }
 
-    //prestation envoyee par le controller
-    
-    public function affich_general(){
+    public function affich_general($i){
         $html = $this->render();
         return $html;
     }
@@ -25,10 +27,6 @@ class VueConnexion {
             $page = $page. '<li><a href="../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
             $i++;
         }
-        
-        $this->lienPrest = '../../index.php/CatalogueController/affich_prest';
-        $this->lienCat = '../../index.php/CatalogueController/affich_cat';
-        $this->lienAccueil = '../..';
         
         return $page;
         
@@ -154,12 +152,11 @@ class VueConnexion {
                     <div class="col-md-8 col-md-offset-2 text-center">
                         <div class="display-t">
                             <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                                <h1>Connectez vous</h1>
-                                <form action="../../index.php/AdministrateurController/afficher" method="post"><p>
+                                <h1>Cet élément est protégé par un mot de passe, veuillez le saisir</h1>
+                                <form action="../../index.php/CagnotteController/affich_cofmdp/'.$this->atr.'" method="post"><p>
                                 <table><tr>
-                                   <td>Nom dutilisateur </td><td><input type="text" name="nomutil" /></td></tr>
                                    <tr><td> Mot de passe </td> <td><input type="password" name="mdp" /></td></tr>
-                                  <td> <br><br><br><input type="submit" value="Me connecter"></td>
+                                  <td> <br><br><br><input type="submit" value="Accéder"></td>
                                     </table>
                                 </form><br><br>
                             </div>

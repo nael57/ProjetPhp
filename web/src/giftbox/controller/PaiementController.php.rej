@@ -1,0 +1,9 @@
+diff a/web/src/giftbox/controller/PaiementController.php b/web/src/giftbox/controller/PaiementController.php	(rejected hunks)
+@@ -93,6 +93,7 @@
+             $lien=$this->getGUID();
+             $coffret->lien=$lien;
+             if($_POST['mdp']!=null){
++                $coffret->mdp= crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls");
+             }
+             $coffret->save();
+ 
