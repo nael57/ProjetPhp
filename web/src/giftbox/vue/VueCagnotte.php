@@ -59,7 +59,7 @@ class VueCagnotte {
     $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'une cagnotte</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+    <form action="../../index.php/CagnotteController/afficher_gestion_cagnotte" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -122,7 +122,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'une cagnotte</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant cagnotte</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_cagnotte" method="post">
+    <form action="../../index.php/CagnotteController/afficher_gestion_cagnotte" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -168,6 +168,28 @@ class VueCagnotte {
                 $html=$html.'<br>Date : '.$this->coffret->dateouverture;
             }
         }
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
+
+        return $html;
+    }
+
+    public function affich_gestion_cagnotte(){
+        $this->titre='<h1>Voici le contenu de votre cagnotte</h1>';
+        $html='';
+        $montant=0;
+        foreach($this->presta as $pre){
+            $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.'€';
+            $html= $html.'      <a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/supp_prest/' . $this->coffret->id . '/'.$pre->id.'">Supprimer</a><br>';
+            $prix = $pre->prix;
+            $montant = $montant + $prix;
+        }
+
+        $html=$html.'<br> Montant total :'.$montant;
+
+        $html=$html.'<br> Contribution total :'.$this->cagnotte->contribution;
+
+        $html=$html.'<br><br><a href="../../'.$this->problemelien.'/CagnotteController/cloturer_cangotte"><strong>Clôturer cagnotte</strong></a>';
+
         $html=$html.'<br><br><a href="../../'.$this->problemelien.'"><strong>Retour à l'."'accueil</strong></a>";
 
         return $html;
@@ -276,6 +298,8 @@ class VueCagnotte {
             $contenu=$this->affich_participation();
         }elseif ($i==11){
             $contenu=$this->confirmer_paiement();
+        }elseif ($i==15){
+            $contenu=$this->affich_gestion_cagnotte();
         }else{
             $contenu=$this->affich_form();
         }

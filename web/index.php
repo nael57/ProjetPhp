@@ -271,6 +271,12 @@ $slim->get('/CagnotteController/participer_cagn/:id', function($id){
     echo $html;
 });
 
+$slim->post('/CagnotteController/afficher_gestion_cagnotte', function(){
+    $c = new CagnotteCon();
+    $html = $c->affich_gestion();
+    echo $html;
+});
+
 $slim->post('/CagnotteController/confirmer_paiement/:id', function($id){
     $c = new CagnotteCon();
     $html = $c->confirmer_paiement($id);

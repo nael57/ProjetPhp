@@ -137,11 +137,41 @@ class CagnotteController {
                 $i = 4;
                 $v = new VueCagnotte($coffret, $prest,null, $cagnotte);
             } else {
-                echo $c;
                 $i = 3;
                 $v = new VueCagnotte();
             }
         }else {
+            $i = 3;
+            $v = new VueCagnotte();
+        }
+
+
+        $html = $v->affich_general($i);
+        return $html;
+    }
+
+    public function affich_gestion(){
+        $i=0;
+        $prest = null;
+        if(isset($_POST['lien3']) && $_POST['lien3']!=null ){
+            $post = $_POST['lien3'];
+            $c = Cagnotte::where('Liengestion', '=', $post)->count();
+            if ($c > 0) {
+                $cagnotte = Cagnotte::where('Liengestion', '=', $post)->first();
+                $coffret = Coffret::where('id', '=', $cagnotte->id_coffret)->first();
+                $liste = Contient::prestations($coffret->id);
+                foreach ($liste as $p) {
+                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+                }
+                $i = 15;
+                $v = new VueCagnotte($coffret, $prest,null, $cagnotte);
+            } else {
+                echo'test';
+                $i = 3;
+                $v = new VueCagnotte();
+            }
+        }else {
+            echo 'test1';
             $i = 3;
             $v = new VueCagnotte();
         }
