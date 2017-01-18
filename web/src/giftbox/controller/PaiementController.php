@@ -3,7 +3,6 @@
 //definition du namespace et des classes a utiliser
 namespace giftbox\controller;
 use giftbox\models\Categorie as Categorie;
-use giftbox\models\Cagnotte as Cagnotte;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Coffret as Coffret;
 use giftbox\models\Contient as Contient;
@@ -13,9 +12,8 @@ use giftbox\vue\VuePaiement as VuePaiement;
 
 class PaiementController {
     public function afficher_paiement(){
-    	if(isset ($_COOKIE[ 'panier' ])){
-        $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-        $coffret = Coffret::where('id','=',$_COOKIE[ 'panier' ])->first();
+        if(isset ($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
         }
         else{
             $liste=null;
@@ -28,7 +26,7 @@ class PaiementController {
             }
         }
 
-        $v = new VuePaiement($prest,$coffret);
+        $v = new VuePaiement($prest);
         return $v->affich_general(1);
     }
 
@@ -67,19 +65,19 @@ class PaiementController {
 
     public function afficher_carte(){
         if(isset ($_COOKIE[ 'panier' ])){
-        $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-    }
-    else{
-        $liste=null;
-    }
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
+        }
+        else{
+            $liste=null;
+        }
         $prest = null;
         if(isset ($_COOKIE[ 'panier' ])){
-        foreach($liste as $p){
-            $prest[] = Prestation::where('id', '=', $p->id_pre)->first(); 
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
         }
-    }
         $v = new VuePaiement($prest);
-       return $v->affich_general(6);
+        return $v->affich_general(6);
     }
 
     public function validation_paiement(){
@@ -95,7 +93,7 @@ class PaiementController {
             $lien=$this->getGUID();
             $coffret->lien=$lien;
             if($_POST['mdp']!=null){
-               $coffret->mdp= password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+                $coffret->mdp= crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls");
             }
             $coffret->save();
 
@@ -118,12 +116,12 @@ class PaiementController {
 
             $prest = array();
 
-                $liste = Contient::prestations($id);
-                if($liste!=null){
-                    foreach ($liste as $p) {
-                        $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
-                    }
+            $liste = Contient::prestations($id);
+            if($liste!=null){
+                foreach ($liste as $p) {
+                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
                 }
+            }
 
             $montant=0;
 
@@ -165,8 +163,8 @@ class PaiementController {
         else {
             mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
             $charid = strtoupper(md5(uniqid(rand(), true)));
-            $uuid=substr($charid, 0, 8).substr($charid, 8, 4)
-                .substr($charid,12, 4);
+            $uuid=substr($charid, 0,8).substr($charid, 8, 4)
+            .substr($charid,12, 4);
 
             return $uuid;
         }

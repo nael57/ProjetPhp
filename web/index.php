@@ -249,5 +249,18 @@ $slim->get('/PaiementController/confirmCagnotte/:id', function($id){
     echo $html;
 });
 
+$slim->post('/CagnotteController/affich_cofmdp/:a', function($a){
+    $c = new CagnotteCon();
+    $html = $c->affich_coffretmdp($a);
+    echo $html;
+});
+
+$slim->post('/CagnotteController/affich_gestion/', function(){
+    $c = new CagnotteCon();
+    $html = $c->afficher_gestion();
+    echo $html;
+});
+
+
 $slim->run();
 

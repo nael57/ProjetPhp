@@ -114,6 +114,73 @@ class CagnotteController {
         return $html;
     }
 
+    public function affich_coffretmdp($c){
+        $cadeau=Coffret::where('id','=',$c)->first();
+        if(crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls")==$cadeau->mdp){
+            $ca = Coffret::where('id', '=', $c)->count();
+            if ($ca > 0) {
+                $liste = Contient::prestations($cadeau->id);
+                foreach ($liste as $p) {
+                    $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+                }
+                $i = 2;
+                $v = new VueCagnotte($cadeau, $prest);
+            } else {
+
+                $i = 3;
+                $v = new VueCagnotte();
+            }
+
+
+        }
+        else{
+            $i=3;
+            echo "Mot de passe incorrect";
+            $v= new VueMotDePasse($cadeau->id);
+        }
+        $html=$v->affich_general($i);
+        return $html;
+    }
+
+    public function afficher_gestion(){
+        $i=1;
+        if (isset($_POST['lien4']) && $_POST['lien4']!=null ){
+            $post = $_POST['lien4'];
+            $c = Coffret::where('lien', '=', $post)->count();
+            $co = Coffret::where('lien', '=', $post)->first();
+            if(isset($co)){
+                if($co->mdp != null){
+                    $v=new VueMotDePasse($co->id);
+                }
+                else{
+                    if ($c > 0) {
+                        $coffret = Coffret::where('lien', '=', $post)->first();
+                        $liste = Contient::prestations($coffret->id);
+                        foreach ($liste as $p) {
+                            $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+                        }
+                        $i = 2;
+                        $v = new VueCagnotte($coffret, $prest);
+                    } else {
+                        $i = 3;
+                        $v = new VueCagnotte();
+                    }
+                }
+            }
+            else{
+                $i=3;
+                $v=new VueCagnotte();
+            }
+        }
+        else{
+            $i=3;
+            $v= new VueCagnotte();
+        }
+        $html=$v->affich_general($i);
+        return $html;
+    }
+
+
     public function participer_cagnotte($id){
         $v=new VueCagnotte(null,null,'../',Cagnotte::where('idcagnotte','=',$id)->first());
         $html=$v->affich_general(10);
