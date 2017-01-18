@@ -3,7 +3,6 @@
 //definition du namespace et des classes a utiliser
 namespace giftbox\controller;
 use giftbox\models\Categorie as Categorie;
-use giftbox\models\Cagnotte as Cagnotte;
 use giftbox\models\Prestation as Prestation;
 use giftbox\models\Coffret as Coffret;
 use giftbox\models\Contient as Contient;
@@ -15,7 +14,6 @@ class PaiementController {
     public function afficher_paiement(){
     	if(isset ($_COOKIE[ 'panier' ])){
         $liste = Contient::prestations($_COOKIE[ 'panier' ]);
-        $coffret = Coffret::where('id','=',$_COOKIE[ 'panier' ])->first();
         }
         else{
             $liste=null;
@@ -28,7 +26,7 @@ class PaiementController {
             }
         }
 
-        $v = new VuePaiement($prest,$coffret);
+        $v = new VuePaiement($prest);
         return $v->affich_general(1);
     }
 
@@ -95,7 +93,7 @@ class PaiementController {
             $lien=$this->getGUID();
             $coffret->lien=$lien;
             if($_POST['mdp']!=null){
-               $coffret->mdp= password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+               $coffret->mdp= crypt($_POST['mdp'],"kldjfskdjf43543jfdsljfls");
             }
             $coffret->save();
 
@@ -105,57 +103,6 @@ class PaiementController {
             $html=$v->affich_general(4);
         }
         return $html;
-    }
-
-    public function validerCagnotte($id){
-
-        $html='';
-        $coffret=Coffret::where('id', '=', $id)->first();
-        if($coffret!=null) {
-            $coffret->modePaiement='cagnotte';
-            $coffret->etat='en cours';
-            $coffret->save();
-
-            $prest = array();
-
-                $liste = Contient::prestations($id);
-                if($liste!=null){
-                    foreach ($liste as $p) {
-                        $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
-                    }
-                }
-
-            $montant=0;
-
-            if(Cagnotte::where('id_coffret','=',$coffret->id)->count()==0){
-                $cagnotte = new Cagnotte();
-                $cagnotte->id_coffret=$id;
-                $cagnotte->contribution=$montant;
-
-                $lienpar=$this->getGUID();
-                $liengest=$this->getGUID();
-                $cagnotte->Lienparticipation=$lienpar;
-                $cagnotte->Liengestion=$liengest;
-                $cagnotte->status='ouvert';
-                $cagnotte->save();
-
-            }else{
-
-                $cagnotte=Cagnotte::where('id_coffret','=',$coffret->id)->first();
-
-            }
-
-
-
-            $v=new VuePaiement(null,$coffret,$cagnotte,'../');
-            setcookie('panier', '', time() - 3600, '/');
-            $html=$v->affich_general(10);
-        }else{
-            $html='Erreur coffret';
-        }
-
-        return $html;
-
     }
 
     private function getGUID(){

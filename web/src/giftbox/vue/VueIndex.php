@@ -370,7 +370,8 @@ class VueIndex {
                                     </figure>
                                     <span>Nael Bouzaza</span>
                                     <blockquote>
-                                        <p>&ldquo;Je moccupe de toute la partie design ainsi que la recherche de prestations et lamélioration du code interne permettant ainsi au site dêtre le plus optimisé possible pour nos clients&rdquo;</p>
+                                        <p>&ldquo;Je moccupe de toute la partie design ainsi que la recherche de prestations et lamélioration du code interne permettant ainsi au site dêtre le plus optimisé possible pour nos clients. Jai en plus réalisé
+                                        la page administrateur ainsi que dautres fonctionnalitées. Comme Tolga, jai quasimment réalisé lintégralité du site&rdquo;</p>
                                     </blockquote>
                                 </div>
                             </div>
@@ -381,7 +382,7 @@ class VueIndex {
                                     </figure>
                                     <span>Léo Claudel</span>
                                     <blockquote>
-                                        <p>&ldquo;Je moccupe de toute la partie design ainsi que la recherche de prestations et lamélioration du code interne permettant ainsi au site dêtre le plus optimisé possible pour nos clients&rdquo;</p>
+                                        <p>&ldquo;Je me suis occupé de faire la bases des affichages et ajouts de prestations&rdquo;</p>
                                     </blockquote>
                                 </div>
                             </div>
@@ -392,7 +393,7 @@ class VueIndex {
                                     </figure>
                                     <span>Tolga Gurel</span>
                                     <blockquote>
-                                        <p>&ldquo;Je moccupe de toute la partie design ainsi que la recherche de prestations et lamélioration du code interne permettant ainsi au site dêtre le plus optimisé possible pour nos clients&rdquo;</p>
+                                        <p>&ldquo;Je moccupe de toute la partie cagnotte et coffrets, avec Nael, nous avons réalisés plus de 90% des fonctionnalitées du site&rdquo;</p>
                                     </blockquote>
                                 </div>
                             </div>
@@ -403,7 +404,7 @@ class VueIndex {
                                     </figure>
                                     <span>Pierre Biermann</span>
                                     <blockquote>
-                                        <p>&ldquo;Je moccupe de toute la partie design ainsi que la recherche de prestations et lamélioration du code interne permettant ainsi au site dêtre le plus optimisé possible pour nos clients&rdquo;</p>
+                                        <p>&ldquo;Je me suis occupé de corriger quelques liens et quelques bugs&rdquo;</p>
                                     </blockquote>
                                 </div>
                             </div>
@@ -414,7 +415,7 @@ class VueIndex {
                                     </figure>
                                     <span>Florian Savouroux</span>
                                     <blockquote>
-                                        <p>&ldquo;Je moccupe de toute la partie design ainsi que la recherche de prestations et lamélioration du code interne permettant ainsi au site dêtre le plus optimisé possible pour nos clients&rdquo;</p>
+                                        <p>&ldquo;&rdquo;</p>
                                     </blockquote>
                                 </div>
                             </div>
@@ -439,30 +440,20 @@ class VueIndex {
                         '.$this->affich_liste_cat().'
                     </ul>
                 </div>
-
-                <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
-                    <h4>L\'aventure GiftBox</h4>
-                    <ul class="fh5co-footer-links">
-                        <li><a href="#">Le concept</a></li>
-                        <li><a href="#">Qui sommes nous</a></li>
-                    </ul>
-                </div>
-
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Nos partenaires</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="http://iut-charlemagne.univ-lorraine.fr/">IUT Charlemagne</a></li>
+                        <li><a href="http://iut-charlemagne.univ-lorraine.fr/" target="_blank">IUT Charlemagne</a></li>
                         <li><a href="#">Cours en PHP de Monsieur B.</a></li>
-                        <li><a href="https://openclassrooms.com/">OpenClassroom</a></li>
-                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr">Youtube</a></li>
+                        <li><a href="https://openclassrooms.com/" target="_blank">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr" target="_blank">Youtube</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                     <h4>Connexion</h4>
                     <ul class="fh5co-footer-links">
-                        <li><a href="#">Se connecter</a></li>
-                        <li><a href="#">Se déconnecter</a></li>
+                        <li><a href="index.php/ConnexionController/affich">Se connecter</a></li>
                     </ul>
                 </div>
             </div>

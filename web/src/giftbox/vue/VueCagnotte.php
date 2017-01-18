@@ -11,12 +11,13 @@ class VueCagnotte {
     //prestation envoyee par le controller
     private $presta;
     private $coffret;
+    private $titre;
 
-    public function __construct($coff=null,$po=null,$probleme=null,$cagnott=null){
+    public function __construct($coff=null,$po=null,$probleme=null){
         $this->presta = $po;
         $this->coffret=$coff;
-        $this->cagnotte=$cagnott;
         $this->problemelien=$probleme;
+        $this->titre="<h1>Entrez votre lien dans la case correspondante</h1>";
     }
 
     public function affich_general($i){
@@ -47,7 +48,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="liencagnotte" required/><br></td>
+                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -61,7 +62,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien4" required/><br></td>
+                    <td> <input type="text" name="lien3" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -71,7 +72,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant coffret</h3><br><br>
-    <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+    <form action="../../index.php/CagnotteController/affich_gestion" method="post">
      <table>              
                   <tr>
                     <td>Identifiant : </td>
@@ -110,7 +111,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="liencagnotte" required/><br></td>
+                    <td> <input type="text" name="lien2" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -124,7 +125,7 @@ class VueCagnotte {
      <table>              
                   <tr>
                     <td>Identifiant : </td>
-                    <td> <input type="text" name="lien4" required/><br></td>
+                    <td> <input type="text" name="lien3" required/><br></td>
                   </tr>
     </table><br>
     <input type="submit" name="valider" value="Valider">
@@ -134,7 +135,7 @@ class VueCagnotte {
         $html=$html.'<br><br><br><h1> Accéder à la gestion d'."'un coffret</h1>".' <br>
     <div class="row"></div><h3>
     Veuillez saisir votre identifiant coffret</h3><br><br>
-      <form action="../../index.php/CagnotteController/affich_coffret" method="post">
+      <form action="../../index.php/CagnotteController/affich_gestion" method="post">
          <table>              
                       <tr>
                         <td>Identifiant : </td>
@@ -148,7 +149,8 @@ class VueCagnotte {
     }
 
     public function affich_contenu_coffret(){
-        $html='Voici le contenu de ce coffret :<br>';
+        $this->titre='<h1>Voici le contenu du coffret</h1>';
+        $html='';
         $montant=0;
         foreach($this->presta as $pre){
             $html = $html .'<img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr.' '.$pre->prix.'€';
@@ -216,64 +218,12 @@ class VueCagnotte {
 
     }
 
-    public function affich_cagnotte(){
-        $html='Voici le contenu de ce cagnotte :<br>';
-        $montant=0;
-        if($this->presta!=null){
-            foreach($this->presta as $pre){
-                $html = $html .'<br><br><img src="../../'.$this->problemelien.'images/'.$pre->img.'" class="img-responsive">'. $pre->nom.' '.$pre->descr;
-
-                $prix = $pre->prix;
-                $montant = $montant + $prix;
-            }
-
-
-
-        $html=$html.'<br><br> Montant total : '.$montant.'€';
-        $html=$html.'<br><br> Contribution total : '.$this->cagnotte->contribution;
-
-        $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'index.php/CagnotteController/participer_cagn/'.$this->cagnotte->idcagnotte.'">Participer à la cagnotte</a>';
-        $html=$html.'<br><br><a class="btn btn-primary btn-lg btn-learn" href="../../'.$this->problemelien.'">Retour à l'."'accueil".'</a>';
-        }
-        return $html;
-    }
-
-    public function confirmer_paiement(){
-        $html='<h1>Merci pour votre contribution</h1><br>';
-        $html=$html.$this->affich_cagnotte();
-        return $html;
-    }
-
-    public function affich_participation(){
-        $html='<h1> Participer à une cagnotte</h1><br>
-        <div class="row"></div><h3>
-        Veuillez saisir le montant de votre participation</h3><br><br>
-        <form action="../../../index.php/CagnotteController/confirmer_paiement/'.$this->cagnotte->idcagnotte.'" method="post">
-         <table>              
-                      <tr>
-                        <td>Montant : </td>
-                        <td> <input type="number" name="montant" required/><br></td>
-                      </tr>
-        </table><br>
-        <input type="submit" name="valider" value="Valider">
-        
-        </form>';
-
-        return $html;
-    }
-
     private function render($i)
     {
         if($i==2){
             $contenu=$this->affich_contenu_coffret();
         }elseif($i==3){
             $contenu=$this->affich_form_erreur();
-        }elseif ($i==4){
-            $contenu=$this->affich_cagnotte();
-        }elseif($i==10){
-            $contenu=$this->affich_participation();
-        }elseif ($i==11){
-            $contenu=$this->confirmer_paiement();
         }else{
             $contenu=$this->affich_form();
         }
@@ -370,7 +320,7 @@ class VueCagnotte {
     <div class="col-md-8 col-md-offset-2 text-center">
     <div class="display-t">
     <div class="display-tc animate-box" data-animate-effect="fadeIn">
-    <h1>Voici, ci dessous le contenu de votre coffret</h1>
+    '.$this->titre.'
     </div>
     </div>
     </div>
