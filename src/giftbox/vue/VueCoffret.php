@@ -3,31 +3,27 @@
 //definition du namespace et des alias
 namespace giftbox\vue;
 use giftbox\models\Prestation as Prestation;
+use giftbox\models\Categorie as Categorie;
+use giftbox\models\Contient as Contient;
 
 //Classe vue pour le coffret (panier cadeau)
 //Les tables ne sont jamais modifiees ici
 class VueCoffret {
-
-    //liens vers d'autres pages flexibles selon ou on se trouve
-    private $lienPrest = '../../../Index.php/CatalogueController/affich_prest';
-    private $lienCat = '../../../Index.php/CatalogueController/affich_cat';
     //prestations envoyees par le controller
     private $tab;
     //num de l'action a effectuer
     private $sel;
     //nul ou definissant la prestation a manipuler
     private $id;
-    private $liens = false;
-    private $lienhaut=null;
-    private $lienbas=null;
-    
+    private $l;
+
     //contructeur prenant en parametre des prestations a ajouter, afficher,...
     public function __construct($tableau){
         $this->tab = $tableau;
     }
     
     //methode qui permet d'aiguiller vers differents affichages selon les parametres
-    public function affich_general($selecteur, $id = NULL){
+    public function affich_general($selecteur, $id){
         $this->sel = $selecteur;
         $this->id = $id;
         $html = $this->render();
@@ -36,52 +32,77 @@ class VueCoffret {
     
     //methode pour permet d'ajouter une prestation au panier
     public function ajout_prest(){
-        $this->lienhaut = '<a href="../../CatalogueController/affich_prest">Liste des prestations</a><br><br><a href="../../CatalogueController/affich_cat">Liste des categories</a>';
-        $this->lienbas='<a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>';
-        $html = 'La prestation n°' . $this->id . ' a été ajoutée au panier !';
+        $p=Prestation::find($this->tab->id_pre);
+        $html = 'La prestation ' . $p->nom . ' a été ajoutée au coffret !<br>';
         return $html;
+    }
+
+    private function affich_liste_cat(){
+        $cat = Categorie::get();
+        $this->l=$cat;
+        $page = '';
+        $i = 1;
+        foreach($this->l as $pre){
+            $page = $page. '<li><a href="../../../index.php/CatalogueController/affich_cat/'.$i.'">'.$pre->nom.'</a></li>';
+            $i++;
+        }
+        return $page;
+        
     }
     
     //methode qui permet d'afficher le panier de l'uilisateur
     public function affich_coffret(){
-        $this->lienhaut = '<a href=../../CatalogueController/affich_prest>Continuer mes achats </a> <br> <br> <a href="../../CoffretController/affich_coffret"> Confirmer ma commande et passer au paiement </a>';
-        $this->lienbas='<a href=../../CatalogueController/affich_prest>Continuer mes achats </a><br><br><a href="../../Index.php/CoffretController/confirmer_coffret"><strong>Confirmer ce coffret cadeau et passer au paiement de la commande</strong></a>';
-        $html = '<h2> Votre coffret cadeau </h2> <br><br>';
-        $montant = 0;
-        foreach($this->tab as $pre){
-            $html = $html . $pre . '<br>';
-            $prix = $pre->prix;
-            $montant = $montant + $prix;
+        if (isset($_COOKIE[ 'panier' ])){
+            $liste = Contient::prestations($_COOKIE[ 'panier' ]);
         }
-        
-        $html = $html . '<br> Montant total de la commande : ' . $montant . '<br><br>';
-        
+        else{
+            $liste=null;
+        }
+        $prest = null;
+        if($liste!=null){
+            foreach($liste as $p){
+                $prest[] = Prestation::where('id', '=', $p->id_pre)->first();
+            }
+        }
+        $html = '';
+        $montant = 0;
+        if($liste!=null && $prest != null){
+            foreach($prest as $pre){
+                $html=$html."<li>".$pre->nom." d'une valeur de ".$pre->prix. " €</li>";
+                $montant = $montant + $pre->prix;
+            }
+        }
+
+        $html = $html . '<li>Montant total : ' . $montant . '</li><li><a href="../../../index.php/PaiementController/afficher_coffret_validation"><strong>Passer au paiement de la commande</strong></a></li>';
+
         return $html;
     }
     
     //methode qui permet de confirmer le coffret une fois fini
     public function confirmer_coffret(){
-        $content = '<h2> Confirmation de votre commande </h2><br><br>
-        <form id="f1" method = "post" action = "RedirectionModePaiement.php">
-                <label for="fNom"> nom : </label>
-                <input type="text" id="fNom" name="nom" placeholder="<obligatoire>" required><br><br>
-                <label for="fPrenom"> prenom : </label>
-                <input type="text" id="fPrenom" name="prenom" placeholder="<obligatoire>" required><br><br>
-                <label for="fMail"> mail : </label>
-                <input type="text" id="fMail" name="mail" placeholder="<obligatoire>" required><br><br>
-                <label for="fComm"> commentaire a envoyer au destinataire : </label>
-                <input type="text" id="fComm" name="comm" placeholder="<obligatoire>" required><br><br>
-                <label for="fMode"> Mode de paiement : </label>
-                <label>classique</label><input type="radio" name="groupe_radio1" value="classique">
-                <label>cagnotte</label><input type="radio" name="groupe_radio1" value="cagnotte"><br><br>
-                <button type="submit" name="valider" value="valid">valider</button>
-        </form>';
+        $content = '<form id="f1" method = "post" action = "RedirectionModePaiement.php">
+        <label for="fNom"> nom : </label>
+        <input type="text" id="fNom" name="nom" placeholder="<name>" required>
+        <label for="fPrenom"> prenom : </label>
+        <input type="text" id="fPrenom" name="prenom" placeholder="<prenom>" required>
+        <label for="fMail"> mail : </label>
+        <input type="text" id="fMail" name="mail" placeholder="<mail>" required>
+        <label for="fComm"> commentaire a envoyer au destinataire : </label>
+        <input type="text" id="fComm" name="comm" placeholder="<commentaire>" required>
+        <label for="fMode"> Mode de paiement : </label>
+        <label>classique</label><input type="radio" name="groupe_radio1" value="classique">
+        <label>cagnotte</label><input type="radio" name="groupe_radio1" value="cagnotte">';
+        return $content;
+    }
+
+    public function deja_dans_coffret(){
+        $content="<h2>L'objet est déjà dans votre coffret, il n'est pas possible de l'ajouter encore une fois !</h2>";
         return $content;
     }
     
-    //methode qui permet de finaliser son coffret
-    public function finaliser_coffret(){
-        echo 'ta meeere';
+    public function supp_prest(){
+        $content = '<h2>La prestation "'.$this->tab->nom .'" a été supprimée de votre panier !</h2><br><br> <a class="btn btn-primary btn-lg btn-learn" href="../../../index.php/PaiementController/afficher_coffret_validation">Retourner au coffret</a>';
+        return $content;
     }
     
     //methode permettant l'affichage general de la page et y ajoutant le bon script
@@ -89,41 +110,197 @@ class VueCoffret {
         $content = '';
         switch ($this->sel){
             case 1 :
-                $this->liens=true;
-                $content = $this->ajout_prest();
+            $content = $this->ajout_prest();
             break;
             case 2 :
-                $this->liens=true;
-                $content = $this->affich_coffret();
+            $content = $this->affich_coffret();
             break;
             case 3 :
-                $this->liens=false;
-                $content = $this->confirmer_coffret();
+            $content = $this->confirmer_coffret();
             break;
-            case 4 : 
-                $this->liens=false;
-                $content = $this->finaliser_coffret();
+            case 4 :
+            $content = $this->deja_dans_coffret();
+            break;
+            case 5 :
+            $content = $this->supp_prest();
             break;
         }
-        
+        $content1 = $this->affich_liste_cat();
         $html = '
-        <!DOCTYPE html>
-        <html lang="fr">
-        <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <title> Ajouté au panier </title>
-            <meta charset="utf-8">
+
+        <!DOCTYPE HTML>
+        <html>
+        <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>GiftBox, offrez du rêve</title>
+
+        <!-- Facebook and Twitter integration -->
+        <meta property="og:title" content=""/>
+        <meta property="og:image" content=""/>
+        <meta property="og:url" content=""/>
+        <meta property="og:site_name" content=""/>
+        <meta property="og:description" content=""/>
+        <meta name="twitter:title" content="" />
+        <meta name="twitter:image" content="" />
+        <meta name="twitter:url" content="" />
+        <meta name="twitter:card" content="" />
+
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="../../../css/animate.css">
+        <!-- Icomoon Icon Fonts-->
+        <link rel="stylesheet" href="../../../css/icomoon.css">
+        <!-- Bootstrap  -->
+        <link rel="stylesheet" href="../../../css/bootstrap.css">
+
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+
+        <!-- Owl Carousel  -->
+        <link rel="stylesheet" href="../../../css/owl.carousel.min.css">
+        <link rel="stylesheet" href="../../../css/owl.theme.default.min.css">
+
+        <!-- Theme style  -->
+        <link rel="stylesheet" href="../../../css/style.css">
+
+        <!-- Modernizr JS -->
+        <script src="../../../js/modernizr-2.6.2.min.js"></script>
+        <!-- FOR IE9 below -->
+        <!--[if lt IE 9]>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+
         </head>
-        <boby>
-            <nav>'.
-                $this->lienhaut.'
-            </nav>
-            <section>
-                '.
-                $content.'
-            </section>
-            <footer>'.
-                $this->lienbas.    
-            '</footer>
+        <body>
+
+        <div class="fh5co-loader"></div>
+
+        <div id="page">
+        <nav class="fh5co-nav" role="navigation">
+        <div class="top-menu">
+        <div class="container">
+        <div class="row">
+        <div class="col-xs-1">
+        <div id="fh5co-logo"><a href="#">Gift<span>Box</span></a></div>
+        </div>
+        <div class="col-xs-11 text-right menu-1">
+        <ul>
+        <li ><a href="../../../">Accueil</a></li>
+        <li class="has-dropdown" >
+        <a href="../../../index.php/CatalogueController/affich_prest" >Catalogue</a>
+        <ul class="dropdown">
+        '.$content1.'
+        </ul>
+        </li>
+        <li><a href="../../../index.php/CagnotteController/form">Accéder à un coffret ou à une cagnotte</a></li>
+        <li class="btn-cta"><a href="../../../index.php/ConnexionController/affich"><span>Connexion</span></a></li>
+        <li class="has-dropdown">
+        <a href="#"><span>Coffret</span></a>
+        <ul class="dropdown">
+        <li><a href="#">Voici le contenu actuel du coffret  :</a></li>
+        '.$this->affich_coffret().'
+        </ul>
+        </li>
+        </ul>
+        </div>
+        </div>
+
+        </div>
+        </div>
+        </nav>
+
+        <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(images/img_bg_2.jpg);" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+        <div class="display-t">
+        <div class="display-tc animate-box" data-animate-effect="fadeIn">
+        <h1>'.$content.'</h1>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </header>
+        <div id="fh5co-blog">
+        <div class="container">
+        <a href="../../../index.php/PaiementController/afficher_coffret_validation"><h1>Voir mon coffret et procéder au paiement</h1><br></a>
+        <a href="../../../index.php/CatalogueController/affich_prest"><h1>Retourner au catalogue</h1><br></a>
+        </div>
+        </div>
+
+
+        <footer id="fh5co-footer" role="contentinfo">
+        <div class="container">
+        <div class="row row-pb-md">
+        <div class="col-md-3 fh5co-widget">
+        <h4>À propos</h4>
+        <p>GiftBox est une entreprise purement fictive réalisée dans le cadre du projet de notre 3ème semestre de DUT Informatique, toute ressemblance avec une entreprise existante nest pas voulue.</p>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
+        <h4>Catalogue</h4>
+        <ul class="fh5co-footer-links">
+        ' . $this->affich_liste_cat() . '
+        </ul>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
+        <h4>Nos partenaires</h4>
+        <ul class="fh5co-footer-links">
+       <li><a href="http://iut-charlemagne.univ-lorraine.fr/" target="_blank">IUT Charlemagne</a></li>
+                        <li><a href="#">Cours en PHP de Monsieur B.</a></li>
+                        <li><a href="https://openclassrooms.com/" target="_blank">OpenClassroom</a></li>
+                        <li><a href="https://www.youtube.com/?gl=FR&hl=fr" target="_blank">Youtube</a></li>
+        </ul>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
+        <h4>Connexion</h4>
+        <ul class="fh5co-footer-links">
+        <li><a href="../../../index.php/ConnexionController/affich">Se connecter</a></li>
+        </ul>
+        </div>
+        </div>
+
+        <div class="row copyright">
+        <div class="col-md-12 text-center">
+        <p>
+        <small class="block">&copy; 2016 Nael Léo Tolga Pierre Florian <strong>Groupe S3B</strong></small> 
+        </p>
+
+        </div>
+        </div>
+
+        </div>
+        </footer>
+        </div>
+
+        <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+        </div>
+
+        <!-- jQuery -->
+        <script src="../../../js/jquery.min.js"></script>
+        <!-- jQuery Easing -->
+        <script src="../../../js/jquery.easing.1.3.js"></script>
+        <!-- Bootstrap -->
+        <script src="../../../js/bootstrap.min.js"></script>
+        <!-- Waypoints -->
+        <script src="../../../js/jquery.waypoints.min.js"></script>
+        <!-- Stellar Parallax -->
+        <script src="../../../js/jquery.stellar.min.js"></script>
+        <!-- Carousel -->
+        <script src="../../../js/owl.carousel.min.js"></script>
+        <!-- countTo -->
+        <script src="../../../js/jquery.countTo.js"></script>
+        <!-- Magnific Popup -->
+        <script src="../../../js/jquery.magnific-popup.min.js"></script>
+        <script src="../../../js/magnific-popup-options.js"></script>
+        <!-- Main -->
+        <script src="../../../js/main.js"></script>
+
         </body>
         </html>';
         return $html;
